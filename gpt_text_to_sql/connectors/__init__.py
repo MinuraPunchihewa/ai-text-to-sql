@@ -1,1 +1,1 @@
-from sqlite_connector import SQLiteConnector
+from gpt_text_to_sql.connectors.sqlite_connector import SQLiteConnector
