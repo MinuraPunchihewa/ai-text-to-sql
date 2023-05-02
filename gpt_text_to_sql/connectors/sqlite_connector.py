@@ -19,4 +19,6 @@ class SQLiteConnector(DatabaseConnector):
         return self.inspector.get_columns(table_name)
 
     def query(self, query: Text):
-        return self.engine.execute(text(query)).fetchall()
+        with self.engine.connect() as conn:
+            result = conn.execute(text(query))
+        return result.fetchall()
