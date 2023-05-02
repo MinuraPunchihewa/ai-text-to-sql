@@ -1,9 +1,9 @@
-from typing import Optional
+from typing import Optional, Text, Dict
 from abc import ABC, abstractmethod
 
 
 class DatabaseConnector(ABC):
-    def __int__(self, name: str, connection_data: Optional[dict]):
+    def __init__(self, name: Text, connection_data: Optional[Dict]):
         self.name = name
         self.connection_data = connection_data
 
