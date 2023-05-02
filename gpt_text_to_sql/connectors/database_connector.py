@@ -12,5 +12,8 @@ class DatabaseConnector(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_columns(self, table_name):
+    def get_columns(self, table_name: Text):
+        raise NotImplementedError
+
+    def query(self, query: Text):
         raise NotImplementedError
