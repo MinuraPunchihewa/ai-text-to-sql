@@ -28,7 +28,14 @@ class GPT:
 
     def get_prime_text(self):
         """Formats all examples to prime the model."""
-        pass
+        prime_text = f"{self.connector.name} tables, with their properties:\n#\n"
+        tables = self.connector.get_tables()
+        for table in tables:
+            columns = [column['name'] for column in self.connector.get_columns(table)]
+            prime_text += f"# {table}(" + ", ".join(columns) + ")\n"
+
+        prime_text += "#\n### "
+        return prime_text
 
     def get_engine(self):
         """Returns the engine specified for the API."""
