@@ -4,6 +4,8 @@ from .database_connector import DatabaseConnector
 
 
 class SQLiteConnector(DatabaseConnector):
+    name = 'SQLite'
+
     def __init__(self, name: Text, connection_data: Optional[Dict]):
         super().__init__(name, connection_data)
 
