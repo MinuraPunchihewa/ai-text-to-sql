@@ -1,1 +1,1 @@
-# gpt-text-to-sql
+# GPT-Text-to-SQL
