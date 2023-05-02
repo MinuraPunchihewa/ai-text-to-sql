@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, inspect
 from .database_connector import DatabaseConnector
 
 
-class SqliteConnector(DatabaseConnector):
+class SQLiteConnector(DatabaseConnector):
     def __init__(self, name: Text, connection_data: Optional[Dict]):
         super().__init__(name, connection_data)
 
