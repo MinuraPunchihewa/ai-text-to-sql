@@ -31,7 +31,7 @@ class GPT:
         prime_text = f"{self.connector.name} tables, with their properties:\n#\n"
         tables = self.connector.get_tables()
         for table in tables:
-            columns = [column['name'] for column in self.connector.get_columns(table)]
+            columns = self.connector.get_columns(table)
             prime_text += f"# {table}(" + ", ".join(columns) + ")\n"
 
         prime_text += "#\n### "
