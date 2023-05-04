@@ -1,6 +1,6 @@
 from typing import Optional, Dict, Text
 from .database_connector import DatabaseConnector
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import create_engine
 
 
 class SQLiteConnector(DatabaseConnector):
@@ -9,16 +9,5 @@ class SQLiteConnector(DatabaseConnector):
     def __init__(self, name: Text, connection_data: Optional[Dict]):
         super().__init__(name, connection_data)
 
-        self.engine = create_engine(f'sqlite:///{self.connection_data["db_file"]}')
-        self.inspector = inspect(self.engine)
-
-    def get_tables(self):
-        return self.inspector.get_table_names()
-
-    def get_columns(self, table_name):
-        return [column['name'] for column in self.inspector.get_columns(table_name)]
-
-    def query(self, query: Text):
-        with self.engine.connect() as conn:
-            result = conn.execute(text(query))
-        return result.fetchall()
+    def create_connection(self):
+        return create_engine(f"sqlite:///{self.connection_data['db_file']}")
