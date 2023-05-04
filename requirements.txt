@@ -1,6 +1,7 @@
 pandas
 pyodbc
 pymysql
+psycopg2-binary
 openai
 sqlalchemy
 python-dotenv
