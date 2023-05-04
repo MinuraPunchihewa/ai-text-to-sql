@@ -1,1 +1,4 @@
 from gpt_text_to_sql.connectors.sqlite_connector import SQLiteConnector
+from gpt_text_to_sql.connectors.mssql_connector import MSSQLConnector
+from gpt_text_to_sql.connectors.mysql_connector import MySQLConnector
+from gpt_text_to_sql.connectors.postgresql_connector import PostgreSQLConnector
