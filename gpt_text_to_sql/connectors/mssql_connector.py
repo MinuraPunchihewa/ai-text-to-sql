@@ -10,8 +10,13 @@ class MSSQLConnector(DatabaseConnector):
     def __init__(self, name: Text, connection_data: Optional[Dict]):
         super().__init__(name, connection_data)
 
-        connection_string = f"mssql+pyodbc://{self.connection_data['user']}:{self.connection_data['password']}@{self.connection_data['host']}:{self.connection_data['port']}/{self.connection_data['database']}?driver={pyodbc.drivers()[-1]}"
-        self.engine = create_engine(connection_string)
+        connection_string = f"mssql+pyodbc://{self.connection_data['user']}:{self.connection_data['password']}@{self.connection_data['host']}:{self.connection_data['port']}/{self.connection_data['database']}"
+        try:
+            driver = pyodbc.drivers()[-1]
+        except IndexError:
+            raise Exception("No MSSQL driver found. Please install a driver for MSSQL.")
+
+        self.engine = create_engine(f"{connection_string}?driver={driver}")
         self.inspector = inspect(self.engine)
 
     def get_tables(self):
