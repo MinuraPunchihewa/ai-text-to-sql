@@ -1,29 +1,51 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Text, Dict
+from typing import Text, Dict, List, Any
 from sqlalchemy import inspect, text
 
 
 class DatabaseConnector(ABC):
-    def __init__(self, name: Text, connection_data: Optional[Dict]):
+    def __init__(self, name: Text, connection_data: Dict):
         self.name = name
         self.connection_data = connection_data
         self.connection = self.create_connection()
         self.inspector = self.create_inspector()
 
     @abstractmethod
-    def create_connection(self):
+    def create_connection(self) -> Any:
+        """
+        Create a connection to a database.
+        :return: A SQLAlchemy engine object or a similar connection object for establishing a connection to a database.
+        """
         raise NotImplementedError
 
     def create_inspector(self):
+        """
+        Create an SQLAlchemy inspector object for the connection to the database.
+        :return:
+        """
         return inspect(self.connection)
 
-    def get_tables(self):
+    def get_tables(self) -> List[Text]:
+        """
+        Get the tables of the database.
+        :return: The tables of the database.
+        """
         return self.inspector.get_table_names()
 
-    def get_columns(self, table_name):
+    def get_columns(self, table_name) -> List[Text]:
+        """
+        Get the columns of a table.
+        :param table_name: The name of the table.
+        :return: The columns of the table.
+        """
         return [column['name'] for column in self.inspector.get_columns(table_name)]
 
-    def query(self, query: Text):
+    def query(self, query: Text) -> List[Dict]:
+        """
+        Execute a query on the database.
+        :param query: The query to execute.
+        :return: The result of the query.
+        """
         with self.connection.connect() as conn:
             result = conn.execute(text(query))
         return result.fetchall()
