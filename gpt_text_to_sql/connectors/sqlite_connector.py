@@ -14,4 +14,7 @@ class SQLiteConnector(DatabaseConnector):
         Create a connection to a SQLite database.
         :return: A SQLAlchemy engine object for the connection to the SQLite database.
         """
-        return create_engine(f"sqlite:///{self.connection_data['db_file']}")
+        try:
+            return create_engine(f"sqlite:///{self.connection_data['database']}")
+        except KeyError:
+            raise ValueError("Missing parameter in connection_data: database.")
