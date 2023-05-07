@@ -13,7 +13,7 @@ class TestSQLiteConnector(unittest.TestCase):
         cls.tts = TextToSQL(
             'SQLite',
             {
-                "db_file": "data/chinook.db"
+                "database": "data/chinook.db"
             },
             os.environ.get("OPENAI_API_KEY")
         )
