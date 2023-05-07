@@ -1,7 +1,7 @@
 import pyodbc
 from typing import Optional, Dict, Text
 from .database_connector import DatabaseConnector
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import create_engine
 
 
 class MSSQLConnector(DatabaseConnector):
