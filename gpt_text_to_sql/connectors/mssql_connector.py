@@ -15,7 +15,12 @@ class MSSQLConnector(DatabaseConnector):
         Create a connection to a MSSQL database.
         :return: A SQLAlchemy engine object for the connection to the MSSQL database.
         """
-        connection_string = f"mssql+pyodbc://{self.connection_data['user']}:{self.connection_data['password']}@{self.connection_data['host']}:{self.connection_data['port']}/{self.connection_data['database']}"
+        try:
+            connection_string = f"mssql+pyodbc://{self.connection_data['user']}:{self.connection_data['password']}@{self.connection_data['host']}:{self.connection_data['port']}/{self.connection_data['database']}"
+        except KeyError as e:
+            missing_param = str(e).strip("'")
+            raise ValueError(f"Missing parameter in connection_data: {missing_param}.")
+
         try:
             driver = pyodbc.drivers()[-1]
         except IndexError:
