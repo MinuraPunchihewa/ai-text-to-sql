@@ -30,5 +30,8 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ),
+    package_data={
+        'gpt_text_to_sql': ['config/*.yml', 'config/*.yaml']
+    },
     python_requires=">=3.9"
 )
