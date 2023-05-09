@@ -4,14 +4,26 @@ import pandas as pd
 from .gpt import GPT
 from typing import Optional, Text, Dict
 
+import logging
+import logging.config
+from .config_parser import ConfigParser
+
+logging_config_parser = ConfigParser()
+logging.config.dictConfig(logging_config_parser.get_config_dict())
+logger = logging.getLogger()
+
 
 class TextToSQL:
     def __init__(self, connector_name: Text, connection_data: Optional[Dict], api_key: Optional[Text] = None):
         self.gpt = GPT(connector_name, connection_data)
         self._set_openai_api_key(api_key)
 
+        self.logger = logger
+
     def convert_text_to_sql(self, text: Text):
-        return self.gpt.get_top_reply(text).strip()
+        sql = self.gpt.get_top_reply(text).strip()
+        self.logger.info(f"SQL query: {sql}")
+        return sql
 
     def query(self, query: Text):
         sql = self.convert_text_to_sql(query)
