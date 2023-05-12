@@ -4,6 +4,24 @@ from sqlalchemy import create_engine
 
 
 class PostgreSQLConnector(DatabaseConnector):
+    """
+    The Connector class for PostgreSQL databases.
+
+    Parameters:
+    -----------
+    name : str
+        The name of the connector.
+    connection_data : Dict
+        A dictionary containing the configuration parameters for the PostgreSQL connection.
+        The following keys are required:
+            - user: The username to connect to the database.
+            - password: The password to connect to the database.
+            - host: The host name or IP address of the database server.
+            - port: The port number of the database server.
+            - database: The name of the database to connect to.
+
+    """
+
     name = 'PostgreSQL'
 
     def __init__(self, name: Text, connection_data: Dict):
