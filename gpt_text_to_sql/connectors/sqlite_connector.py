@@ -4,6 +4,18 @@ from sqlalchemy import create_engine
 
 
 class SQLiteConnector(DatabaseConnector):
+    """
+    The Connector class for SQLite databases.
+
+    Parameters:
+    -----------
+    name : str
+        The name of the connector.
+    connection_data : Dict
+        A dictionary containing the configuration parameters for the SQLite connection.
+        The following keys are required:
+            - database: The path to the SQLite database file.
+    """
     name = 'SQLite'
 
     def __init__(self, name: Text, connection_data: Dict):
