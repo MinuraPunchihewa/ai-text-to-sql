@@ -122,3 +122,6 @@ Why settle for a list of dictionaries when you can have a fancy pandas DataFrame
 ```
 tts.query_df("")
 ```
+
+# License
+This code is licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE.txt for details.
