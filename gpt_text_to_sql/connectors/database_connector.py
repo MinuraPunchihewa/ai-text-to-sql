@@ -1,9 +1,21 @@
 from abc import ABC, abstractmethod
 from typing import Text, Dict, List, Any
+
+import sqlalchemy
 from sqlalchemy import inspect, text
 
 
 class DatabaseConnector(ABC):
+    """
+    The abstract base class for database connectors.
+
+    Parameters
+    ----------
+    name: Text
+        The name of the connector.
+    connection_data: Dict
+        A dictionary containing the configuration parameters for the database connection.
+    """
     def __init__(self, name: Text, connection_data: Dict):
         self.name = name
         self.connection_data = connection_data
@@ -18,10 +30,10 @@ class DatabaseConnector(ABC):
         """
         raise NotImplementedError
 
-    def create_inspector(self):
+    def create_inspector(self) -> sqlalchemy.Inspector:
         """
         Create an SQLAlchemy inspector object for the connection to the database.
-        :return:
+        :return: An SQLAlchemy inspector object.
         """
         return inspect(self.connection)
 
