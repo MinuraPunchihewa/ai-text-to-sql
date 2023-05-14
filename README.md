@@ -26,9 +26,9 @@ Next, create an instance of the TextToSQL class:
 tts = TextToSQL(
     'SQLite',
     {
-        "database": "data/chinook.db"
+        "database": "your_database_file_name"
     },
-    os.environ.get("OPENAI_API_KEY")
+    'your_openai_api_key'
 )
 ```
 To instantiate the TextToSQL class, you need to provide the following parameters:
@@ -43,18 +43,73 @@ Additionally, given below are examples of how to instantiate the `TextToSQL` cla
 
 ### SQLite
 ```
+tts = TextToSQL(
+    'SQLite',
+    {
+        "database": "your_database_file_name"
+    },
+    'your_openai_api_key'
+)
 ```
 
 ### MySQL
 ```
+tts = TextToSQL(
+    'MySQL',
+    {
+        'user': 'your_username',
+        'port': '3306',
+        'password': 'your_password',
+        'host': 'your_host',
+        'database': 'your_database_name'
+    },
+    'your_openai_api_key'
+)
 ```
 
 ### MariaDB
 ```
+tts = tts = TextToSQL(
+    'MariaDB',
+    {
+        'user': 'your_username',
+        'port': '3306',
+        'password': 'your_password',
+        'host': 'your_host',
+        'database': 'your_database_name'
+    },
+    'your_openai_api_key'
+)
+```
+
+## PostgreSQL
+```
+tts = tts = TextToSQL(
+    'PostgreSQL',
+    {
+        'user': 'your_username',
+        'port': '5432',
+        'password': 'your_password',
+        'host': 'your_host',
+        'database': 'your_database_name'
+    },
+    'your_openai_api_key'
+)
 ```
 
 ### MSSQL
 ```
+tts = tts = TextToSQL(
+    'PostgreSQL',
+    {
+        'user': 'your_username',
+        'port': '1433',
+        'password': 'your_password',
+        'host': 'your_host',
+        'database': 'your_database_name'
+    },
+    'your_openai_api_key'
+)
 ```
 
 Now that you've summoned the mystical TextToSQL class, you hold the power to query your database with ease:
