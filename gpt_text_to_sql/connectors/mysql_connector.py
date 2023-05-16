@@ -32,7 +32,9 @@ class MySQLConnector(DatabaseConnector):
         :return: A SQLAlchemy engine object for the connection to the MySQL database.
         """
         try:
-            return create_engine(f"mysql+pymysql://{self.connection_data['user']}:{self.connection_data['password']}@{self.connection_data['host']}:{self.connection_data['port']}/{self.connection_data['database']}")
+            return create_engine(f"mysql+pymysql://{self.connection_data['user']}:{self.connection_data['password']}"
+                                 f"@{self.connection_data['host']}:{self.connection_data['port']}/"
+                                 f"{self.connection_data['database']}")
         except KeyError as e:
             missing_param = str(e).strip("'")
             raise ValueError(f"Missing parameter in connection_data: {missing_param}.")
