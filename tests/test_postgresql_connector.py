@@ -17,7 +17,8 @@ class TestPostgreSQLConnector(unittest.TestCase):
                 'port': os.environ.get("POSTGRESQL_PORT"),
                 'password': os.environ.get("POSTGRESQL_PASSWORD"),
                 'host': os.environ.get("POSTGRESQL_HOST"),
-                'database': os.environ.get("POSTGRESQL_DATABASE")
+                'database': os.environ.get("POSTGRESQL_DATABASE"),
+                'schema': os.environ.get("POSTGRESQL_SCHEMA")
             },
             os.environ.get("OPENAI_API_KEY")
         )
