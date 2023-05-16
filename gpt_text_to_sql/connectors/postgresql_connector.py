@@ -1,6 +1,10 @@
 from typing import Dict, Text
-from .database_connector import DatabaseConnector
+
+from sqlalchemy import text
 from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session, sessionmaker
+
+from .database_connector import DatabaseConnector
 
 
 class PostgreSQLConnector(DatabaseConnector):
@@ -33,7 +37,18 @@ class PostgreSQLConnector(DatabaseConnector):
         :return: A SQLAlchemy engine object for the connection to the PostgreSQL database.
         """
         try:
-            return create_engine(f"postgresql+psycopg2://{self.connection_data['user']}:{self.connection_data['password']}@{self.connection_data['host']}:{self.connection_data['port']}/{self.connection_data['database']}")
+            engine = create_engine(f"postgresql+psycopg2://{self.connection_data['user']}:"
+                                 f"{self.connection_data['password']}@{self.connection_data['host']}:"
+                                 f"{self.connection_data['port']}/{self.connection_data['database']}")
+
+            if 'schema' in self.connection_data:
+                session_factory = sessionmaker(bind=engine)
+                Session = scoped_session(session_factory)
+                session = Session()
+                session.execute(text(f"SET search_path TO {self.connection_data['schema']}"))
+                session.commit()
+
+            return engine
         except KeyError as e:
             missing_param = str(e).strip("'")
             raise ValueError(f"Missing parameter in connection_data: {missing_param}.")
