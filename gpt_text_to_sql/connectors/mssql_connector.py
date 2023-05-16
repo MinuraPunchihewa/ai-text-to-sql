@@ -21,6 +21,9 @@ class MSSQLConnector(DatabaseConnector):
             - port: The port number of the database server.
             - database: The name of the database to connect to.
 
+        The following keys are optional:
+            - schema: The name of the schema to connect to.
+
     """
     name = 'MSSQL'
 
@@ -33,7 +36,12 @@ class MSSQLConnector(DatabaseConnector):
         :return: A SQLAlchemy engine object for the connection to the MSSQL database.
         """
         try:
-            connection_string = f"mssql+pyodbc://{self.connection_data['user']}:{self.connection_data['password']}@{self.connection_data['host']}:{self.connection_data['port']}/{self.connection_data['database']}"
+            connection_string = f"mssql+pyodbc://{self.connection_data['user']}:{self.connection_data['password']}" \
+                                f"@{self.connection_data['host']}:{self.connection_data['port']}/" \
+                                f"{self.connection_data['database']}"
+
+            if 'schema' in self.connection_data:
+                connection_string += f"?schema={self.connection_data['schema']}"
         except KeyError as e:
             missing_param = str(e).strip("'")
             raise ValueError(f"Missing parameter in connection_data: {missing_param}.")
