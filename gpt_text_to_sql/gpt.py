@@ -1,5 +1,6 @@
 import openai
 from typing import Text, Dict, List
+
 from gpt_text_to_sql.connectors.database_connector_factory import DatabaseConnectorFactory
 
 

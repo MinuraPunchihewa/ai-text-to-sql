@@ -1,4 +1,5 @@
 from typing import Optional, Dict, Text
+
 from .mysql_connector import MySQLConnector
 
 

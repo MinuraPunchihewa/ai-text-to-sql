@@ -1,11 +1,12 @@
 import os
 import openai
 import pandas as pd
-from .gpt import GPT
 from typing import Optional, Text, List, Dict
 
 import logging
 import logging.config
+
+from .gpt import GPT
 from .config_parser import ConfigParser
 
 logging_config_parser = ConfigParser()
