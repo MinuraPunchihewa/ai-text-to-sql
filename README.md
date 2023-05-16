@@ -82,7 +82,7 @@ tts = tts = TextToSQL(
 )
 ```
 
-## PostgreSQL
+### PostgreSQL
 ```
 tts = tts = TextToSQL(
     'PostgreSQL',
@@ -96,11 +96,12 @@ tts = tts = TextToSQL(
     'your_openai_api_key'
 )
 ```
+Optionally, a `schema` parameter can be provided with the `connection_data` for `PostgreSQL`.
 
 ### MSSQL
 ```
 tts = tts = TextToSQL(
-    'PostgreSQL',
+    'MSSQL',
     {
         'user': 'your_username',
         'port': '1433',
@@ -111,16 +112,17 @@ tts = tts = TextToSQL(
     'your_openai_api_key'
 )
 ```
+Optionally, a `schema` parameter can be provided with the `connection_data` for `MSSQL`.
 
 Now that you've summoned the mystical TextToSQL class, you hold the power to query your database with ease:
 ```
-tts.query("")
+tts.query("Get me the names of 5 Rock songs.")
 ```
 The `query` method returns a list of dictionaries, where each dictionary represents a row in the result set.
 
 Why settle for a list of dictionaries when you can have a fancy pandas DataFrame? Use the `query_df` method to get the results you deserve:
 ```
-tts.query_df("")
+tts.query_df("Get me the names of 5 Rock songs.")
 ```
 
 # License
