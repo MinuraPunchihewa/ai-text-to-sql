@@ -24,6 +24,9 @@ class PostgreSQLConnector(DatabaseConnector):
             - port: The port number of the database server.
             - database: The name of the database to connect to.
 
+        The following keys are optional:
+            - schema: The name of the schema to connect to.
+
     """
 
     name = 'PostgreSQL'
