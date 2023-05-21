@@ -15,7 +15,7 @@ class TestSQLiteConnector(unittest.TestCase):
             {
                 "database": "data/chinook.db"
             },
-            'GPT',
+            'OpenAI',
             os.environ.get("OPENAI_API_KEY")
         )
 

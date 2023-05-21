@@ -14,7 +14,7 @@ logging.config.dictConfig(logging_config_parser.get_config_dict())
 logger = logging.getLogger()
 
 
-class GPTLLM(LLM):
+class OpenAILLM(LLM):
     """
     The class for interacting with the OpenAI API.
 
@@ -39,7 +39,7 @@ class GPTLLM(LLM):
     stop: List[Text]
         The stop for the OpenAI API.
     """
-    name = 'GPT'
+    name = 'OpenAI'
 
     def __init__(self,
                  name,
