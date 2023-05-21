@@ -5,6 +5,7 @@ from typing import Text, Dict, List
 import logging
 import logging.config
 
+from gpt_text_to_sql.llms.llm import LLM
 from gpt_text_to_sql.config_parser import ConfigParser
 from gpt_text_to_sql.connectors.database_connector import DatabaseConnector
 
@@ -13,7 +14,7 @@ logging.config.dictConfig(logging_config_parser.get_config_dict())
 logger = logging.getLogger()
 
 
-class GPTLLM:
+class GPTLLM(LLM):
     """
     The class for interacting with the OpenAI API.
 
