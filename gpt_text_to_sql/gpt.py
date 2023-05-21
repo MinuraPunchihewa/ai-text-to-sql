@@ -58,20 +58,6 @@ class GPT:
 
         self.logger = logger
 
-    def get_prime_text(self) -> Text:
-        """
-        Formats all examples to prime the model.
-        :return: A string containing all examples formatted for the API.
-        """
-        prime_text = f"{self.connector.name} tables, with their properties:\n#\n"
-        tables = self.connector.get_tables()
-        for table in tables:
-            columns = self.connector.get_columns(table)
-            prime_text += f"# {table}(" + ", ".join(columns) + ")\n"
-
-        prime_text += "#\n### "
-        return prime_text
-
     def get_engine(self) -> Text:
         """
         Returns the engine specified for the API.
@@ -114,13 +100,31 @@ class GPT:
         """
         return self.max_tokens
 
+    def get_prime_text(self) -> Text:
+        """
+        Formats all examples to prime the model.
+        :return: A string containing all examples formatted for the API.
+        """
+        prime_text = f"### {self.connector.name} tables, with their properties:\n#\n"
+        tables = self.connector.get_tables()
+        for table in tables:
+            columns = self.connector.get_columns(table)
+            prime_text += f"# {table}(" + ", ".join(columns) + ")\n"
+
+        prime_text += "#\n### "
+        return prime_text
+
     def craft_query(self, prompt) -> Text:
         """
         Creates the query for the API request.
         :param prompt: The prompt to query the API with.
         :return: The query for the API request.
         """
-        return self.get_prime_text() + prompt
+        return self.get_prime_text() + prompt + "\n### Your response should be a clear and concise SQL statement that" \
+                                                " retrieves only the necessary data from the relevant tables. " \
+                                                "Please ensure that your query is optimized for performance and " \
+                                                "accuracy. Your response should only include the SQL statement," \
+                                                " without any additional text."
 
     def submit_request(self, prompt) -> Dict:
         """
