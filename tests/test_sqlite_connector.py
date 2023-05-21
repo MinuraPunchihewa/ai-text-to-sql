@@ -15,6 +15,7 @@ class TestSQLiteConnector(unittest.TestCase):
             {
                 "database": "data/chinook.db"
             },
+            'GPT',
             os.environ.get("OPENAI_API_KEY")
         )
 
@@ -27,9 +28,10 @@ class TestSQLiteConnector(unittest.TestCase):
     def test_advanced_convert_text_to_sql(self):
         self.assertEqual(
             self.tts.convert_text_to_sql("Get me the names of 5 Rock songs."),
-            "SELECT Name FROM tracks\n"
-            "INNER JOIN genres ON genres.GenreId = tracks.GenreId\n"
-            "WHERE genres.Name = 'Rock'\n"
+            "SELECT Name \n"
+            "FROM tracks \n"
+            "INNER JOIN genres ON genres.GenreId = tracks.GenreId \n"
+            "WHERE genres.Name = 'Rock' \n"
             "LIMIT 5"
         )
 
