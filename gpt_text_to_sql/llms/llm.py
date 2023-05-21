@@ -13,7 +13,8 @@ class LLM(ABC):
     api_key: Text
         The API key for the LLM.
     """
-    def __init__(self, api_key: Text):
+    def __init__(self, name: Text, api_key: Text):
+        self.name = name
         self.api_key = api_key
 
     @abstractmethod
@@ -25,10 +26,11 @@ class LLM(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def craft_prompt(self, connector: DatabaseConnector) -> Text:
+    def craft_prompt(self, prompt: Text, prime_text: Text) -> Text:
         """
         Craft the prompt for the request to the LLM using the prime text and any additional text.
-        :param connector: The database connector.
+        :param prompt: The prompt for the request to the LLM.
+        :param prime_text: The prime text for the request to the LLM.
         :return: The prompt for the request to the LLM.
         """
         raise NotImplementedError
@@ -43,7 +45,7 @@ class LLM(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_top_reply(self) -> Text:
+    def get_top_reply(self, prompt, connector: DatabaseConnector) -> Text:
         """
         Get the top reply from the LLM.
         :return: The top reply from the LLM.
@@ -51,7 +53,7 @@ class LLM(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def set_api_key(self, api_key: Text):
+    def set_api_key(self):
         """
         Set the API key for the LLM.
         :param api_key: The API key for the LLM.
