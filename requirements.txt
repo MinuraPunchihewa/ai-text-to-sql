@@ -6,3 +6,4 @@ psycopg2-binary
 openai
 sqlalchemy
 python-dotenv
+bardapi
