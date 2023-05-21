@@ -10,6 +10,8 @@ class LLM(ABC):
 
     Parameters
     ----------
+    name: Text
+        The name of the LLM.
     api_key: Text
         The API key for the LLM.
     """
