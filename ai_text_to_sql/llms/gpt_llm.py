@@ -121,24 +121,23 @@ class GPTLLM(LLM):
         prime_text += "#\n### "
         return prime_text
 
-    def craft_prompt(self, prompt: Text, prime_text: Text) -> Text:
+    def craft_prompt(self, text: Text, prime_text: Text) -> Text:
         """
         Creates the query for the API request.
-        :param prompt: The prompt to query the API with.
+        :param text: The text provided by the user.
         :param prime_text: The prime text to use for the API request.
         :return: The query for the API request.
         """
-        return prime_text + prompt + "\n### Your response should be a clear and concise SQL statement that" \
-                                     " retrieves only the necessary data from the relevant tables. " \
-                                     "Please ensure that your query is optimized for performance and " \
-                                     "accuracy. Your response should only include the SQL statement," \
-                                     " without any additional text."
+        return prime_text + text + "\n### Your response should be a clear and concise SQL statement that" \
+                                   " retrieves only the necessary data from the relevant tables. " \
+                                   "Please ensure that your query is optimized for performance and " \
+                                   "accuracy. Your response should only include the SQL statement," \
+                                   " without any additional text."
 
-    def submit_request(self, prompt) -> Dict:
+    def submit_request(self, prompt: Text) -> Dict:
         """
         Calls the OpenAI API with the specified parameters.
         :param prompt: The prompt to query the API with.
-        :param connector: The DatabaseConnector object to use.
         :return: The API response.
         """
         response = openai.Completion.create(engine=self.get_engine(),
@@ -152,18 +151,18 @@ class GPTLLM(LLM):
                                             stop=self.stop)
         return response
 
-    def get_top_reply(self, prompt, connector: DatabaseConnector) -> Text:
+    def get_top_reply(self, text: Text, connector: DatabaseConnector) -> Text:
         """
         Obtains the best result as returned by the API.
-        :param prompt: The prompt to query the API with.
+        :param text: The text provided by the user.
         :param connector: The DatabaseConnector object to use.
         :return: The best result returned by the API.
         """
         prime_text = self.get_prime_text(connector)
-        modified_prompt = self.craft_prompt(prompt, prime_text)
-        self.logger.info(f"Prompt: {modified_prompt}")
+        prompt = self.craft_prompt(text, prime_text)
+        self.logger.info(f"Prompt: {prompt}")
 
-        response = self.submit_request(modified_prompt)
+        response = self.submit_request(prompt)
         return response['choices'][0]['text']
 
     def set_api_key(self):

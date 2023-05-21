@@ -21,15 +21,15 @@ class LLM(ABC):
     def get_prime_text(self, connector: DatabaseConnector):
         """
         Get the prime text for the request to the LLM using the Database Connector.
-        :param connector: The database connector.
+        :param connector: The DatabaseConnector object to use.
         """
         raise NotImplementedError
 
     @abstractmethod
-    def craft_prompt(self, prompt: Text, prime_text: Text) -> Text:
+    def craft_prompt(self, text: Text, prime_text: Text) -> Text:
         """
         Craft the prompt for the request to the LLM using the prime text and any additional text.
-        :param prompt: The prompt for the request to the LLM.
+        :param text: The text provided by the user to query the database.
         :param prime_text: The prime text for the request to the LLM.
         :return: The prompt for the request to the LLM.
         """
@@ -45,9 +45,11 @@ class LLM(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_top_reply(self, prompt, connector: DatabaseConnector) -> Text:
+    def get_top_reply(self, text: Text, connector: DatabaseConnector) -> Text:
         """
         Get the top reply from the LLM.
+        :param text: The text provided by the user to query the database.
+        :param connector: The DatabaseConnector object to use.
         :return: The top reply from the LLM.
         """
         raise NotImplementedError
