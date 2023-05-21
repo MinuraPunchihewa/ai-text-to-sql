@@ -1,14 +1,10 @@
-import os
-import openai
 import pandas as pd
 from typing import Optional, Text, List, Dict
 
-import logging
 import logging.config
 
-from .gpt import GPT
 from .config_parser import ConfigParser
-from .connectors.database_connector import DatabaseConnector
+from .llms.llm_factory import LLMFactory
 from .connectors.database_connector_factory import DatabaseConnectorFactory
 
 logging_config_parser = ConfigParser()
@@ -27,8 +23,8 @@ class TextToSQL:
     connection_data: Dict
         A dictionary containing the configuration parameters for the database connection.
     """
-    def __init__(self, connector_name: Text, connection_data: Optional[Dict], api_key: Optional[Text] = None):
-        self.gpt = GPT(api_key)
+    def __init__(self, connector_name: Text, connection_data: Optional[Dict], llm_name: Text, api_key: Optional[Text] = None):
+        self.llm = LLMFactory.build_llm(llm_name, api_key)
         self.connector = DatabaseConnectorFactory.build_connector(connector_name, connection_data)
 
         self.logger = logger
@@ -39,7 +35,7 @@ class TextToSQL:
         :param text: The Text to convert to SQL query.
         :return: The converted SQL query.
         """
-        sql = self.gpt.get_top_reply(text, self.connector).strip()
+        sql = self.llm.get_top_reply(text, self.connector).strip()
         self.logger.info(f"SQL query: {sql}")
         return sql
 
