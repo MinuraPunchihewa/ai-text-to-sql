@@ -23,7 +23,7 @@ class TextToSQL:
     connection_data: Dict
         A dictionary containing the configuration parameters for the database connection.
     """
-    def __init__(self, connector_name: Text, connection_data: Optional[Dict], llm_name: Text, api_key: Optional[Text] = None):
+    def __init__(self, connector_name: Text, connection_data: Optional[Dict], llm_name: Text = 'GPT', api_key: Optional[Text] = None):
         self.llm = LLMFactory.build_llm(llm_name, api_key)
         self.connector = DatabaseConnectorFactory.build_connector(connector_name, connection_data)
 
