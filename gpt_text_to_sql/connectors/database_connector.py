@@ -30,6 +30,13 @@ class DatabaseConnector(ABC):
         """
         raise NotImplementedError
 
+    def get_connector_name(self) -> Text:
+        """
+        Get the name of the connector.
+        :return: The name of the connector.
+        """
+        return self.name
+
     def create_inspector(self) -> sqlalchemy.Inspector:
         """
         Create an SQLAlchemy inspector object for the connection to the database.
