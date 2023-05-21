@@ -13,16 +13,14 @@ logging.config.dictConfig(logging_config_parser.get_config_dict())
 logger = logging.getLogger()
 
 
-class GPT:
+class GPTLLM:
     """
     The class for interacting with the OpenAI API.
 
     Parameters
     ----------
-    connector_name: Text
-        The name of the connector.
-    connection_data: Dict
-        A dictionary containing the configuration parameters for the database connection.
+    api_key: Text
+        The API key for the OpenAI API.
     engine: Text
         The engine to use for the OpenAI API.
     temperature: float
