@@ -37,7 +37,10 @@ class GPTLLM(LLM):
     stop: List[Text]
         The stop for the OpenAI API.
     """
+    name = 'GPT'
+
     def __init__(self,
+                 name,
                  api_key=None,
                  engine='text-davinci-003',
                  temperature=0,
@@ -46,7 +49,8 @@ class GPTLLM(LLM):
                  frequency_penalty=0.0,
                  presence_penalty=0.0,
                  stop=("#", ";")):
-        self.set_api_key(api_key)
+        super().__init__(name, api_key)
+        self.set_api_key()
 
         self.engine = engine
         self.temperature = temperature
@@ -160,15 +164,14 @@ class GPTLLM(LLM):
         response = self.submit_request(modified_prompt)
         return response['choices'][0]['text']
 
-    @staticmethod
-    def set_api_key(api_key):
+    def set_api_key(self):
         """
         Set the OpenAI API key.
         :param api_key: A valid OpenAI API key.
         :return: None.
         """
-        api_key = api_key or os.getenv('OPENAI_API_KEY')
-        if api_key is not None:
+        api_key = self.api_key or os.getenv('OPENAI_API_KEY')
+        if self.api_key is not None:
             openai.api_key = api_key
         else:
             raise Exception("No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable.")
