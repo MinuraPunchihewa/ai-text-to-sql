@@ -5,7 +5,7 @@ from typing import Text, Dict, List
 import logging
 import logging.config
 
-from .config_parser import ConfigParser
+from gpt_text_to_sql.config_parser import ConfigParser
 from gpt_text_to_sql.connectors.database_connector import DatabaseConnector
 
 logging_config_parser = ConfigParser()
