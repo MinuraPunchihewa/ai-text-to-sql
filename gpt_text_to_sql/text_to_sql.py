@@ -8,6 +8,8 @@ import logging.config
 
 from .gpt import GPT
 from .config_parser import ConfigParser
+from .connectors.database_connector import DatabaseConnector
+from .connectors.database_connector_factory import DatabaseConnectorFactory
 
 logging_config_parser = ConfigParser()
 logging.config.dictConfig(logging_config_parser.get_config_dict())
@@ -26,7 +28,8 @@ class TextToSQL:
         A dictionary containing the configuration parameters for the database connection.
     """
     def __init__(self, connector_name: Text, connection_data: Optional[Dict], api_key: Optional[Text] = None):
-        self.gpt = GPT(connector_name, connection_data, api_key)
+        self.gpt = GPT(api_key)
+        self.connector = DatabaseConnectorFactory.build_connector(connector_name, connection_data)
 
         self.logger = logger
 
@@ -36,7 +39,7 @@ class TextToSQL:
         :param text: The Text to convert to SQL query.
         :return: The converted SQL query.
         """
-        sql = self.gpt.get_top_reply(text).strip()
+        sql = self.gpt.get_top_reply(text, self.connector).strip()
         self.logger.info(f"SQL query: {sql}")
         return sql
 
@@ -47,7 +50,7 @@ class TextToSQL:
         :return: The query result.
         """
         sql = self.convert_text_to_sql(text)
-        return self.gpt.connector.query(sql)
+        return self.connector.query(sql)
 
     def query_df(self, text: Text) -> pd.DataFrame:
         """

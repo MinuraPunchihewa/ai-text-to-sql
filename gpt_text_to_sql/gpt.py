@@ -6,7 +6,7 @@ import logging
 import logging.config
 
 from .config_parser import ConfigParser
-from gpt_text_to_sql.connectors.database_connector_factory import DatabaseConnectorFactory
+from gpt_text_to_sql.connectors.database_connector import DatabaseConnector
 
 logging_config_parser = ConfigParser()
 logging.config.dictConfig(logging_config_parser.get_config_dict())
@@ -39,8 +39,6 @@ class GPT:
         The stop for the OpenAI API.
     """
     def __init__(self,
-                 connector_name,
-                 connection_data,
                  api_key=None,
                  engine='text-davinci-003',
                  temperature=0,
@@ -49,7 +47,6 @@ class GPT:
                  frequency_penalty=0.0,
                  presence_penalty=0.0,
                  stop=("#", ";")):
-        self.connector = DatabaseConnectorFactory.build_connector(connector_name, connection_data)
         self.set_api_key(api_key)
 
         self.engine = engine
@@ -104,41 +101,41 @@ class GPT:
         """
         return self.max_tokens
 
-    def get_prime_text(self) -> Text:
+    def get_prime_text(self, connector: DatabaseConnector) -> Text:
         """
         Formats all examples to prime the model.
+        :param connector: The DatabaseConnector object to use.
         :return: A string containing all examples formatted for the API.
         """
-        prime_text = f"### {self.connector.name} tables, with their properties:\n#\n"
-        tables = self.connector.get_tables()
+        prime_text = f"### {connector.get_connector_name()} tables, with their properties:\n#\n"
+        tables = connector.get_tables()
         for table in tables:
-            columns = self.connector.get_columns(table)
+            columns = connector.get_columns(table)
             prime_text += f"# {table}(" + ", ".join(columns) + ")\n"
 
         prime_text += "#\n### "
         return prime_text
 
-    def craft_query(self, prompt) -> Text:
+    def craft_query(self, prompt: Text, prime_text: Text) -> Text:
         """
         Creates the query for the API request.
         :param prompt: The prompt to query the API with.
+        :param connector: The DatabaseConnector object to use.
         :return: The query for the API request.
         """
-        return self.get_prime_text() + prompt + "\n### Your response should be a clear and concise SQL statement that" \
+        return prime_text + prompt + "\n### Your response should be a clear and concise SQL statement that" \
                                                 " retrieves only the necessary data from the relevant tables. " \
                                                 "Please ensure that your query is optimized for performance and " \
                                                 "accuracy. Your response should only include the SQL statement," \
                                                 " without any additional text."
 
-    def submit_request(self, prompt) -> Dict:
+    def submit_request(self, prompt, connector: DatabaseConnector) -> Dict:
         """
         Calls the OpenAI API with the specified parameters.
         :param prompt: The prompt to query the API with.
+        :param connector: The DatabaseConnector object to use.
         :return: The API response.
         """
-        prompt = self.craft_query(prompt)
-        self.logger.info(f"Modified prompt: {prompt}")
-
         response = openai.Completion.create(engine=self.get_engine(),
                                             prompt=prompt,
                                             max_tokens=self.get_max_tokens(),
@@ -150,13 +147,18 @@ class GPT:
                                             stop=self.stop)
         return response
 
-    def get_top_reply(self, prompt) -> Text:
+    def get_top_reply(self, prompt, connector: DatabaseConnector) -> Text:
         """
         Obtains the best result as returned by the API.
         :param prompt: The prompt to query the API with.
+        :param connector: The DatabaseConnector object to use.
         :return: The best result returned by the API.
         """
-        response = self.submit_request(prompt)
+        prime_text = self.get_prime_text(connector)
+        prompt = self.craft_query(prompt, prime_text)
+        self.logger.info(f"Prompt: {prompt}")
+
+        response = self.submit_request(prompt, connector)
         return response['choices'][0]['text']
 
     @staticmethod
