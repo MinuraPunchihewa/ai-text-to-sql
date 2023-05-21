@@ -22,6 +22,10 @@ class TextToSQL:
         The name of the connector.
     connection_data: Dict
         A dictionary containing the configuration parameters for the database connection.
+    llm_name: Text
+        The name of the Large Language Model (LLM) to use.
+    api_key: Text
+        The API key for the Large Language Model API.
     """
     def __init__(self, connector_name: Text, connection_data: Optional[Dict], llm_name: Text = 'GPT', api_key: Optional[Text] = None):
         self.llm = LLMFactory.build_llm(llm_name, api_key)
