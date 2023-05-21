@@ -120,14 +120,14 @@ class GPT:
         """
         Creates the query for the API request.
         :param prompt: The prompt to query the API with.
-        :param connector: The DatabaseConnector object to use.
+        :param prime_text: The prime text to use for the API request.
         :return: The query for the API request.
         """
         return prime_text + prompt + "\n### Your response should be a clear and concise SQL statement that" \
-                                                " retrieves only the necessary data from the relevant tables. " \
-                                                "Please ensure that your query is optimized for performance and " \
-                                                "accuracy. Your response should only include the SQL statement," \
-                                                " without any additional text."
+                                     " retrieves only the necessary data from the relevant tables. " \
+                                     "Please ensure that your query is optimized for performance and " \
+                                     "accuracy. Your response should only include the SQL statement," \
+                                     " without any additional text."
 
     def submit_request(self, prompt, connector: DatabaseConnector) -> Dict:
         """
