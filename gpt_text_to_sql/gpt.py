@@ -50,7 +50,7 @@ class GPT:
                  presence_penalty=0.0,
                  stop=("#", ";")):
         self.connector = DatabaseConnectorFactory.build_connector(connector_name, connection_data)
-        self.set_openai_api_key(api_key)
+        self.set_api_key(api_key)
 
         self.engine = engine
         self.temperature = temperature
@@ -160,7 +160,7 @@ class GPT:
         return response['choices'][0]['text']
 
     @staticmethod
-    def set_openai_api_key(api_key):
+    def set_api_key(api_key):
         """
         Set the OpenAI API key.
         :param api_key: A valid OpenAI API key.
