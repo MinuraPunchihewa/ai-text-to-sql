@@ -26,8 +26,7 @@ class TextToSQL:
         A dictionary containing the configuration parameters for the database connection.
     """
     def __init__(self, connector_name: Text, connection_data: Optional[Dict], api_key: Optional[Text] = None):
-        self.gpt = GPT(connector_name, connection_data)
-        self._set_openai_api_key(api_key)
+        self.gpt = GPT(connector_name, connection_data, api_key)
 
         self.logger = logger
 
@@ -58,16 +57,4 @@ class TextToSQL:
         """
         sql = self.convert_text_to_sql(text)
         return pd.DataFrame(self.gpt.connector.query(sql))
-
-    def _set_openai_api_key(self, api_key):
-        """
-        Set the OpenAI API key.
-        :param api_key: A valid OpenAI API key.
-        :return: None.
-        """
-        api_key = api_key or os.getenv('OPENAI_API_KEY')
-        if api_key is not None:
-            openai.api_key = api_key
-        else:
-            raise Exception("No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable.")
 

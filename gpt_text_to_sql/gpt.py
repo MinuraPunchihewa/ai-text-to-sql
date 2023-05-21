@@ -1,3 +1,4 @@
+import os
 import openai
 from typing import Text, Dict, List
 
@@ -40,6 +41,7 @@ class GPT:
     def __init__(self,
                  connector_name,
                  connection_data,
+                 api_key=None,
                  engine='text-davinci-003',
                  temperature=0,
                  max_tokens=150,
@@ -48,6 +50,8 @@ class GPT:
                  presence_penalty=0.0,
                  stop=("#", ";")):
         self.connector = DatabaseConnectorFactory.build_connector(connector_name, connection_data)
+        self.set_openai_api_key(api_key)
+
         self.engine = engine
         self.temperature = temperature
         self.max_tokens = max_tokens
@@ -154,3 +158,16 @@ class GPT:
         """
         response = self.submit_request(prompt)
         return response['choices'][0]['text']
+
+    @staticmethod
+    def set_openai_api_key(api_key):
+        """
+        Set the OpenAI API key.
+        :param api_key: A valid OpenAI API key.
+        :return: None.
+        """
+        api_key = api_key or os.getenv('OPENAI_API_KEY')
+        if api_key is not None:
+            openai.api_key = api_key
+        else:
+            raise Exception("No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable.")
