@@ -116,7 +116,7 @@ class GPT:
         prime_text += "#\n### "
         return prime_text
 
-    def craft_query(self, prompt: Text, prime_text: Text) -> Text:
+    def craft_prompt(self, prompt: Text, prime_text: Text) -> Text:
         """
         Creates the query for the API request.
         :param prompt: The prompt to query the API with.
@@ -129,7 +129,7 @@ class GPT:
                                      "accuracy. Your response should only include the SQL statement," \
                                      " without any additional text."
 
-    def submit_request(self, prompt, connector: DatabaseConnector) -> Dict:
+    def submit_request(self, prompt) -> Dict:
         """
         Calls the OpenAI API with the specified parameters.
         :param prompt: The prompt to query the API with.
@@ -155,10 +155,10 @@ class GPT:
         :return: The best result returned by the API.
         """
         prime_text = self.get_prime_text(connector)
-        prompt = self.craft_query(prompt, prime_text)
-        self.logger.info(f"Prompt: {prompt}")
+        modified_prompt = self.craft_prompt(prompt, prime_text)
+        self.logger.info(f"Prompt: {modified_prompt}")
 
-        response = self.submit_request(prompt, connector)
+        response = self.submit_request(modified_prompt)
         return response['choices'][0]['text']
 
     @staticmethod
