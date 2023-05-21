@@ -1,7 +1,15 @@
 import openai
 from typing import Text, Dict, List
 
+import logging
+import logging.config
+
+from .config_parser import ConfigParser
 from gpt_text_to_sql.connectors.database_connector_factory import DatabaseConnectorFactory
+
+logging_config_parser = ConfigParser()
+logging.config.dictConfig(logging_config_parser.get_config_dict())
+logger = logging.getLogger()
 
 
 class GPT:
@@ -47,6 +55,8 @@ class GPT:
         self.frequency_penalty = frequency_penalty
         self.presence_penalty = presence_penalty
         self.stop = list(stop)
+
+        self.logger = logger
 
     def get_prime_text(self) -> Text:
         """
@@ -118,8 +128,11 @@ class GPT:
         :param prompt: The prompt to query the API with.
         :return: The API response.
         """
+        prompt = self.craft_query(prompt)
+        self.logger.info(f"Modified prompt: {prompt}")
+
         response = openai.Completion.create(engine=self.get_engine(),
-                                            prompt=self.craft_query(prompt),
+                                            prompt=prompt,
                                             max_tokens=self.get_max_tokens(),
                                             temperature=self.get_temperature(),
                                             top_p=self.get_top_p(),
