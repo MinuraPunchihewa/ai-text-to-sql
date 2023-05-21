@@ -3,7 +3,7 @@ import inspect
 from typing import Optional, Dict, Type, Text
 
 from .llm import LLM
-from gpt_text_to_sql.llms import *
+from ai_text_to_sql.llms import *
 
 
 class LLMFactory:

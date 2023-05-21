@@ -2,7 +2,7 @@ import sys
 import inspect
 from typing import Optional, Dict, Type
 
-from gpt_text_to_sql.connectors import *
+from ai_text_to_sql.connectors import *
 from .database_connector import DatabaseConnector
 
 

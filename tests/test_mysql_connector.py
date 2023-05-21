@@ -2,7 +2,7 @@ import os
 import unittest
 from dotenv import load_dotenv
 
-from gpt_text_to_sql import TextToSQL
+from ai_text_to_sql import TextToSQL
 
 load_dotenv()
 

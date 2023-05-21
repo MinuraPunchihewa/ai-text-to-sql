@@ -2,7 +2,7 @@ import setuptools
 
 
 about = {}
-with open("gpt_text_to_sql/__about__.py") as fp:
+with open("ai_text_to_sql/__about__.py") as fp:
     exec(fp.read(), about)
 
 
@@ -31,7 +31,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ),
     package_data={
-        'gpt_text_to_sql': ['config/*.yml', 'config/*.yaml']
+        'ai_text_to_sql': ['config/*.yml', 'config/*.yaml']
     },
     python_requires=">=3.9"
 )

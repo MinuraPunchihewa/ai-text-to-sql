@@ -1,7 +1,7 @@
-__title__ = 'gpt_text_to_sql'
-__package_name__ = 'gpt_text_to_sql'
+__title__ = 'ai_text_to_sql'
+__package_name__ = 'ai_text_to_sql'
 __version__ = '0.1.0'
-__description__ = "GPT-Text-to-SQL, revolutionize database querying with AI-powered text-to-SQL."
+__description__ = "AI-Text-to-SQL, revolutionize database querying with AI-powered text-to-SQL."
 __email__ = "minurapunchihewa17@gmail.com"
 __author__ = 'Minura Punchihewa'
 __github__ = 'https://github.com/MinuraPunchihewa/gpt-text-to-sql'

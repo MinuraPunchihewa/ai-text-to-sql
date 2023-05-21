@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Text, Dict, List, Any
 
-from gpt_text_to_sql.connectors.database_connector import DatabaseConnector
+from ai_text_to_sql.connectors.database_connector import DatabaseConnector
 
 
 class LLM(ABC):
