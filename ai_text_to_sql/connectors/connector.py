@@ -16,7 +16,7 @@ class Connector(ABC):
     connection_data: Dict
         A dictionary containing the configuration parameters for the database connection.
     """
-    name = "Base"
+    name = "BaseConnector"
 
     def __init__(self, connection_data: Dict):
         self.connection_data = connection_data
