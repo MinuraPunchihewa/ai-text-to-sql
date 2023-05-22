@@ -59,5 +59,5 @@ class TextToSQL:
         :return: A Pandas DataFrame containing the query result.
         """
         sql = self.convert_text_to_sql(text)
-        return pd.DataFrame(self.gpt.connector.query(sql))
+        return pd.DataFrame(self.connector.query(sql))
 
