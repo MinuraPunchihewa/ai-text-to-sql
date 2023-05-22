@@ -10,14 +10,14 @@ class LLM(ABC):
 
     Parameters
     ----------
-    name: Text
-        The name of the LLM.
     api_key: Text
         The API key for the LLM.
+    kwargs: Dict
+        Additional keyword arguments to pass to the LLM.
     """
-    def __init__(self, name: Text, api_key: Text):
-        self.name = name
+    def __init__(self, api_key: Text, **kwargs):
         self.api_key = api_key
+        self.kwargs = kwargs
 
     @abstractmethod
     def get_prime_text(self, connector: Connector):
@@ -60,6 +60,5 @@ class LLM(ABC):
     def set_api_key(self):
         """
         Set the API key for the LLM.
-        :param api_key: The API key for the LLM.
         """
         raise NotImplementedError
