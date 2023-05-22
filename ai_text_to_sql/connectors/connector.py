@@ -5,7 +5,7 @@ import sqlalchemy
 from sqlalchemy import inspect, text
 
 
-class DatabaseConnector(ABC):
+class Connector(ABC):
     """
     The abstract base class for database connectors.
 

@@ -4,10 +4,10 @@ from sqlalchemy import text
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from .database_connector import DatabaseConnector
+from .connector import Connector
 
 
-class PostgreSQLConnector(DatabaseConnector):
+class PostgreSQLConnector(Connector):
     """
     The Connector class for PostgreSQL databases.
 

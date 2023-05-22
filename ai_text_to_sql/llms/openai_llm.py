@@ -7,7 +7,7 @@ import logging.config
 
 from ai_text_to_sql.llms.llm import LLM
 from ai_text_to_sql.config_parser import ConfigParser
-from ai_text_to_sql.connectors.database_connector import DatabaseConnector
+from ai_text_to_sql.connectors.connector import Connector
 
 logging_config_parser = ConfigParser()
 logging.config.dictConfig(logging_config_parser.get_config_dict())
@@ -106,7 +106,7 @@ class OpenAILLM(LLM):
         """
         return self.max_tokens
 
-    def get_prime_text(self, connector: DatabaseConnector) -> Text:
+    def get_prime_text(self, connector: Connector) -> Text:
         """
         Formats all examples to prime the model.
         :param connector: The DatabaseConnector object to use.
@@ -151,7 +151,7 @@ class OpenAILLM(LLM):
                                             stop=self.stop)
         return response
 
-    def get_top_reply(self, text: Text, connector: DatabaseConnector) -> Text:
+    def get_top_reply(self, text: Text, connector: Connector) -> Text:
         """
         Obtains the best result as returned by the API.
         :param text: The text provided by the user.

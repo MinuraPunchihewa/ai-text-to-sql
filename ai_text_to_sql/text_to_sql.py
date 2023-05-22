@@ -5,7 +5,7 @@ import logging.config
 
 from .config_parser import ConfigParser
 from .llms.llm_factory import LLMFactory
-from .connectors.database_connector_factory import DatabaseConnectorFactory
+from .connectors.connector_factory import ConnectorFactory
 
 logging_config_parser = ConfigParser()
 logging.config.dictConfig(logging_config_parser.get_config_dict())
@@ -29,7 +29,7 @@ class TextToSQL:
     """
     def __init__(self, connector_name: Text, connection_data: Optional[Dict], llm_name: Text = 'GPT', api_key: Optional[Text] = None):
         self.llm = LLMFactory.build_llm(llm_name, api_key)
-        self.connector = DatabaseConnectorFactory.build_connector(connector_name, connection_data)
+        self.connector = ConnectorFactory.build_connector(connector_name, connection_data)
 
         self.logger = logger
 

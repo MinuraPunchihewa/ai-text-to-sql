@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Text, Dict, List, Any
 
-from ai_text_to_sql.connectors.database_connector import DatabaseConnector
+from ai_text_to_sql.connectors.connector import Connector
 
 
 class LLM(ABC):
@@ -20,7 +20,7 @@ class LLM(ABC):
         self.api_key = api_key
 
     @abstractmethod
-    def get_prime_text(self, connector: DatabaseConnector):
+    def get_prime_text(self, connector: Connector):
         """
         Get the prime text for the request to the LLM using the Database Connector.
         :param connector: The DatabaseConnector object to use.
@@ -47,7 +47,7 @@ class LLM(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_top_reply(self, text: Text, connector: DatabaseConnector) -> Text:
+    def get_top_reply(self, text: Text, connector: Connector) -> Text:
         """
         Get the top reply from the LLM.
         :param text: The text provided by the user to query the database.
