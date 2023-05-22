@@ -105,7 +105,7 @@ class OpenAILLM(LLM):
 
     def get_prime_text(self, connector: Connector) -> Text:
         """
-        Get the prime text for the request to the LLM using the Database Connector (tables and their columns).
+        Get the prime text for the request to the OpenAI API using the Database Connector (tables and their columns).
         :param connector: The DatabaseConnector object to use.
         :return: A string containing all examples formatted for the API.
         """
@@ -132,7 +132,7 @@ class OpenAILLM(LLM):
 
     def submit_request(self, prompt: Text) -> Dict:
         """
-        Calls the OpenAI API with the specified parameters.
+        Calls the OpenAI API with the crafted prompt.
         :param prompt: The prompt to query the API with.
         :return: The API response.
         """
@@ -170,4 +170,6 @@ class OpenAILLM(LLM):
         if self.api_key is not None:
             openai.api_key = api_key
         else:
-            raise Exception("No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable.")
+            raise Exception(
+                "No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable."
+            )
