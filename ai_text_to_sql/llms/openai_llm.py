@@ -115,7 +115,6 @@ class OpenAILLM(LLM):
             columns = connector.get_columns(table)
             prime_text += f"# {table}(" + ", ".join(columns) + ")\n"
 
-        prime_text += "#\n### "
         return prime_text
 
     def craft_prompt(self, text: Text, prime_text: Text) -> Text:
@@ -125,7 +124,7 @@ class OpenAILLM(LLM):
         :param prime_text: The prime text to use for the API request.
         :return: The query for the API request.
         """
-        return prime_text + text + "\n### Your response should be a clear and concise SQL statement that" \
+        return prime_text + text + "\nYour response should be a clear and concise SQL statement that" \
                                    " retrieves only the necessary data from the relevant tables. " \
                                    "Please ensure that your query is optimized for performance and " \
                                    "accuracy. Your response should only include the SQL statement," \
