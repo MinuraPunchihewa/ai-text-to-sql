@@ -20,8 +20,6 @@ class OpenAILLM(LLM):
 
     Parameters
     ----------
-    name: Text
-        The name of the LLM.
     api_key: Text
         The API key for the OpenAI API.
     engine: Text
@@ -42,7 +40,6 @@ class OpenAILLM(LLM):
     name = 'OpenAI'
 
     def __init__(self,
-                 name,
                  api_key=None,
                  engine='text-davinci-003',
                  temperature=0,
@@ -51,7 +48,7 @@ class OpenAILLM(LLM):
                  frequency_penalty=0.0,
                  presence_penalty=0.0,
                  stop=("#", ";")):
-        super().__init__(name, api_key)
+        super().__init__(api_key)
         self.set_api_key()
 
         self.engine = engine
@@ -168,7 +165,6 @@ class OpenAILLM(LLM):
     def set_api_key(self):
         """
         Set the OpenAI API key.
-        :param api_key: A valid OpenAI API key.
         :return: None.
         """
         api_key = self.api_key or os.getenv('OPENAI_API_KEY')
