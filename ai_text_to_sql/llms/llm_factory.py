@@ -11,7 +11,7 @@ class LLMFactory:
     The class for building LLMs.
     """
     @staticmethod
-    def build_llm(name: Text, api_key: Text) -> LLM:
+    def build_llm(name: Text, api_key: Text, **kwargs) -> LLM:
         """
         Build a LLM.
         :param name: The name of the LLM.
@@ -20,7 +20,7 @@ class LLMFactory:
         """
         llms = LLMFactory._discover_llms()
         if name in llms:
-            return llms[name](name, api_key)
+            return llms[name](api_key, **kwargs)
         else:
             raise ValueError(f"Unsupported LLM: {name}")
 
