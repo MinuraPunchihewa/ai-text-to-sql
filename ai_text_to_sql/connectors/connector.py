@@ -47,6 +47,7 @@ class Connector(ABC):
     def get_tables(self) -> List[Text]:
         """
         Get the tables of the database.
+        This method must be implemented by subclasses if the database does not support the inspector.
         :return: The tables of the database.
         """
         return self.inspector.get_table_names()
@@ -54,6 +55,7 @@ class Connector(ABC):
     def get_columns(self, table_name) -> List[Text]:
         """
         Get the columns of a table.
+        This method must be implemented by subclasses if the database does not support the inspector.
         :param table_name: The name of the table.
         :return: The columns of the table.
         """
@@ -62,6 +64,7 @@ class Connector(ABC):
     def query(self, query: Text) -> List[Dict]:
         """
         Execute a query on the database.
+        This method must be implemented by subclasses if the given implementation is not sufficient.
         :param query: The query to execute.
         :return: The result of the query.
         """
