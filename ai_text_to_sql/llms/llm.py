@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Text, Dict, List, Any
+from typing import Text, Dict, Any, Union
 
 from ai_text_to_sql.connectors.connector import Connector
 
@@ -57,7 +57,7 @@ class LLM(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def set_api_key(self):
+    def set_api_key(self) -> Union[Any, None]:
         """
         Set the API key for the LLM.
         """
