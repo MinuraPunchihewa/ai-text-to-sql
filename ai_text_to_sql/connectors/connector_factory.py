@@ -20,7 +20,7 @@ class ConnectorFactory:
         """
         connectors = ConnectorFactory._discover_connectors()
         if name in connectors:
-            return connectors[name](name, connection_data)
+            return connectors[name](connection_data)
         else:
             raise ValueError(f"Unsupported connector: {name}")
 

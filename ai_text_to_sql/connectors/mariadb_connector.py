@@ -9,8 +9,6 @@ class MariaDB(MySQLConnector):
 
     Parameters:
     -----------
-    name : str
-        The name of the connector.
     connection_data : Dict
         A dictionary containing the configuration parameters for the MariaDB connection.
         The following keys are required:
@@ -23,5 +21,5 @@ class MariaDB(MySQLConnector):
     """
     name = 'MariaDB'
 
-    def __init__(self, name: Text, connection_data: Optional[Dict]):
-        super().__init__(name, connection_data)
+    def __init__(self, connection_data: Optional[Dict]):
+        super().__init__(connection_data)
