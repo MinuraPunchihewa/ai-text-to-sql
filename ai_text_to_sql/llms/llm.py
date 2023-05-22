@@ -22,7 +22,7 @@ class LLM(ABC):
     @abstractmethod
     def get_prime_text(self, connector: Connector):
         """
-        Get the prime text for the request to the LLM using the Database Connector.
+        Get the prime text for the request to the LLM using the Database Connector (tables and their columns).
         :param connector: The DatabaseConnector object to use.
         """
         raise NotImplementedError

@@ -105,7 +105,7 @@ class OpenAILLM(LLM):
 
     def get_prime_text(self, connector: Connector) -> Text:
         """
-        Formats all examples to prime the model.
+        Get the prime text for the request to the LLM using the Database Connector (tables and their columns).
         :param connector: The DatabaseConnector object to use.
         :return: A string containing all examples formatted for the API.
         """
