@@ -33,5 +33,5 @@ class LLMFactory:
         llms = {}
         for name, obj in inspect.getmembers(sys.modules[__name__]):
             if inspect.isclass(obj) and issubclass(obj, LLM) and obj is not LLM:
-                llms[obj.__name__[:-3]] = obj  # Remove "LLM" from class name
+                llms[obj.__name__] = obj
         return llms
