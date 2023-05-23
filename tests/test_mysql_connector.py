@@ -19,7 +19,7 @@ class TestMySQLConnector(unittest.TestCase):
                 'host': os.environ.get("MYSQL_HOST"),
                 'database': os.environ.get("MYSQL_DATABASE")
             },
-            os.environ.get("OPENAI_API_KEY")
+            api_key=os.environ.get("OPENAI_API_KEY")
         )
 
     def test_convert_text_to_sql(self):

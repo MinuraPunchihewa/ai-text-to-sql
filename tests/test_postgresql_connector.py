@@ -20,7 +20,7 @@ class TestPostgreSQLConnector(unittest.TestCase):
                 'database': os.environ.get("POSTGRESQL_DATABASE"),
                 'schema': os.environ.get("POSTGRESQL_SCHEMA")
             },
-            os.environ.get("OPENAI_API_KEY")
+            api_key=os.environ.get("OPENAI_API_KEY")
         )
 
     def test_convert_text_to_sql(self):

@@ -15,8 +15,7 @@ class TestSQLiteConnector(unittest.TestCase):
             {
                 "database": "data/chinook.db"
             },
-            'OpenAI',
-            os.environ.get("OPENAI_API_KEY")
+            api_key=os.environ.get("OPENAI_API_KEY")
         )
 
     def test_convert_text_to_sql(self):
