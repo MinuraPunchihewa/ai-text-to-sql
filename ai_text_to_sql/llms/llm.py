@@ -4,20 +4,10 @@ from typing import Text, Dict, Any, Union
 from ai_text_to_sql.connectors.connector import Connector
 
 
-class LLM(ABC):
+class BaseLLM(ABC):
     """
     The abstract base class for LLMs.
-
-    Parameters
-    ----------
-    api_key: Text
-        The API key for the LLM.
-    kwargs: Dict
-        Additional keyword arguments to pass to the LLM.
     """
-    def __init__(self, api_key: Text, **kwargs):
-        self.api_key = api_key
-        self.kwargs = kwargs
 
     @abstractmethod
     def get_prime_text(self, connector: Connector):
@@ -55,6 +45,19 @@ class LLM(ABC):
         :return: The top reply from the LLM.
         """
         raise NotImplementedError
+
+
+class BaseAPILLM(BaseLLM, ABC):
+    """
+    The abstract base class for API-based LLMs.
+
+    Parameters
+    ----------
+    api_key: Text
+        The API key for the LLM.
+    """
+    def __init__(self, api_key: Text):
+        self.api_key = api_key
 
     @abstractmethod
     def set_api_key(self) -> Union[Any, None]:
