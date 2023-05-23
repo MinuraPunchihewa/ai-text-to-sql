@@ -1,11 +1,11 @@
 import os
-from bardapi import Bard
-from typing import Text, Dict, List
+from bardapi import Bard as BardAPI
+from typing import Text, Dict
 
 import logging
 import logging.config
 
-from ai_text_to_sql.llms.llm import LLM
+from ai_text_to_sql.llms.llm import BaseAPILLM
 from ai_text_to_sql.config_parser import ConfigParser
 from ai_text_to_sql.connectors.connector import Connector
 
@@ -14,7 +14,7 @@ logging.config.dictConfig(logging_config_parser.get_config_dict())
 logger = logging.getLogger()
 
 
-class Bard(LLM):
+class Bard(BaseAPILLM):
     def __init__(self, api_key=None):
         super().__init__(api_key)
         self.bard = self.set_api_key()
@@ -72,14 +72,14 @@ class Bard(LLM):
         response = self.submit_request(prompt)
         return response['textQuery'][0]
 
-    def set_api_key(self) -> Bard:
+    def set_api_key(self) -> BardAPI:
         """
         Sets the Bard API key.
         :return: The Bard object.
         """
         api_key = self.api_key or os.getenv('BARD_API_KEY')
         if api_key is not None:
-            return Bard(token=api_key)
+            return BardAPI(token=api_key)
         else:
             raise Exception(
                 "No Bard API key provided. Please provide an API key or set the BARD_API_KEY environment variable."
