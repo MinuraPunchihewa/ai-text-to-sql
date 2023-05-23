@@ -14,7 +14,7 @@ logging.config.dictConfig(logging_config_parser.get_config_dict())
 logger = logging.getLogger()
 
 
-class BardLLM(LLM):
+class Bard(LLM):
     def __init__(self, api_key=None):
         super().__init__(api_key)
         self.bard = self.set_api_key()
