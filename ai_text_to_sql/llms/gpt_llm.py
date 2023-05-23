@@ -14,7 +14,7 @@ logging.config.dictConfig(logging_config_parser.get_config_dict())
 logger = logging.getLogger()
 
 
-class OpenAILLM(LLM):
+class GPT(LLM):
     """
     The class for interacting with the OpenAI API.
 
