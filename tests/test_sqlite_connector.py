@@ -26,12 +26,12 @@ class TestSQLiteConnector(unittest.TestCase):
 
     def test_advanced_convert_text_to_sql(self):
         self.assertEqual(
-            self.tts.convert_text_to_sql("Get me the names of 5 Rock songs."),
+            self.tts.convert_text_to_sql("Get me the names of 5 Rock songs.").replace('\n', ''),
             "SELECT Name \n"
             "FROM tracks \n"
             "INNER JOIN genres ON genres.GenreId = tracks.GenreId \n"
             "WHERE genres.Name = 'Rock' \n"
-            "LIMIT 5"
+            "LIMIT 5".replace('\n', '')
         )
 
     def test_query(self):
