@@ -119,13 +119,13 @@ Optionally, a `schema` parameter can be provided with the `connection_data` for 
 
 Now that you've summoned the mystical TextToSQL class, you hold the power to query your database with ease:
 ```
-tts.query("Get me the names of 5 Rock songs.")
+tts.query("Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name.")
 ```
 The `query` method returns a list of dictionaries, where each dictionary represents a row in the result set.
 
 Why settle for a list of dictionaries when you can have a fancy pandas DataFrame? Use the `query_df` method to get the results you deserve:
 ```
-tts.query_df("Get me the names of 5 Rock songs.")
+tts.query_df("Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name.")
 ```
 
 # License
