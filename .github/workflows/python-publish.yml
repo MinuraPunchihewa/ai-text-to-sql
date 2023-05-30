@@ -1,0 +1,52 @@
+name: Build and Publish to PyPI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: [3.9, 3.10, 3.11]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install --no-cache-dir -e .[test]
+      - name: Run unit tests
+        run: python -m unittest discover tests -t tests/excluded_tests
+        shell: bash
+        env:
+          API_KEY: ${{ secrets.OPENAI_TOKEN }}
+  source-dist:
+    needs: test
+    runs-on: windows-latest
+    env:
+      TWINE_USERNAME: __token__
+      TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: build wheel
+        run: |
+          pip install wheel
+          python setup.py bdist_wheel
+      - name: create source distribution
+        run: python setup.py sdist
+      - name: upload source distribution
+        run: |
+          pip install twine
+          twine upload dist/*
