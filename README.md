@@ -128,5 +128,10 @@ Why settle for a list of dictionaries when you can have a fancy pandas DataFrame
 tts.query_df("Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name.")
 ```
 
+# TODO
+- [ ] Add support for more database connectors.
+- [ ] Ensure the Bard LLM is fully supported.
+- [ ] Add support for more Large Language Models.
+
 # License
 This code is licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE.txt for details.
