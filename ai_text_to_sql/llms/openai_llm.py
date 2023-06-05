@@ -123,13 +123,8 @@ class OpenAI(LLM):
         :param database_schema: The database schema to use for the prompt as a formatted string.
         :return: The prompt for the API call.
         """
-        prompt = "Your task is to convert natural language commands into SQL queries.\nYou will be given a " \
-                 "database schema and natural language commands. Your response should be clear and concise SQL " \
-                 "statements that retrieve or modify data from the relevant tables. Please ensure that your queries " \
-                 "are optimized for performance and accuracy. Your response should only include the SQL statement, " \
-                 "without any additional text.\nThe database schema will be delimited by triple hashtags and " \
-                 "individual tables will be delimited by single hashtags.\n\n"
-
-        prompt += database_schema + "\nThe natural language command:\n```" + user_input + "```\n"
-
-        return prompt
+        return database_schema + user_input + "\nYour response should be a clear and concise SQL statement that" \
+                                              " retrieves only the necessary data from the relevant tables. " \
+                                              "Please ensure that your query is optimized for performance and " \
+                                              "accuracy. Your response should only include the SQL statement," \
+                                              " without any additional text."
