@@ -27,7 +27,7 @@ class TextToSQL:
     api_key: Text
         The API key for the Large Language Model (LLM) API.
     """
-    def __init__(self, connector_name: Text, connection_data: Optional[Dict], llm_name: Text = 'GPT', api_key: Optional[Text] = None):
+    def __init__(self, connector_name: Text, connection_data: Optional[Dict], llm_name: Text = 'OpenAI', api_key: Optional[Text] = None):
         self.llm = LLMFactory.build_llm(llm_name, api_key)
         self.connector = ConnectorFactory.build_connector(connector_name, connection_data)
 
@@ -39,7 +39,11 @@ class TextToSQL:
         :param text: The Text to convert to SQL query.
         :return: The converted SQL query.
         """
-        sql = self.llm.get_top_reply(text, self.connector).strip()
+        database_schema = self.connector.get_database_schema()
+        prompt = self.llm.create_prompt(text, database_schema)
+        self.logger.info(f"Prompt: {prompt}")
+
+        sql = self.llm.get_answer(prompt)
         self.logger.info(f"SQL query: {sql}")
         return sql
 
