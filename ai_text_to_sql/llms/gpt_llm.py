@@ -1,20 +1,11 @@
 import os
 import openai
-from typing import Text, Dict, List
+from typing import Text, List
 
-import logging
-import logging.config
-
-from ai_text_to_sql.llms.llm import BaseAPILLM
-from ai_text_to_sql.config_parser import ConfigParser
-from ai_text_to_sql.connectors.connector import Connector
-
-logging_config_parser = ConfigParser()
-logging.config.dictConfig(logging_config_parser.get_config_dict())
-logger = logging.getLogger()
+from ai_text_to_sql.llms.llm import LLM
 
 
-class GPT(BaseAPILLM):
+class OpenAI(LLM):
     """
     The class for interacting with the OpenAI API.
 
@@ -41,15 +32,19 @@ class GPT(BaseAPILLM):
 
     def __init__(self,
                  api_key=None,
-                 engine='text-davinci-003',
+                 engine="text-davinci-003",
                  temperature=0,
                  max_tokens=150,
                  top_p=1.0,
                  frequency_penalty=0.0,
                  presence_penalty=0.0,
                  stop=("#", ";")):
-        super().__init__(api_key)
-        self.set_api_key()
+        self.api_key = api_key or os.getenv("OPENAI_API_KEY") or None
+        if self.api_key is None:
+            raise Exception(
+                "No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable."
+            )
+        openai.api_key = self.api_key
 
         self.engine = engine
         self.temperature = temperature
@@ -59,7 +54,7 @@ class GPT(BaseAPILLM):
         self.presence_penalty = presence_penalty
         self.stop = list(stop)
 
-        self.logger = logger
+        self.context = []
 
     def get_engine(self) -> Text:
         """
@@ -103,38 +98,11 @@ class GPT(BaseAPILLM):
         """
         return self.max_tokens
 
-    def get_prime_text(self, connector: Connector) -> Text:
+    def get_answer(self, prompt: Text) -> Text:
         """
-        Get the prime text for the request to the OpenAI API using the Database Connector (tables and their columns).
-        :param connector: The DatabaseConnector object to use.
-        :return: A string containing all examples formatted for the API.
-        """
-        prime_text = f"### {connector.get_connector_name()} tables, with their properties:\n#\n"
-        tables = connector.get_tables()
-        for table in tables:
-            columns = connector.get_columns(table)
-            prime_text += f"# {table}(" + ", ".join(columns) + ")\n"
-
-        return prime_text
-
-    def craft_prompt(self, text: Text, prime_text: Text) -> Text:
-        """
-        Creates the query for the API request.
-        :param text: The text provided by the user.
-        :param prime_text: The prime text to use for the API request.
-        :return: The query for the API request.
-        """
-        return prime_text + text + "\nYour response should be a clear and concise SQL statement that" \
-                                   " retrieves only the necessary data from the relevant tables. " \
-                                   "Please ensure that your query is optimized for performance and " \
-                                   "accuracy. Your response should only include the SQL statement," \
-                                   " without any additional text."
-
-    def submit_request(self, prompt: Text) -> Dict:
-        """
-        Calls the OpenAI API with the crafted prompt.
-        :param prompt: The prompt to query the API with.
-        :return: The API response.
+        Calls the OpenAI Completion API with the provided prompt.
+        :param prompt: The prompt for the API call.
+        :return: The response (SQL query) from the API call.
         """
         response = openai.Completion.create(engine=self.get_engine(),
                                             prompt=prompt,
@@ -145,31 +113,23 @@ class GPT(BaseAPILLM):
                                             presence_penalty=self.get_presence_penalty(),
                                             stream=False,
                                             stop=self.stop)
-        return response
 
-    def get_top_reply(self, text: Text, connector: Connector) -> Text:
-        """
-        Obtains the best result as returned by the API.
-        :param text: The text provided by the user.
-        :param connector: The DatabaseConnector object to use.
-        :return: The best result returned by the API.
-        """
-        prime_text = self.get_prime_text(connector)
-        prompt = self.craft_prompt(text, prime_text)
-        self.logger.info(f"Prompt: {prompt}")
+        return response["choices"][0]["text"]
 
-        response = self.submit_request(prompt)
-        return response['choices'][0]['text']
+    def create_prompt(self, user_input: Text, database_schema: Text) -> Text:
+        """
+        Creates the prompt for the API call by incorporating the user input and the database schema.
+        :param user_input: The user input to be converted to SQL.
+        :param database_schema: The database schema to use for the prompt as a formatted string.
+        :return: The prompt for the API call.
+        """
+        prompt = "Your task is to convert natural language commands into SQL queries.\nYou will be given a " \
+                 "database schema and natural language commands. Your response should be clear and concise SQL " \
+                 "statements that retrieve or modify data from the relevant tables. Please ensure that your queries " \
+                 "are optimized for performance and accuracy. Your response should only include the SQL statement, " \
+                 "without any additional text.\nThe database schema will be delimited by triple hashtags and " \
+                 "individual tables will be delimited by single hashtags.\n\n"
 
-    def set_api_key(self):
-        """
-        Set the OpenAI API key.
-        :return: None.
-        """
-        api_key = self.api_key or os.getenv('OPENAI_API_KEY')
-        if self.api_key is not None:
-            openai.api_key = api_key
-        else:
-            raise Exception(
-                "No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable."
-            )
+        prompt += database_schema + "\nThe natural language command:\n```" + user_input + "```\n"
+
+        return prompt
