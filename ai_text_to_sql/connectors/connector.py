@@ -16,7 +16,7 @@ class Connector(ABC):
     connection_data: Dict
         A dictionary containing the configuration parameters for the database connection.
     """
-    name = "BaseConnector"
+    name = "Connector"
 
     def __init__(self, connection_data: Dict):
         self.connection_data = connection_data
@@ -67,7 +67,7 @@ class Connector(ABC):
         Get the database schema as a formatted string.
         :return: A formatted string containing the database schema.
         """
-        database_schema = ""
+        database_schema = f"### {self.get_connector_name()} tables, with their properties:\n#\n"
         tables = self.get_tables()
         for table in tables:
             columns = self.get_columns(table)
