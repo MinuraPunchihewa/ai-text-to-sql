@@ -1,1 +1,1 @@
-from .openai_llm import GPT
+from .openai_llm import OpenAI
