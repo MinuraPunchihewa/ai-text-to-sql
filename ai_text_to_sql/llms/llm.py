@@ -1,67 +1,27 @@
 from abc import ABC, abstractmethod
-from typing import Text, Dict, Any, Union
-
-from ai_text_to_sql.connectors.connector import Connector
+from typing import Text
 
 
-class BaseLLM(ABC):
+class LLM(ABC):
     """
     The abstract base class for LLMs.
     """
 
     @abstractmethod
-    def get_prime_text(self, connector: Connector):
+    def create_prompt(self, user_input: Text, database_schema: Text) -> Text:
         """
-        Get the prime text for the request to the LLM using the Database Connector (tables and their columns).
-        :param connector: The DatabaseConnector object to use.
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def craft_prompt(self, text: Text, prime_text: Text) -> Text:
-        """
-        Craft the prompt for the request to the LLM using the prime text and any additional text.
-        :param text: The text provided by the user to query the database.
-        :param prime_text: The prime text for the request to the LLM.
-        :return: The prompt for the request to the LLM.
+        Creates the prompt for the API call by incorporating the user input and the database schema.
+        :param user_input: The user input to be converted to SQL.
+        :param database_schema: The database schema to use for the prompt as a formatted string.
+        :return: The prompt for the API call.
         """
         raise NotImplementedError
 
     @abstractmethod
-    def submit_request(self, prompt: Text) -> Dict:
+    def get_answer(self, prompt: Text) -> Text:
         """
-        Submit a request to the LLM using the crafted prompt.
-        :param prompt: The prompt for the request to the LLM.
-        :return: The response from the LLM.
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_top_reply(self, text: Text, connector: Connector) -> Text:
-        """
-        Get the top reply from the LLM.
-        :param text: The text provided by the user to query the database.
-        :param connector: The DatabaseConnector object to use.
-        :return: The top reply from the LLM.
-        """
-        raise NotImplementedError
-
-
-class BaseAPILLM(BaseLLM, ABC):
-    """
-    The abstract base class for API-based LLMs.
-
-    Parameters
-    ----------
-    api_key: Text
-        The API key for the LLM.
-    """
-    def __init__(self, api_key: Text):
-        self.api_key = api_key
-
-    @abstractmethod
-    def set_api_key(self) -> Union[Any, None]:
-        """
-        Set the API key for the LLM.
+        Calls the LLM's API and returns the response.
+        :param prompt: The prompt for the API call.
+        :return: The response (SQL query) from the API call.
         """
         raise NotImplementedError
