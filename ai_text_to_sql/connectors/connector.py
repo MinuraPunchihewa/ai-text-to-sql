@@ -62,6 +62,19 @@ class Connector(ABC):
         """
         return [column['name'] for column in self.inspector.get_columns(table_name)]
 
+    def get_database_schema(self) -> Text:
+        """
+        Get the database schema as a formatted string.
+        :return: A formatted string containing the database schema.
+        """
+        database_schema = ""
+        tables = self.get_tables()
+        for table in tables:
+            columns = self.get_columns(table)
+            database_schema += f"# {table}(" + ", ".join(columns) + ")\n"
+
+        return database_schema
+
     def query(self, query: Text) -> List[Dict]:
         """
         Execute a query on the database.
