@@ -1,11 +1,23 @@
 from abc import ABC, abstractmethod
-from typing import Text
+from typing import Text, Dict
 
 
 class LLM(ABC):
     """
     The abstract base class for LLMs.
     """
+
+    @abstractmethod
+    def format_database_schema(self, database_schema: Dict, connector_name: Text) -> Text:
+        """
+        Formats the database schema for the prompt.
+        The database schema is a dictionary containing the tables and columns of the database.
+        E.g.: {"table1": ["column1", "column2"], "table2": ["column1", "column2"]}
+        :param database_schema: The database schema to format.
+        :param connector_name: The name of the connector.
+        :return: A formatted string containing the database schema.
+        """
+        raise NotImplementedError
 
     @abstractmethod
     def create_prompt(self, user_input: Text, database_schema: Text) -> Text:
@@ -20,7 +32,7 @@ class LLM(ABC):
     @abstractmethod
     def get_answer(self, prompt: Text) -> Text:
         """
-        Calls the LLM's API and returns the response.
+        Calls the LLM and returns the response.
         :param prompt: The prompt for the API call.
         :return: The response (SQL query) from the API call.
         """
