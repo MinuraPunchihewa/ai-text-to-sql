@@ -6,7 +6,7 @@ from .llm_connector import LLMConnector
 from ai_text_to_sql.llm_connectors import *
 
 
-class LLMFactory:
+class LLMConnectorFactory:
     """
     The class for building LLMs.
     """
@@ -18,7 +18,7 @@ class LLMFactory:
         :param api_key: The API key for the LLM.
         :return: A LLM.
         """
-        llms = LLMFactory._discover_llms()
+        llms = LLMConnectorFactory._discover_llms()
         if name in llms:
             return llms[name](api_key, **kwargs)
         else:

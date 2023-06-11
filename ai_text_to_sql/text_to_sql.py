@@ -4,7 +4,7 @@ from typing import Optional, Text, List, Dict
 import logging.config
 
 from .config_parser import ConfigParser
-from .llm_connectors.llm_factory import LLMFactory
+from .llm_connectors.llm_connector_factory import LLMConnectorFactory
 from .database_connectors.database_connector_factory import DatabaseConnectorFactory
 
 logging_config_parser = ConfigParser()
@@ -28,7 +28,7 @@ class TextToSQL:
         The API key for the Large Language Model (LLM) API.
     """
     def __init__(self, connector_name: Text, connection_data: Optional[Dict], llm_name: Text = 'OpenAI', api_key: Optional[Text] = None):
-        self.llm = LLMFactory.build_llm(llm_name, api_key)
+        self.llm = LLMConnectorFactory.build_llm(llm_name, api_key)
         self.connector = DatabaseConnectorFactory.build_connector(connector_name, connection_data)
 
         self.logger = logger
