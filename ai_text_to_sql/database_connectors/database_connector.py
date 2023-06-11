@@ -8,6 +8,14 @@ from sqlalchemy import inspect, text
 class DatabaseConnector(ABC):
     """
     The abstract base class for database connectors.
+
+    To add a new database connector, follow these steps:
+    1. Create a new module in the database_connectors directory.
+    2. Create a new class in the module that inherits from the base DatabaseConnector class.
+    3. Add the 'name' attribute to the new class to set the name of the connector.
+    4. Implement the create_connection() abstract method.
+    5. Implement the get_tables() and get_columns() methods if the database does not support the inspector.
+    6. Add an import statement for the new class in the __init__.py file in the database_connectors directory.
     """
     name = "Base"
 
