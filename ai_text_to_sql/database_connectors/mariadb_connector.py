@@ -1,9 +1,9 @@
 from typing import Optional, Dict, Text
 
-from .mysql_connector import MySQLDatabaseConnector
+from .mysql_connector import MySQLConnector
 
 
-class MariaDB(MySQLDatabaseConnector):
+class MariaDBConnector(MySQLConnector):
     """
     The Connector class for MariaDB databases.
 

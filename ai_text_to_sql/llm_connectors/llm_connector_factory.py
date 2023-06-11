@@ -33,5 +33,5 @@ class LLMConnectorFactory:
         llms = {}
         for name, obj in inspect.getmembers(sys.modules[__name__]):
             if inspect.isclass(obj) and issubclass(obj, LLMConnector) and obj is not LLMConnector:
-                llms[obj.__name__] = obj
+                llms[obj.__name__[:-9]] = obj  # Remove "Connector" from class name
         return llms

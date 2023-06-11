@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from .database_connector import DatabaseConnector
 
 
-class MySQLDatabaseConnector(DatabaseConnector):
+class MySQLConnector(DatabaseConnector):
     """
     The Connector class for MySQL databases.
 

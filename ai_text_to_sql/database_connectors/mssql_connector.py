@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from .database_connector import DatabaseConnector
 
 
-class MSSQLDatabaseConnector(DatabaseConnector):
+class MSSQLConnector(DatabaseConnector):
     """
     The Connector class for MSSQL databases.
 

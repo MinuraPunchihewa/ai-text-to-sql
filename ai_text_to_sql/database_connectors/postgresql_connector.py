@@ -7,7 +7,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from .database_connector import DatabaseConnector
 
 
-class PostgreSQLDatabaseConnector(DatabaseConnector):
+class PostgreSQLConnector(DatabaseConnector):
     """
     The Connector class for PostgreSQL databases.
 

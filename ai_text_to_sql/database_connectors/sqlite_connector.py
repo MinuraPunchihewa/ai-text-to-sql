@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from .database_connector import DatabaseConnector
 
 
-class SQLiteDatabaseConnector(DatabaseConnector):
+class SQLiteConnector(DatabaseConnector):
     """
     The Connector class for SQLite databases.
 
