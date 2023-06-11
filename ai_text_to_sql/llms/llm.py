@@ -20,11 +20,13 @@ class LLM(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def create_prompt(self, user_input: Text, database_schema: Text) -> Text:
+    def create_prompt(self, user_input: Text, database_schema: Text, connector_name: Text) -> Text:
         """
         Creates the prompt for the API call by incorporating the user input and the database schema.
+        Use the format_database_schema method to format the database schema as required and incorporate it into the prompt.
         :param user_input: The user input to be converted to SQL.
         :param database_schema: The database schema to use for the prompt as a formatted string.
+        :param connector_name: The name of the connector.
         :return: The prompt for the API call.
         """
         raise NotImplementedError
