@@ -5,7 +5,7 @@ import logging.config
 
 from .config_parser import ConfigParser
 from .llms.llm_factory import LLMFactory
-from .connectors.connector_factory import ConnectorFactory
+from .database_connectors.connector_factory import ConnectorFactory
 
 logging_config_parser = ConfigParser()
 logging.config.dictConfig(logging_config_parser.get_config_dict())

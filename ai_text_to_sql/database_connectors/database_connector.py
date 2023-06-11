@@ -5,18 +5,11 @@ import sqlalchemy
 from sqlalchemy import inspect, text
 
 
-class Connector(ABC):
+class DatabaseConnector(ABC):
     """
     The abstract base class for database connectors.
-
-    Parameters
-    ----------
-    name: Text
-        The name of the connector.
-    connection_data: Dict
-        A dictionary containing the configuration parameters for the database connection.
     """
-    name = "Connector"
+    name = "Base"
 
     def __init__(self, connection_data: Dict):
         self.connection_data = connection_data

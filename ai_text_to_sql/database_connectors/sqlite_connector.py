@@ -2,10 +2,10 @@ from typing import Dict, Text
 
 from sqlalchemy import create_engine
 
-from .connector import Connector
+from .database_connector import DatabaseConnector
 
 
-class SQLiteConnector(Connector):
+class SQLiteDatabaseConnector(DatabaseConnector):
     """
     The Connector class for SQLite databases.
 

@@ -3,10 +3,10 @@ from typing import Dict, Text
 
 from sqlalchemy import create_engine
 
-from .connector import Connector
+from .database_connector import DatabaseConnector
 
 
-class MSSQLConnector(Connector):
+class MSSQLDatabaseConnector(DatabaseConnector):
     """
     The Connector class for MSSQL databases.
 
