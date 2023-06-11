@@ -1,1 +1,1 @@
-from .openai_llm import OpenAI
+from .openai_connector import OpenAIConnector

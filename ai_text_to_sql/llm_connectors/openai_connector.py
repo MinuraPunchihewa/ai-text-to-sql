@@ -5,7 +5,7 @@ from typing import Text, List, Dict
 from ai_text_to_sql.llm_connectors.llm_connector import LLMConnector
 
 
-class OpenAI(LLMConnector):
+class OpenAIConnector(LLMConnector):
     """
     The class for interacting with the OpenAI API.
 
