@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Text, Dict
 
 
-class LLM(ABC):
+class LLMConnector(ABC):
     """
     The abstract base class for LLMs.
     """

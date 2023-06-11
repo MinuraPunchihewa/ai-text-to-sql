@@ -4,7 +4,7 @@ from typing import Optional, Text, List, Dict
 import logging.config
 
 from .config_parser import ConfigParser
-from .llms.llm_factory import LLMFactory
+from .llm_connectors.llm_factory import LLMFactory
 from .database_connectors.database_connector_factory import DatabaseConnectorFactory
 
 logging_config_parser = ConfigParser()

@@ -2,10 +2,10 @@ import os
 import openai
 from typing import Text, List, Dict
 
-from ai_text_to_sql.llms.llm import LLM
+from ai_text_to_sql.llm_connectors.llm_connector import LLMConnector
 
 
-class OpenAI(LLM):
+class OpenAI(LLMConnector):
     """
     The class for interacting with the OpenAI API.
 
