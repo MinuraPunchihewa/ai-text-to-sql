@@ -1,6 +1,6 @@
 import os
 import openai
-from typing import Text, List
+from typing import Text, List, Dict
 
 from ai_text_to_sql.llms.llm import LLM
 
@@ -116,7 +116,7 @@ class OpenAI(LLM):
 
         return response["choices"][0]["text"]
 
-    def create_prompt(self, user_input: Text, database_schema: Text) -> Text:
+    def create_prompt(self, user_input: Text, database_schema: Dict) -> Text:
         """
         Creates the prompt for the API call by incorporating the user input and the database schema.
         :param user_input: The user input to be converted to SQL.
@@ -128,3 +128,15 @@ class OpenAI(LLM):
                                               "Please ensure that your query is optimized for performance and " \
                                               "accuracy. Your response should only include the SQL statement," \
                                               " without any additional text."
+
+    def format_database_schema(self, database_schema: Dict, connector_name: Text) -> Text:
+        """
+        Formats the database schema for the prompt.
+        :param database_schema: The database schema to format.
+        :param connector_name: The name of the connector.
+        :return: A formatted string containing the database schema.
+        """
+        formatted_database_schema = f"### {connector_name} tables, with their properties:\n#\n"
+        formatted_database_schema += "\n".join([f"# {table_name} ({', '.join(columns)})" for table_name, columns in database_schema.items()])
+
+        return formatted_database_schema
