@@ -39,8 +39,11 @@ class TextToSQL:
         :param text: The Text to convert to SQL query.
         :return: The converted SQL query.
         """
-        database_schema = self.connector.get_database_schema()
-        prompt = self.llm.create_prompt(text, database_schema)
+        prompt = self.llm.create_prompt(
+            text,
+            self.connector.get_database_schema(),
+            self.connector.get_connector_name()
+        )
         self.logger.info(f"Prompt: {prompt}")
 
         sql = self.llm.get_answer(prompt)
