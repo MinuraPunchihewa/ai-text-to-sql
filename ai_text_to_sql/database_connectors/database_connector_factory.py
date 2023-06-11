@@ -6,7 +6,7 @@ from ai_text_to_sql.database_connectors import *
 from .database_connector import DatabaseConnector
 
 
-class ConnectorFactory:
+class DatabaseConnectorFactory:
     """
     The class for building database database_connectors.
     """
@@ -18,7 +18,7 @@ class ConnectorFactory:
         :param connection_data: A dictionary containing the configuration parameters for the database connection.
         :return: A database connector.
         """
-        connectors = ConnectorFactory._discover_connectors()
+        connectors = DatabaseConnectorFactory._discover_connectors()
         if name in connectors:
             return connectors[name](connection_data)
         else:
