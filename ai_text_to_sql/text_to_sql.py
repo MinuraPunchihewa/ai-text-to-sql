@@ -43,7 +43,7 @@ class TextToSQL:
         self.logger.info(f"Prompt: {prompt}")
 
         sql = self.llm_connector.get_answer(prompt)
-        self.logger.info(f"SQL query: {sql}")
+        self.logger.info(f"SQL query: {sql}").strip()
         return sql
 
     def query(self, text: Text) -> List[Dict]:
