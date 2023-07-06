@@ -19,7 +19,8 @@ class DataConnector(ABC):
     """
     name = "Base"
 
-    def __init__(self):
+    def __init__(self, connection_string: Text = None, **kwargs):
+        self.connection_string = connection_string
         self.connection = self.create_connection()
         self.inspector = self.create_inspector()
 
