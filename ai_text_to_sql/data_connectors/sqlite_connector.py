@@ -1,4 +1,4 @@
-from typing import Dict, Text
+from typing import Text
 
 from sqlalchemy import create_engine
 
@@ -18,8 +18,9 @@ class SQLiteConnector(DataConnector):
     """
     name = 'SQLite'
 
-    def __init__(self, connection_data: Dict):
-        super().__init__(connection_data)
+    def __init__(self, database: Text):
+        self.database = database
+        super().__init__()
 
     def create_connection(self):
         """
@@ -27,6 +28,6 @@ class SQLiteConnector(DataConnector):
         :return: A SQLAlchemy engine object for the connection to the SQLite database.
         """
         try:
-            return create_engine(f"sqlite:///{self.connection_data['database']}")
+            return create_engine(f"sqlite:///{self.database}")
         except KeyError:
             raise ValueError("Missing parameter in connection_data: database.")
