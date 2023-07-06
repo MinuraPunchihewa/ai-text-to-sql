@@ -2,9 +2,12 @@ from typing import Dict, Text
 
 from sqlalchemy import text
 from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from .data_connector import DataConnector
+
+from ai_text_to_sql.exceptions import ConnectionCreationException
 
 
 class PostgreSQLConnector(DataConnector):
@@ -13,24 +16,33 @@ class PostgreSQLConnector(DataConnector):
 
     Parameters:
     -----------
-    connection_data : Dict
-        A dictionary containing the configuration parameters for the PostgreSQL connection.
-        The following keys are required:
-            - user: The username to connect to the database.
-            - password: The password to connect to the database.
-            - host: The host name or IP address of the database server.
-            - port: The port number of the database server.
-            - database: The name of the database to connect to.
-
-        The following keys are optional:
-            - schema: The name of the schema to connect to.
-
+    connection_string : Text
+        A SQLAlchemy connection string for the PostgreSQL database. This parameter is optional, but either this parameter or the user, password, host, port and database parameters must be specified.
+    user : Text
+        The username to connect to the database. This parameter is optional, but either this parameter (in combination with the password, host, port and database parameters) or the connection_string parameter must be specified.
+    password : Text
+        The password to connect to the database. This parameter is optional, but either this parameter (in combination with the user, host, port and database parameters) or the connection_string parameter must be specified.
+    host : Text
+        The host name or IP address of the database server. This parameter is optional, but either this parameter (in combination with the user, password, port and database parameters) or the connection_string parameter must be specified.
+    port : int
+        The port number of the database server. This parameter is optional, but either this parameter (in combination with the user, password, host and database parameters) or the connection_string parameter must be specified.
+    database : Text
+        The name of the database to connect to. This parameter is optional, but either this parameter (in combination with the user, password, host and port parameters) or the connection_string parameter must be specified.
+    schema : Text
+        The name of the schema to connect to. This parameter is optional. This parameter can be provided along with the connection_string parameter as well.
     """
 
     name = 'PostgreSQL'
 
-    def __init__(self, connection_data: Dict):
-        super().__init__(connection_data)
+    def __init__(self, connection_string: Text = None, user: Text = None, password: Text = None, host: Text = None, port: int = None, database: Text = None, schema: Text = None):
+        self.connection_string = connection_string
+        self.user = user
+        self.password = password
+        self.host = host
+        self.port = port
+        self.database = database
+        self.schema = schema
+        super().__init__()
 
     def create_connection(self):
         """
@@ -38,18 +50,19 @@ class PostgreSQLConnector(DataConnector):
         :return: A SQLAlchemy engine object for the connection to the PostgreSQL database.
         """
         try:
-            engine = create_engine(f"postgresql+psycopg2://{self.connection_data['user']}:"
-                                 f"{self.connection_data['password']}@{self.connection_data['host']}:"
-                                 f"{self.connection_data['port']}/{self.connection_data['database']}")
+            if self.connection_string:
+                engine = create_engine(self.connection_string)
+            else:
+                engine = create_engine(f"postgresql+psycopg2://{self.user}:{self.password}@{self.host}:{self.port}/"
+                                   f"{self.database}")
 
-            if 'schema' in self.connection_data:
+            if self.schema:
                 session_factory = sessionmaker(bind=engine)
                 Session = scoped_session(session_factory)
                 session = Session()
-                session.execute(text(f"SET search_path TO {self.connection_data['schema']}"))
+                session.execute(text(f"SET search_path TO {self.schema}"))
                 session.commit()
 
             return engine
-        except KeyError as e:
-            missing_param = str(e).strip("'")
-            raise ValueError(f"Missing parameter in connection_data: {missing_param}.")
+        except SQLAlchemyError as e:
+            ConnectionCreationException(f"Could not create connection to PostgreSQL database: {e}")
