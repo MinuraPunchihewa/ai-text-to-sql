@@ -1,8 +1,11 @@
 from typing import Text
 
 from sqlalchemy import create_engine
+from sqlalchemy.exc import SQLAlchemyError
 
 from .data_connector import DataConnector
+
+from ai_text_to_sql.exceptions import ConnectionCreationException
 
 
 class SQLiteConnector(DataConnector):
@@ -29,5 +32,5 @@ class SQLiteConnector(DataConnector):
         """
         try:
             return create_engine(f"sqlite:///{self.database}")
-        except KeyError:
-            raise ValueError("Missing parameter in connection_data: database.")
+        except SQLAlchemyError as e:
+            ConnectionCreationException(f"Could not create connection to SQLite database: {e}")
