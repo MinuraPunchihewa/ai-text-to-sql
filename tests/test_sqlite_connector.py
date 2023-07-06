@@ -2,6 +2,8 @@ import os
 import unittest
 from dotenv import load_dotenv
 
+from ai_text_to_sql.data_connectors.sqlite_connector import SQLiteConnector
+from ai_text_to_sql.llm_connectors.openai_connector import OpenAIConnector
 from ai_text_to_sql import TextToSQL
 
 load_dotenv()
@@ -10,12 +12,16 @@ load_dotenv()
 class TestSQLiteConnector(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.tts = TextToSQL(
-            'SQLite',
-            {
-                "database": "data/chinook.db"
-            },
+        sqlite_connector = SQLiteConnector(
+            database="data/chinook.db"
+        )
+
+        openai_connector = OpenAIConnector(
             api_key=os.environ.get("OPENAI_API_KEY")
+        )
+        cls.tts = TextToSQL(
+            sqlite_connector,
+            openai_connector
         )
 
     def test_convert_text_to_sql(self):
