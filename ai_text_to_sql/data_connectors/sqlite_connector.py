@@ -22,8 +22,9 @@ class SQLiteConnector(DataConnector):
     name = 'SQLite'
 
     def __init__(self, connection_string: Text = None, database: Text = None):
+        self.connection_string = connection_string
         self.database = database
-        super().__init__(connection_string)
+        super().__init__()
 
     def create_connection(self):
         """
