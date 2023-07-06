@@ -21,9 +21,9 @@ class SQLiteConnector(DataConnector):
     """
     name = 'SQLite'
 
-    def __init__(self, database: Text):
+    def __init__(self, connection_string: Text = None, database: Text = None):
         self.database = database
-        super().__init__()
+        super().__init__(connection_string)
 
     def create_connection(self):
         """
@@ -31,6 +31,9 @@ class SQLiteConnector(DataConnector):
         :return: A SQLAlchemy engine object for the connection to the SQLite database.
         """
         try:
-            return create_engine(f"sqlite:///{self.database}")
+            if self.connection_string:
+                return create_engine(self.connection_string)
+            else:
+                return create_engine(f"sqlite:///{self.database}")
         except SQLAlchemyError as e:
             ConnectionCreationException(f"Could not create connection to SQLite database: {e}")
