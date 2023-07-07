@@ -25,5 +25,5 @@ class MariaDBConnector(MySQLConnector):
     """
     name = 'MariaDB'
 
-    def __init__(self, connection_data: Optional[Dict]):
-        super().__init__(connection_data)
+    def __init__(self, connection_string: Text = None, user: Text = None, password: Text = None, host: Text = None, port: Text = None, database: Text = None):
+        super().__init__(connection_string, user, password, host, port, database)
