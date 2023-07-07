@@ -9,14 +9,18 @@ class MariaDBConnector(MySQLConnector):
 
     Parameters:
     -----------
-    connection_data : Dict
-        A dictionary containing the configuration parameters for the MariaDB connection.
-        The following keys are required:
-            - user: The username to connect to the database.
-            - password: The password to connect to the database.
-            - host: The host name or IP address of the database server.
-            - port: The port number of the database server.
-            - database: The name of the database to connect to.
+    connection_string : Text
+        A SQLAlchemy connection string for the MySQL database. This parameter is optional, but either this parameter or the user, password, host, port and database parameters must be specified.
+    user : Text
+        The username to connect to the database. This parameter is optional, but either this parameter (in combination with the password, host, port and database parameters) or the connection_string parameter must be specified.
+    password : Text
+        The password to connect to the database. This parameter is optional, but either this parameter (in combination with the user, host, port and database parameters) or the connection_string parameter must be specified.
+    host : Text
+        The host name or IP address of the database server. This parameter is optional, but either this parameter (in combination with the user, password, port and database parameters) or the connection_string parameter must be specified.
+    port : int
+        The port number of the database server. This parameter is optional, but either this parameter (in combination with the user, password, host and database parameters) or the connection_string parameter must be specified.
+    database : Text
+        The name of the database to connect to. This parameter is optional, but either this parameter (in combination with the user, password, host and port parameters) or the connection_string parameter must be specified.
 
     """
     name = 'MariaDB'
