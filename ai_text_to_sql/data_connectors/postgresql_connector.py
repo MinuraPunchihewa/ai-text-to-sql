@@ -30,6 +30,7 @@ class PostgreSQLConnector(DataConnector):
         The name of the database to connect to. This parameter is optional, but either this parameter (in combination with the user, password, host and port parameters) or the connection_string parameter must be specified.
     schema : Text
         The name of the schema to connect to. This parameter is optional. This parameter can be provided along with the connection_string parameter as well.
+
     """
 
     name = 'PostgreSQL'

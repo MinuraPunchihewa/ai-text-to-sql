@@ -26,6 +26,7 @@ class MySQLConnector(DataConnector):
         The port number of the database server. This parameter is optional, but either this parameter (in combination with the user, password, host and database parameters) or the connection_string parameter must be specified.
     database : Text
         The name of the database to connect to. This parameter is optional, but either this parameter (in combination with the user, password, host and port parameters) or the connection_string parameter must be specified.
+
     """
     name = 'MySQL'
 
