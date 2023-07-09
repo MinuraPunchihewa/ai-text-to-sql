@@ -5,6 +5,13 @@ from typing import Text, Dict
 class LLMConnector(ABC):
     """
     The abstract base class for LLMs.
+
+    To add a new LLM connector, follow these steps:
+    1. Create a new module in the llm_connectors directory.
+    2. Create a new class in the module that inherits from the base LLMConnector class.
+    3. Add the 'name' attribute to the new class to set the name of the connector.
+    4. Implement the format_database_schema(), create_prompt() and get_answer() abstract methods.
+    5. Add an import statement for the new class in the __init__.py file in the llm_connectors directory.
     """
 
     @abstractmethod
