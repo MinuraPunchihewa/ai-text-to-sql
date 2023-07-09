@@ -13,3 +13,7 @@ class NoMSSQLDriverException(Exception):
 
 class UnsupportedDataConnectorException(Exception):
     pass
+
+
+class NoOpenAIAPIKeyException(Exception):
+    pass
