@@ -1,6 +1,6 @@
 import sys
 import inspect
-from typing import Optional, Dict, Type, Text
+from typing import Dict, Type, Text
 
 from .llm_connector import LLMConnector
 from ai_text_to_sql.llm_connectors import *
@@ -11,16 +11,16 @@ class LLMConnectorFactory:
     The class for building LLMs.
     """
     @staticmethod
-    def build_llm(name: Text, api_key: Text, **kwargs) -> LLMConnector:
+    def build_llm(name: Text, **kwargs) -> LLMConnector:
         """
         Build a LLM.
         :param name: The name of the LLM.
-        :param api_key: The API key for the LLM.
+        :param kwargs: The parameters for the LLM.
         :return: A LLM.
         """
         llms = LLMConnectorFactory._discover_llms()
         if name in llms:
-            return llms[name](api_key, **kwargs)
+            return llms[name](**kwargs)
         else:
             raise ValueError(f"Unsupported LLM: {name}")
 
