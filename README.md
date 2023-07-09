@@ -1,10 +1,7 @@
-# AI-Text-to-SQL
+# AI-Text-to-SQL: Transforming Text Queries into SQL Magic ✨
+Have you ever wished you could simply speak or type your queries in plain English, and poof! They magically turn into perfectly formatted SQL queries? Well, say hello to ai_text_to_sql - the enchanting Python package that brings your dream to life!
 
-AI-Text-to-SQL is the Python package that makes querying databases as easy as asking questions in plain English. With this package, you don't need to know SQL to get the answers you need from your databases.
-
-The package provides a simple interface for interacting with various databases. At the moment, SQLite, MySQL, MariaDB, and MS SQL Server are supported. These interfaces are called "Connectors" because they connect you to your data faster than you can say "SELECT * FROM table;".
-
-## Installation
+## Unleashing the Magic 🌟
 ### With pip
 
 Installing AI-Text-to-SQL is as easy as pip-pip-pip:
@@ -12,126 +9,68 @@ Installing AI-Text-to-SQL is as easy as pip-pip-pip:
 pip install ai_text_to_sql
 ```
 
-## Usage
+## Casting the Spell 🪄
 
-Using AI-Text-to-SQL is so easy, you might even forget you're querying a database and start asking it what's the meaning of life, the universe, and everything. (Spoiler alert: it's 42, but you can still ask more questions if you want.)
+To summon the power of AI-Text-to-SQL, follow these mystical steps:
+1. Import the Data Connector: Begin by importing the required data connector of your choice. It's like selecting the perfect wand for your SQL sorcery!
 
-First, import the package:
-```
-from ai_text_to_sql import TextToSQL
-```
+2. Import the LLM Connector: Next, import the LLM (Language Learning Model) connector. This vital ingredient enhances the mystical abilities of ai_text_to_sql, enabling it to comprehend your text queries like a seasoned SQL wizard.
 
-Next, create an instance of the TextToSQL class (this example uses SQLite)):
-```
-tts = TextToSQL(
-    'SQLite',
-    {
-        "database": "your_database_file_name"
-    },
-    'GPT',
-    'your_openai_api_key'
-)
-```
-To instantiate the TextToSQL class, you need to provide the following parameters:
-- `connector_name`: The name of the database you want to connect to (e.g., SQLite, MySQL, MariaDB, MSSQL).
-- `connection_data`: A dictionary containing the configuration parameters for the database connector (e.g., database, username, password).
-- `llm_name`: The name of the Large Language Model you want to use. This is an optional parameter and the default value is `GPT`. Currently, only the GPT model is supported, but more models like Bard will be added in the future.
-- `api_key`: The API key for the Large Language Model. This is an optional parameter and the default value is `None`. Since the GPT model is currently the only supported model, this is essentially your OpenAI API key. If you don't provide an API key, the environment variable `OPENAI_API_KEY` will need to be configured.
+3. Instantiating TextToSQL: Now, it's time to weave your magic! Create an instance of TextToSQL by passing in the objects of the previously instantiated data connector and LLM connector. This mystical union forms the very heart of ai_text_to_sql, enabling it to interpret your words and craft elegant SQL incantations.
 
-The keys required in the `connection_data` dictionary depend on the database connector you're using. For example, if you're using the SQLite connector, you only need to provide the path to the database file. If you're using the MySQL connector, you need to provide the host, port, username, password, and database name.
+## Spellbinding Example Usage 🎩
 
-The required keys for each connector can be found in the documentation for that `Connector` class.
+```python
+from ai_text_to_sql.data_connectors import SQLiteConnector
+from ai_text_to_sql.llm_connectors import OpenAIConnector
+from ai_text_to_sql.text_to_sql import TextToSQL
 
-Additionally, given below are examples of how to instantiate the `TextToSQL` class for each of the supported database connectors:
+# Prepare your spell ingredients 
+sqlite_connector = SQLiteConnector(database='chinook.db')
+openai_connector = OpenAIConnector(api_key='YOUR_OPENAI_API_KEY')
 
-### SQLite
-```
-tts = TextToSQL(
-    'SQLite',
-    {
-        "database": "your_database_file_name"
-    },
-    api_key='your_openai_api_key'
-)
+# Weave the enchantment 🧙‍♂️✨
+text_to_sql = TextToSQL(sqlite_connector, openai_connector)
+
+# Utter your magical incantation 🗣️✨
+text_query = "Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name."
+
+# Witness the spell's transformation 🔮✨
+sql_query = text_to_sql.convert_text_to_sql(text_query)
+
+# Unleash the magic upon the database directly 💾✨
+results = text_to_sql.query(text_query)
+
+# Store the results in a DataFrame for further sorcery 📊✨
+df = text_to_sql.query_df(text_query)
 ```
 
-### MySQL
-```
-tts = TextToSQL(
-    'MySQL',
-    {
-        'user': 'your_username',
-        'port': '3306',
-        'password': 'your_password',
-        'host': 'your_host',
-        'database': 'your_database_name'
-    },
-    api_key='your_openai_api_key'
-)
-```
+To witness the enchanting powers of AI-Text-to-SQL in action, behold the following example usage with the SQLite data connector and OpenAI LLM connector.
 
-### MariaDB
-```
-tts = tts = TextToSQL(
-    'MariaDB',
-    {
-        'user': 'your_username',
-        'port': '3306',
-        'password': 'your_password',
-        'host': 'your_host',
-        'database': 'your_database_name'
-    },
-    api_key='your_openai_api_key'
-)
-```
+## The Realm of Compatible Databases 🌐🏰
 
-### PostgreSQL
-```
-tts = tts = TextToSQL(
-    'PostgreSQL',
-    {
-        'user': 'your_username',
-        'port': '5432',
-        'password': 'your_password',
-        'host': 'your_host',
-        'database': 'your_database_name'
-    },
-    api_key='your_openai_api_key'
-)
-```
-Optionally, a `schema` parameter can be provided with the `connection_data` for `PostgreSQL`.
+Within the enchanted realm of AI-Text-to-SQL, a variety of databases stand ready to be harmoniously united with your mystical text queries. Our sorcery extends its reach to the following realms of data:
 
-### MSSQL
-```
-tts = tts = TextToSQL(
-    'MSSQL',
-    {
-        'user': 'your_username',
-        'port': '1433',
-        'password': 'your_password',
-        'host': 'your_host',
-        'database': 'your_database_name'
-    },
-    api_key='your_openai_api_key'
-)
-```
-Optionally, a `schema` parameter can be provided with the `connection_data` for `MSSQL`.
+| Database     | Status  |
+|--------------|---------|
+| SQLite       | ✅       | 
+| PostgreSQL   | ✅       |
+| MySQL        | ✅       |   
+| MariaDB      | ✅       |   
+| MS SQLServer | ✅       |   
+| Oracle       | 🔜      |   
+| MS Access    | 🔜      |   
+| DB2          | 🔜      |   
+| Firebird     | 🔜      |   
+| Apache Druid | 🔜      |   
+| Apache Pinot | 🔜      |
 
-Now that you've summoned the mystical TextToSQL class, you hold the power to query your database with ease:
-```
-tts.query("Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name.")
-```
-The `query` method returns a list of dictionaries, where each dictionary represents a row in the result set.
+## The Fellowship of Language Learning Models 🧠📚
 
-Why settle for a list of dictionaries when you can have a fancy pandas DataFrame? Use the `query_df` method to get the results you deserve:
-```
-tts.query_df("Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name.")
-```
+In the mystical realm of AI-Text-to-SQL, an esteemed fellowship of Language Learning Models (LLMs) awaits to join forces with your magical text queries. Our sorcery encompasses the wisdom of the following LLM allies:
 
-# TODO
-- [ ] Add support for more database connectors.
-- [ ] Ensure the Bard LLM is fully supported.
-- [ ] Add support for more Large Language Models.
-
-# License
-This code is licensed under the GNU GENERAL PUBLIC LICENSE. See LICENSE.txt for details.
+| LLM          | Status  |
+|--------------|---------|
+| OpenAI       | ✅       |
+| Bard         | 🔜      |   
+| Hugging Face | 🔜      |   
