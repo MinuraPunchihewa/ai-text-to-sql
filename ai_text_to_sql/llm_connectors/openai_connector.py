@@ -4,6 +4,8 @@ from typing import Text, List, Dict
 
 from ai_text_to_sql.llm_connectors.llm_connector import LLMConnector
 
+from ai_text_to_sql.exceptions import NoOpenAIAPIKeyException
+
 
 class OpenAIConnector(LLMConnector):
     """
@@ -12,36 +14,31 @@ class OpenAIConnector(LLMConnector):
     Parameters
     ----------
     api_key: Text
-        The API key for the OpenAI API.
+        The API key for the OpenAI API. This parameter is optional, but if not provided, the OPENAI_API_KEY environment
+        variable must be set.
     engine: Text
-        The engine to use for the OpenAI API.
+        The engine to use for the OpenAI API. This parameter is optional, and defaults to "text-davinci-003".
     temperature: float
-        The temperature for the OpenAI API.
+        The temperature for the OpenAI API. This parameter is optional, and defaults to 0.
     max_tokens: int
-        The maximum number of tokens for the OpenAI API.
+        The maximum number of tokens for the OpenAI API. This parameter is optional, and defaults to 150.
     top_p: float
-        The top p for the OpenAI API.
+        The top p for the OpenAI API. This parameter is optional, and defaults to 1.0.
     frequency_penalty: float
-        The frequency penalty for the OpenAI API.
+        The frequency penalty for the OpenAI API. This parameter is optional, and defaults to 0.0.
     presence_penalty: float
-        The presence penalty for the OpenAI API.
+        The presence penalty for the OpenAI API. This parameter is optional, and defaults to 0.0.
     stop: List[Text]
-        The stop for the OpenAI API.
+        The stop for the OpenAI API. This parameter is optional, and defaults to ("#", ";").
     """
     name = 'OpenAI'
 
-    def __init__(self,
-                 api_key=None,
-                 engine="text-davinci-003",
-                 temperature=0,
-                 max_tokens=150,
-                 top_p=1.0,
-                 frequency_penalty=0.0,
-                 presence_penalty=0.0,
-                 stop=("#", ";")):
+    def __init__(self, api_key: Text = None, engine: Text = "text-davinci-003", temperature: int = 0,
+                 max_tokens: int = 150, top_p: float = 1.0, frequency_penalty: float = 0.0,
+                 presence_penalty: float = 0.0, stop: tuple = ("#", ";")):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY") or None
         if self.api_key is None:
-            raise Exception(
+            raise NoOpenAIAPIKeyException(
                 "No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable."
             )
         openai.api_key = self.api_key
@@ -124,11 +121,12 @@ class OpenAIConnector(LLMConnector):
         :param connector_name: The name of the connector.
         :return: The prompt for the API call.
         """
-        return self.format_database_schema(database_schema, connector_name) + user_input + "\nYour response should be a clear and concise SQL statement that" \
-                                                                                           " retrieves only the necessary data from the relevant tables. " \
-                                                                                           "Please ensure that your query is optimized for performance and " \
-                                                                                           "accuracy. Your response should only include the SQL statement," \
-                                                                                           " without any additional text."
+        return self.format_database_schema(database_schema, connector_name) + user_input + \
+                                                "\nYour response should be a clear and concise SQL statement that" \
+                                                " retrieves only the necessary data from the relevant tables. " \
+                                                "Please ensure that your query is optimized for performance and " \
+                                                "accuracy. Your response should only include the SQL statement," \
+                                                " without any additional text."
 
     def format_database_schema(self, database_schema: Dict, connector_name: Text) -> Text:
         """
@@ -138,6 +136,7 @@ class OpenAIConnector(LLMConnector):
         :return: A formatted string containing the database schema.
         """
         formatted_database_schema = f"### {connector_name} tables, with their properties:\n#\n"
-        formatted_database_schema += "\n".join([f"# {table_name} ({', '.join(columns)})" for table_name, columns in database_schema.items()])
+        formatted_database_schema += "\n".join([f"# {table_name} ({', '.join(columns)})" for table_name, columns in
+                                                database_schema.items()])
 
         return formatted_database_schema
