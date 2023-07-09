@@ -1,4 +1,4 @@
-from typing import Text
+from typing import Text, Optional
 
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
@@ -15,14 +15,16 @@ class SQLiteConnector(DataConnector):
     Parameters:
     -----------
     connection_string : Text
-        A SQLAlchemy connection string for the SQLite database. This parameter is optional, but either this parameter or the database parameter must be specified.
+        A SQLAlchemy connection string for the SQLite database. This parameter is optional, but either this parameter or
+         the database parameter must be specified.
     database : Text
-        The path to the SQLite database file. This parameter is optional, but either this parameter or the connection_string parameter must be specified.
+        The path to the SQLite database file. This parameter is optional, but either this parameter or the
+        connection_string parameter must be specified.
 
     """
     name = 'SQLite'
 
-    def __init__(self, connection_string: Text = None, database: Text = None):
+    def __init__(self, connection_string: Optional[Text] = None, database: Optional[Text] = None):
         self.connection_string = connection_string
         self.database = database
         super().__init__()
