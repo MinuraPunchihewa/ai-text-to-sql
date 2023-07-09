@@ -5,6 +5,8 @@ from typing import Dict, Type, Text
 from .llm_connector import LLMConnector
 from ai_text_to_sql.llm_connectors import *
 
+from ai_text_to_sql.exceptions import UnsupportedLLMConnectorException
+
 
 class LLMConnectorFactory:
     """
@@ -22,7 +24,7 @@ class LLMConnectorFactory:
         if name in llms:
             return llms[name](**kwargs)
         else:
-            raise ValueError(f"Unsupported LLM: {name}")
+            raise UnsupportedLLMConnectorException(f"Unsupported LLM: {name}")
 
     @staticmethod
     def _discover_llms() -> Dict[str, Type[LLMConnector]]:
