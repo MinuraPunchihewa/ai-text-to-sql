@@ -27,6 +27,13 @@ class UnsupportedDataConnectorException(Exception):
     pass
 
 
+class UnsupportedLLMConnectorException(Exception):
+    """
+    Raised when an attempt is made to use an unsupported LLM connector.
+    """
+    pass
+
+
 class NoOpenAIAPIKeyException(Exception):
     """
     Raised when no OpenAI API key is provided for using the OpenAI connector.
