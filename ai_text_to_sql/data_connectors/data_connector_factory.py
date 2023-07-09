@@ -1,9 +1,11 @@
 import sys
 import inspect
-from typing import Optional, Dict, Type
+from typing import Text, Dict, Type
 
 from ai_text_to_sql.data_connectors import *
 from .data_connector import DataConnector
+
+from ai_text_to_sql.exceptions import UnsupportedDataConnectorException
 
 
 class DataConnectorFactory:
@@ -11,18 +13,18 @@ class DataConnectorFactory:
     The class for building database data_connectors.
     """
     @staticmethod
-    def build_connector(name: str, connection_data: Optional[Dict]) -> DataConnector:
+    def build_connector(name: Text, **kwargs) -> DataConnector:
         """
         Build a database connector.
         :param name: The name of the connector.
-        :param connection_data: A dictionary containing the configuration parameters for the database connection.
+        :param kwargs: The parameters for the connector.
         :return: A database connector.
         """
         connectors = DataConnectorFactory._discover_connectors()
         if name in connectors:
-            return connectors[name](connection_data)
+            return connectors[name](**kwargs)
         else:
-            raise ValueError(f"Unsupported connector: {name}")
+            raise UnsupportedDataConnectorException(f"Unsupported connector: {name}")
 
     @staticmethod
     def _discover_connectors() -> Dict[str, Type[DataConnector]]:
