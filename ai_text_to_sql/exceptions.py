@@ -9,3 +9,7 @@ class InsufficientParametersException(Exception):
 
 class NoMSSQLDriverException(Exception):
     pass
+
+
+class UnsupportedDataConnectorException(Exception):
+    pass
