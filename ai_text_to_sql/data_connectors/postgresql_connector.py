@@ -7,7 +7,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from .data_connector import DataConnector
 
-from ai_text_to_sql.exceptions import ConnectionCreationException
+from ai_text_to_sql.exceptions import ConnectionCreationException, InsufficientParametersException
 
 
 class PostgreSQLConnector(DataConnector):
@@ -46,6 +46,10 @@ class PostgreSQLConnector(DataConnector):
     def __init__(self, connection_string: Optional[Text] = None, user: Optional[Text] = None,
                  password: Optional[Text] = None, host: Optional[Text] = None, port: int = None,
                  database: Optional[Text] = None, schema: Optional[Text] = None):
+        if not connection_string and not user and not password and not host and not port and not database:
+            raise InsufficientParametersException("Either the connection_string or the user, password, host, port and "
+                                                  "database parameters must be specified.")
+
         self.connection_string = connection_string
         self.user = user
         self.password = password

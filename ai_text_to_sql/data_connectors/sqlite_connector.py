@@ -5,7 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from .data_connector import DataConnector
 
-from ai_text_to_sql.exceptions import ConnectionCreationException
+from ai_text_to_sql.exceptions import ConnectionCreationException, InsufficientParametersException
 
 
 class SQLiteConnector(DataConnector):
@@ -25,6 +25,10 @@ class SQLiteConnector(DataConnector):
     name = 'SQLite'
 
     def __init__(self, connection_string: Optional[Text] = None, database: Optional[Text] = None):
+        if not connection_string and not database:
+            raise InsufficientParametersException("Either the connection_string or the database parameter must be "
+                                                  "specified.")
+
         self.connection_string = connection_string
         self.database = database
         super().__init__()
