@@ -1,0 +1,10 @@
+__title__ = 'ai_text_to_sql'
+__package_name__ = 'ai_text_to_sql'
+__version__ = '0.2.0'
+__description__ = "AI-Text-to-SQL, revolutionize database querying with AI-powered text-to-SQL."
+__email__ = "minurapunchihewa17@gmail.com"
+__author__ = 'Minura Punchihewa'
+__github__ = 'https://github.com/MinuraPunchihewa/gpt-text-to-sql'
+__pypi__ = 'https://pypi.org/project/gpt-text-to-sql/'
+__license__ = 'GPL-3.0'
+__copyright__ = 'Copyright (C) 2023  Minura Punchihewa'
