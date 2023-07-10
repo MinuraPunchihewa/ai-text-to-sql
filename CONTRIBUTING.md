@@ -15,16 +15,20 @@ To contribute a new data connector, please follow these steps:
 1. Create a new module in the data_connectors directory.
 2. Create a new class in the module that inherits from the base DataConnector class.
 3. Add the 'name' attribute to the new class to set the name of the connector.
-4. Implement the create_connection() abstract method.
-5. Implement the get_tables() and get_columns() methods if the database does not support the SQLAlchemy Inspector.
-6. Add an import statement for the new class in the __init__.py file in the data_connectors directory.
-7. Congratulations, data virtuoso! 🎉 Your mastery of data connectors has unlocked the gates to a realm of boundless data possibilities.
+4. Implement the `create_connection()` abstract method.
+5. Implement the `get_tables()` and `get_columns()` methods if the database does not support SQLAlchemy Inspector.
+6. Add an import statement for the new class in the `__init__.py` file in the data_connectors directory.
+7. Add unit tests for the new data connector in the `tests` directory.
+8. Add your new data connector to the list of supported databases in the README.md file.
+9. Congratulations, data virtuoso! 🎉 Your mastery of data connectors has unlocked the gates to a realm of boundless data possibilities.
 
 ### Guidelines for Contributing LLM Connectors 🤖
 To contribute a new LLM connector, please follow these steps:
 1. Create a new module in the llm_connectors directory.
 2. Create a new class in the module that inherits from the base LLMConnector class.
 3. Add the 'name' attribute to the new class to set the name of the connector.
-4. Implement the format_database_schema(), create_prompt() and get_answer() abstract methods.
-5. Add an import statement for the new class in the __init__.py file in the llm_connectors directory.
-6. Rejoice and let the Fellowship of Language Learning Models raise their virtual goblets in celebration! 🎉 Your mastery of LLM connectors has united the powers of AI language models, forging an alliance that transcends the boundaries of human-machine communication.
+4. Implement the `format_database_schema()`, `create_prompt()` and `get_answer()` abstract methods.
+5. Add an import statement for the new class in the `__init__.py` file in the llm_connectors directory.
+6. Add unit tests for the new LLM connector in the `tests` directory.
+7. Add your new LLM connector to the list of supported LLMs in the README.md file.
+8. Rejoice and let the Fellowship of Language Learning Models raise their virtual goblets in celebration! 🎉 Your mastery of LLM connectors has united the powers of AI language models, forging an alliance that transcends the boundaries of human-machine communication.
