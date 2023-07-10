@@ -32,3 +32,15 @@ To contribute a new LLM connector, please follow these steps:
 6. Add unit tests for the new LLM connector in the `tests` directory.
 7. Add your new LLM connector to the list of supported LLMs in the README.md file.
 8. Rejoice and let the Fellowship of Language Learning Models raise their virtual goblets in celebration! 🎉 Your mastery of LLM connectors has united the powers of AI language models, forging an alliance that transcends the boundaries of human-machine communication.
+
+## Setting Up the Local Environment 🛠️
+To set up the local environment for AI-Text-to-SQL, please follow these steps:
+1. Fork the repository.
+2. Clone the forked repository.<br>
+`git clone https://github.com/YourUsername/ai_text_to_sql.git`
+3. Create a virtual environment with Python 3.9 or higher.<br>
+`conda create -n ai_text_to_sql python=3.9`
+4. Activate the virtual environment.<br>
+`conda activate ai_text_to_sql`
+5. Install the dependencies.<br>
+`pip install -r requirements.txt`
