@@ -59,11 +59,9 @@ Within the enchanted realm of AI-Text-to-SQL, a variety of databases stand ready
 | MariaDB      | ✅       |   
 | MS SQLServer | ✅       |   
 | Oracle       | 🔜      |   
-| MS Access    | 🔜      |   
-| DB2          | 🔜      |   
+| MS Access    | 🔜      |
 | Firebird     | 🔜      |   
-| Apache Druid | 🔜      |   
-| Apache Pinot | 🔜      |
+| IBM Db2      | 🔜      |
 
 Is your preferred database missing from our list? Don't worry! Suggestions for new data connectors are always welcome. Feel free to create an issue on the GitHub repository and maybe even submit a pull request!
 
@@ -71,10 +69,10 @@ Is your preferred database missing from our list? Don't worry! Suggestions for n
 
 In the mystical realm of AI-Text-to-SQL, an esteemed fellowship of Language Learning Models (LLMs) awaits to join forces with your magical text queries. Our sorcery encompasses the wisdom of the following LLM allies:
 
-| LLM          | Status  |
-|--------------|---------|
-| OpenAI       | ✅       |
-| Bard         | 🔜      |   
-| Hugging Face | 🔜      |   
+| LLM         | Status  |
+|-------------|---------|
+| OpenAI      | ✅       |
+| Bard        | 🔜      |   
+| HuggingFace | 🔜      |   
 
 Excited about the potential of additional LLMs? If you have recommendations for new LLM connectors to integrate into AI-Text-to-SQL, please create an issue on the GitHub repository to share your ideas and take steps to contribute to the project!
