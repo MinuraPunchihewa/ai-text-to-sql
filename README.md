@@ -76,3 +76,9 @@ In the mystical realm of AI-Text-to-SQL, an esteemed fellowship of Language Lear
 | HuggingFace | 🔜      |   
 
 Excited about the potential of additional LLMs? If you have recommendations for new LLM connectors to integrate into AI-Text-to-SQL, please create an issue on the GitHub repository to share your ideas and take steps to contribute to the project!
+
+## License 📜
+
+AI-Text-to-SQL is released under the GNU General Public License v3.0 (GPL-3.0). This means that you are free to use, modify, and distribute this package in compliance with the terms outlined in the license.
+
+Embrace the spirit of open-source collaboration and together let's propel the world of text-to-SQL transformation forward!
