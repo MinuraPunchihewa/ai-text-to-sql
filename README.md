@@ -77,6 +77,14 @@ In the mystical realm of AI-Text-to-SQL, an esteemed fellowship of Language Lear
 
 Excited about the potential of additional LLMs? If you have recommendations for new LLM connectors to integrate into AI-Text-to-SQL, please create an issue on the GitHub repository to share your ideas and take steps to contribute to the project!
 
+## Contributing 🤝
+
+Thank you for your interest in contributing to AI-Text-to-SQL! Contributions from the community are highly appreciated.
+
+For detailed instructions on how to contribute to the project, please refer to the CONTRIBUTING.md file. It provides guidelines on reporting bugs, suggesting new features, making code improvements, and more.
+
+Your contributions are valuable, and together, let's collaborate to enhance AI-Text-to-SQL and make it even more magical!
+
 ## License 📜
 
 AI-Text-to-SQL is released under the GNU General Public License v3.0 (GPL-3.0). This means that you are free to use, modify, and distribute this package in compliance with the terms outlined in the license.
