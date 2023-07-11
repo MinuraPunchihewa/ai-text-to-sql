@@ -13,7 +13,7 @@ class TestSQLiteConnector(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         sqlite_connector = SQLiteConnector(
-            database="data/chinook.db"
+            database="tests/data/chinook.db"
         )
 
         openai_connector = OpenAIConnector(
