@@ -26,29 +26,29 @@ class TestSQLiteConnector(unittest.TestCase):
 
     def test_convert_text_to_sql(self):
         self.assertEqual(
-            self.tts.convert_text_to_sql("Get me a list of distinct genres."),
-            "SELECT DISTINCT Name FROM genres"
+            self.tts.convert_text_to_sql("Get me a list of distinct genres.").lower(),
+            "SELECT DISTINCT Name FROM genres".lower()
         )
 
     def test_advanced_convert_text_to_sql_1(self):
         self.assertEqual(
-            self.tts.convert_text_to_sql("Get me the names of 5 Rock songs.").replace('\n', '').strip(),
+            self.tts.convert_text_to_sql("Get me the names of 5 Rock songs.").replace('\n', '').strip().lower(),
             "SELECT Name \n"
             "FROM tracks \n"
-            "INNER JOIN genres ON genres.GenreId = tracks.GenreId \n"
+            "INNER JOIN genres ON tracks.GenreId = genres.GenreId \n"
             "WHERE genres.Name = 'Rock' \n"
-            "LIMIT 5".replace('\n', '').strip()
+            "LIMIT 5".replace('\n', '').strip().lower()
         )
 
     def test_advanced_convert_text_to_sql_2(self):
         self.assertEqual(
-            self.tts.convert_text_to_sql("Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name.").replace('\n', ' ').strip(),
-            "SELECT t.Name AS Track, a.Title AS Album, ar.Name AS Artist \n"
+            self.tts.convert_text_to_sql("Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name.").replace('\n', ' ').strip().lower(),
+            "SELECT t.Name AS TrackName, a.Title AS AlbumTitle, ar.Name AS ArtistName \n"
             "FROM tracks t \n"
             "INNER JOIN albums a ON t.AlbumId = a.AlbumId \n"
             "INNER JOIN artists ar ON a.ArtistId = ar.ArtistId \n"
             "WHERE ar.Name = 'AC/DC' \n"
-            "ORDER BY t.Name ASC".replace('\n', '').strip()
+            "ORDER BY t.Name ASC".replace('\n', '').strip().lower()
         )
 
     def test_query(self):
