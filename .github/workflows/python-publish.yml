@@ -20,8 +20,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python -X utf8
-          python -m pip install --upgrade pip
+          python -X utf8 -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install --no-cache-dir -e .[test]
       - name: Run unit tests
