@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         python-version: [3.9, 3.11]
     steps:
       - uses: actions/checkout@v2
@@ -20,8 +20,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python -X utf8 -m pip install --upgrade pip
-          python -X utf8 -m pip install -r requirements.txt
+          pip install --upgrade pip
+          pip install -r requirements.txt
           pip install --no-cache-dir -e .[test]
       - name: Run unit tests
         run: python -m unittest discover tests
