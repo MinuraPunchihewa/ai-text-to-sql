@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
           pip install --no-cache-dir -e .[test]
       - name: Run unit tests
-        run: python -m unittest discover tests -t tests/excluded_tests
+        run: python -m unittest discover tests
         shell: bash
         env:
           API_KEY: ${{ secrets.OPENAI_TOKEN }}
