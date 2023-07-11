@@ -27,7 +27,7 @@ jobs:
         run: python -m unittest discover tests
         shell: bash
         env:
-          API_KEY: ${{ secrets.OPENAI_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_TOKEN }}
   source-dist:
     needs: test
     runs-on: windows-latest
