@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -X utf8 -m pip install --upgrade pip
-          python -X utf8 pip install -r requirements.txt
+          python -X utf8 -m pip install -r requirements.txt
           pip install --no-cache-dir -e .[test]
       - name: Run unit tests
         run: python -m unittest discover tests
