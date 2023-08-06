@@ -121,7 +121,7 @@ class OpenAIConnector(LLMConnector):
         :param connector_name: The name of the connector.
         :return: The prompt for the API call.
         """
-        return self.format_database_schema(database_schema, connector_name) + user_input + \
+        return self.format_database_schema(database_schema, connector_name) + "\n" + user_input + \
                                                 "\nYour response should be a clear and concise SQL statement that" \
                                                 " retrieves only the necessary data from the relevant tables. " \
                                                 "Please ensure that your query is optimized for performance and " \
