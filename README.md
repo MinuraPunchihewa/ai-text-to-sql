@@ -1,10 +1,13 @@
 # AI-Text-to-SQL: Transforming Text Queries into SQL Magic ✨
+
 Have you ever wished you could simply speak or type your queries in plain English, and poof! They magically turn into perfectly formatted SQL queries? Well, say hello to ai_text_to_sql - the enchanting Python package that brings your dream to life!
 
 ## Unleashing the Magic 🌟
+
 ### With pip
 
 Installing AI-Text-to-SQL is as easy as pip-pip-pip:
+
 ```
 pip install ai_text_to_sql
 ```
@@ -12,6 +15,7 @@ pip install ai_text_to_sql
 ## Casting the Spell 🪄
 
 To summon the power of AI-Text-to-SQL, follow these mystical steps:
+
 1. Import the Data Connector: Begin by importing the required data connector of your choice. It's like selecting the perfect wand for your SQL sorcery!
 
 2. Import the LLM Connector: Next, import the LLM (Language Learning Model) connector. This vital ingredient enhances the mystical abilities of ai_text_to_sql, enabling it to comprehend your text queries like a seasoned SQL wizard.
@@ -23,9 +27,9 @@ To summon the power of AI-Text-to-SQL, follow these mystical steps:
 ```python
 from ai_text_to_sql.data_connectors import SQLiteConnector
 from ai_text_to_sql.llm_connectors import OpenAIConnector
-from ai_text_to_sql.text_to_sql import TextToSQL
+from ai_text_to_sql import TextToSQL
 
-# Prepare your spell ingredients 
+# Prepare your spell ingredients
 sqlite_connector = SQLiteConnector(database='chinook.db')
 openai_connector = OpenAIConnector(api_key='YOUR_OPENAI_API_KEY')
 
@@ -51,17 +55,17 @@ To witness the enchanting powers of AI-Text-to-SQL in action, behold the followi
 
 Within the enchanted realm of AI-Text-to-SQL, a variety of databases stand ready to be harmoniously united with your mystical text queries. Our sorcery extends its reach to the following realms of data:
 
-| Database     | Status  |
-|--------------|---------|
-| SQLite       | ✅       | 
-| PostgreSQL   | ✅       |
-| MySQL        | ✅       |   
-| MariaDB      | ✅       |   
-| MS SQLServer | ✅       |   
-| Oracle       | 🔜      |   
-| MS Access    | 🔜      |
-| Firebird     | 🔜      |   
-| IBM Db2      | 🔜      |
+| Database     | Status |
+| ------------ | ------ |
+| SQLite       | ✅     |
+| PostgreSQL   | ✅     |
+| MySQL        | ✅     |
+| MariaDB      | ✅     |
+| MS SQLServer | ✅     |
+| Oracle       | 🔜     |
+| MS Access    | 🔜     |
+| Firebird     | 🔜     |
+| IBM Db2      | 🔜     |
 
 Is your preferred database missing from our list? Don't worry! Suggestions for new data connectors are always welcome. Feel free to create an issue on the GitHub repository and maybe even submit a pull request!
 
@@ -69,11 +73,11 @@ Is your preferred database missing from our list? Don't worry! Suggestions for n
 
 In the mystical realm of AI-Text-to-SQL, an esteemed fellowship of Language Learning Models (LLMs) awaits to join forces with your magical text queries. Our sorcery encompasses the wisdom of the following LLM allies:
 
-| LLM         | Status  |
-|-------------|---------|
-| OpenAI      | ✅       |
-| Bard        | 🔜      |   
-| HuggingFace | 🔜      |   
+| LLM         | Status |
+| ----------- | ------ |
+| OpenAI      | ✅     |
+| Bard        | 🔜     |
+| HuggingFace | 🔜     |
 
 Excited about the potential of additional LLMs? If you have recommendations for new LLM connectors to integrate into AI-Text-to-SQL, please create an issue on the GitHub repository to share your ideas and take steps to contribute to the project!
 
