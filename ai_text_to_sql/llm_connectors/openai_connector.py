@@ -1,10 +1,11 @@
 import os
-import openai
 from typing import Text, List, Dict
 
-from ai_text_to_sql.llm_connectors.llm_connector import LLMConnector
+import openai
+from langchain_openai import ChatOpenAI
 
 from ai_text_to_sql.exceptions import NoOpenAIAPIKeyException
+from ai_text_to_sql.llm_connectors.llm_connector import LLMConnector
 
 
 class OpenAIConnector(LLMConnector):
@@ -140,3 +141,12 @@ class OpenAIConnector(LLMConnector):
                                                 database_schema.items()])
 
         return formatted_database_schema
+    
+    def to_langchain(self) -> ChatOpenAI:
+        """
+        Converts the OpenAI connector to a LangChain ChatOpenAI model.
+        :return: The LangChain chat model.
+        """
+        return ChatOpenAI(api_key=self.api_key, engine=self.engine, temperature=self.temperature,
+                          max_tokens=self.max_tokens, top_p=self.top_p, frequency_penalty=self.frequency_penalty,
+                          presence_penalty=self.presence_penalty, stop=self.stop)
