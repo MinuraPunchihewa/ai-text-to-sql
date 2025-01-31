@@ -44,7 +44,8 @@ openai_connector = OpenAIConnector(api_key='YOUR_OPENAI_API_KEY')
 text_to_sql = TextToSQL(sqlite_connector, openai_connector)
 
 # Utter your magical incantation 🗣️✨
-text_query = "Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name."
+text_query = "Find all the tracks written by AC/DC, including the track name, album title, " \
+             "and the artist name. Sort the results alphabetically by track name."
 
 # Witness the spell's transformation 🔮✨
 sql_query = text_to_sql.convert_text_to_sql(text_query)
@@ -74,7 +75,8 @@ openai_connector = OpenAIConnector(api_key='YOUR_OPENAI_API_KEY')
 text_to_sql_agent = TextToSQLAgent(sqlite_connector, openai_connector)
 
 # Utter your magical incantation 🗣️✨
-text_query = "Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name."
+text_query = "Find all the tracks written by AC/DC, including the track name, album title, " \
+             "and the artist name. Sort the results alphabetically by track name."
 
 # Unlock the agent's advanced powers to query the database directly 💾✨
 response = text_to_sql_agent.query(text_query)
