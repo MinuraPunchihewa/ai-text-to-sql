@@ -162,4 +162,7 @@ class OpenAIConnector(LLMConnector):
                           max_tokens=self.max_tokens, top_p=self.top_p, frequency_penalty=self.frequency_penalty,
                           presence_penalty=self.presence_penalty, stop=self.stop)
         except ImportError:
-            raise ImportError("The langchain-openai package is required to use this connector with the agent.")
+            raise ImportError(
+                "The langchain-openai package is required to use this connector with the agent. "
+                "Please run 'pip install langchain-openai' to install it."
+            )

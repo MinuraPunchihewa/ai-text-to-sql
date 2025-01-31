@@ -27,7 +27,10 @@ class TextToSQLAgent:
 
             self.agent_executor = create_sql_agent(llm, db=db, verbose=True)
         except ImportError:
-            raise ImportError("The langchain-community package is required to use the agent.")
+            raise ImportError(
+                "The langchain-community package is required to use the agent. "
+                "Please run 'pip install langchain-community' to install it."
+            )
 
     def query(self, text: Text) -> List[Dict]:
         """
