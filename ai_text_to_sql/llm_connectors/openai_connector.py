@@ -1,8 +1,9 @@
 import os
-from typing import Text, List, Dict
+from typing import Dict, Text, TYPE_CHECKING
 
 import openai
-from langchain_openai import ChatOpenAI
+if TYPE_CHECKING:
+    from langchain_openai import ChatOpenAI
 
 from ai_text_to_sql.exceptions import NoOpenAIAPIKeyException
 from ai_text_to_sql.llm_connectors.llm_connector import LLMConnector
@@ -142,11 +143,15 @@ class OpenAIConnector(LLMConnector):
 
         return formatted_database_schema
     
-    def to_langchain(self) -> ChatOpenAI:
+    def to_langchain(self) -> "ChatOpenAI":
         """
         Converts the OpenAI connector to a LangChain ChatOpenAI model.
         :return: The LangChain chat model.
         """
-        return ChatOpenAI(api_key=self.api_key, engine=self.engine, temperature=self.temperature,
+        try:
+            from langchain_openai import ChatOpenAI
+            return ChatOpenAI(api_key=self.api_key, engine=self.engine, temperature=self.temperature,
                           max_tokens=self.max_tokens, top_p=self.top_p, frequency_penalty=self.frequency_penalty,
                           presence_penalty=self.presence_penalty, stop=self.stop)
+        except ImportError:
+            raise ImportError("The langchain_openai package is required to use this connector with the agent.")
