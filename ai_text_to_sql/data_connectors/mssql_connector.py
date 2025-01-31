@@ -79,3 +79,11 @@ class MSSQLConnector(DataConnector):
             return create_engine(f"{connection_string}?driver={driver}")
         except SQLAlchemyError as e:
             ConnectionCreationException(f"Could not create connection to MSSQL database: {e}")
+
+    def get_connection_string(self) -> Text:
+        """
+        Returns the connection string for the MSSQL database.
+        :return: The connection string for the MSSQL database.
+        """
+        return self.connection_string if self.connection_string else \
+            f"mssql+pyodbc://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
