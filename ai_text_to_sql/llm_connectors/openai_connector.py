@@ -157,8 +157,9 @@ class OpenAIConnector(LLMConnector):
         """
         try:
             from langchain_openai import ChatOpenAI
-            return ChatOpenAI(api_key=self.api_key, engine=self.model, temperature=self.temperature,
+
+            return ChatOpenAI(api_key=self.api_key, model=self.model, temperature=self.temperature,
                           max_tokens=self.max_tokens, top_p=self.top_p, frequency_penalty=self.frequency_penalty,
                           presence_penalty=self.presence_penalty, stop=self.stop)
         except ImportError:
-            raise ImportError("The langchain_openai package is required to use this connector with the agent.")
+            raise ImportError("The langchain-openai package is required to use this connector with the agent.")
