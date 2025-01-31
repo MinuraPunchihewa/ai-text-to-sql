@@ -1,7 +1,7 @@
 import os
 from typing import Dict, Text, TYPE_CHECKING
 
-import openai
+from openai import OpenAI
 if TYPE_CHECKING:
     from langchain_openai import ChatOpenAI
 
@@ -35,7 +35,7 @@ class OpenAIConnector(LLMConnector):
     """
     name = 'OpenAI'
 
-    def __init__(self, api_key: Text = None, engine: Text = "text-davinci-003", temperature: int = 0,
+    def __init__(self, api_key: Text = None, model: Text = "gpt-3.5-turbo", temperature: int = 0,
                  max_tokens: int = 150, top_p: float = 1.0, frequency_penalty: float = 0.0,
                  presence_penalty: float = 0.0, stop: tuple = ("#", ";")):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY") or None
@@ -43,9 +43,8 @@ class OpenAIConnector(LLMConnector):
             raise NoOpenAIAPIKeyException(
                 "No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable."
             )
-        openai.api_key = self.api_key
 
-        self.engine = engine
+        self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.top_p = top_p
@@ -53,7 +52,9 @@ class OpenAIConnector(LLMConnector):
         self.presence_penalty = presence_penalty
         self.stop = list(stop)
 
-        self.context = []
+        self.client = OpenAI(
+            api_key=self.api_key,
+        )
 
     def get_engine(self) -> Text:
         """
@@ -103,17 +104,23 @@ class OpenAIConnector(LLMConnector):
         :param prompt: The prompt for the API call.
         :return: The response (SQL query) from the API call.
         """
-        response = openai.Completion.create(engine=self.get_engine(),
-                                            prompt=prompt,
-                                            max_tokens=self.get_max_tokens(),
-                                            temperature=self.get_temperature(),
-                                            top_p=self.get_top_p(),
-                                            frequency_penalty=self.get_frequency_penalty(),
-                                            presence_penalty=self.get_presence_penalty(),
-                                            stream=False,
-                                            stop=self.stop)
+        response = self.client.chat.completions.create(
+            model=self.model,
+            temperature=self.temperature,
+            max_tokens=self.max_tokens,
+            top_p=self.top_p,
+            frequency_penalty=self.frequency_penalty,
+            presence_penalty=self.presence_penalty,
+            stop=self.stop,
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+        )
 
-        return response["choices"][0]["text"]
+        return response.choices[0].message.content
 
     def create_prompt(self, user_input: Text, database_schema: Dict, connector_name: Text) -> Text:
         """
@@ -150,7 +157,7 @@ class OpenAIConnector(LLMConnector):
         """
         try:
             from langchain_openai import ChatOpenAI
-            return ChatOpenAI(api_key=self.api_key, engine=self.engine, temperature=self.temperature,
+            return ChatOpenAI(api_key=self.api_key, engine=self.model, temperature=self.temperature,
                           max_tokens=self.max_tokens, top_p=self.top_p, frequency_penalty=self.frequency_penalty,
                           presence_penalty=self.presence_penalty, stop=self.stop)
         except ImportError:
