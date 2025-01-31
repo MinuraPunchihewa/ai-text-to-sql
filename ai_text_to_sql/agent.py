@@ -35,5 +35,6 @@ class TextToSQLAgent:
         :param text: The text to invoke the agent with.
         :return: The response from the agent.
         """
-        return self.agent_executor.invoke(text)
+        response = self.agent_executor.invoke(text)
+        return response["output"]
     
