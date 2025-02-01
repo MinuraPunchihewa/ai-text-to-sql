@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Text, Dict, List, Any
+from typing import Any, Dict, List, Text
 
 import sqlalchemy
 from sqlalchemy import inspect, text
@@ -17,6 +17,7 @@ class DataConnector(ABC):
     5. Implement the get_tables() and get_columns() methods if the database does not support SQLAlchemy Inspector.
     6. Add an import statement for the new class in the __init__.py file in the data_connectors directory.
     """
+
     name = "Base"
 
     def __init__(self):
@@ -60,7 +61,7 @@ class DataConnector(ABC):
         :param table_name: The name of the table.
         :return: The columns of the table.
         """
-        return [column['name'] for column in self.inspector.get_columns(table_name)]
+        return [column["name"] for column in self.inspector.get_columns(table_name)]
 
     def get_database_schema(self) -> Dict:
         """

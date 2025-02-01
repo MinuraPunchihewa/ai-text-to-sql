@@ -1,13 +1,15 @@
-from typing import Text, Optional
+from typing import Optional, Text
 
-from sqlalchemy import text
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-from .data_connector import DataConnector
+from ai_text_to_sql.exceptions import (
+    ConnectionCreationException,
+    InsufficientParametersException,
+)
 
-from ai_text_to_sql.exceptions import ConnectionCreationException, InsufficientParametersException
+from .data_connector import DataConnector
 
 
 class PostgreSQLConnector(DataConnector):
@@ -41,14 +43,30 @@ class PostgreSQLConnector(DataConnector):
 
     """
 
-    name = 'PostgreSQL'
+    name = "PostgreSQL"
 
-    def __init__(self, connection_string: Optional[Text] = None, user: Optional[Text] = None,
-                 password: Optional[Text] = None, host: Optional[Text] = None, port: int = None,
-                 database: Optional[Text] = None, schema: Optional[Text] = None):
-        if not connection_string and not user and not password and not host and not port and not database:
-            raise InsufficientParametersException("Either the connection_string or the user, password, host, port and "
-                                                  "database parameters must be specified.")
+    def __init__(
+        self,
+        connection_string: Optional[Text] = None,
+        user: Optional[Text] = None,
+        password: Optional[Text] = None,
+        host: Optional[Text] = None,
+        port: int = None,
+        database: Optional[Text] = None,
+        schema: Optional[Text] = None,
+    ):
+        if (
+            not connection_string
+            and not user
+            and not password
+            and not host
+            and not port
+            and not database
+        ):
+            raise InsufficientParametersException(
+                "Either the connection_string or the user, password, host, port and "
+                "database parameters must be specified."
+            )
 
         self.connection_string = connection_string
         self.user = user
@@ -68,8 +86,10 @@ class PostgreSQLConnector(DataConnector):
             if self.connection_string:
                 engine = create_engine(self.connection_string)
             else:
-                engine = create_engine(f"postgresql+psycopg2://{self.user}:{self.password}@{self.host}:{self.port}/"
-                                   f"{self.database}")
+                engine = create_engine(
+                    f"postgresql+psycopg2://{self.user}:{self.password}@{self.host}:{self.port}/"
+                    f"{self.database}"
+                )
 
             if self.schema:
                 session_factory = sessionmaker(bind=engine)
@@ -80,4 +100,6 @@ class PostgreSQLConnector(DataConnector):
 
             return engine
         except SQLAlchemyError as e:
-            ConnectionCreationException(f"Could not create connection to PostgreSQL database: {e}")
+            ConnectionCreationException(
+                f"Could not create connection to PostgreSQL database: {e}"
+            )

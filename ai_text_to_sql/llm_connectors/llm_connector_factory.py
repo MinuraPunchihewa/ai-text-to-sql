@@ -1,17 +1,18 @@
-import sys
 import inspect
-from typing import Dict, Type, Text
-
-from .llm_connector import LLMConnector
-from ai_text_to_sql.llm_connectors import *
+import sys
+from typing import Dict, Text, Type
 
 from ai_text_to_sql.exceptions import UnsupportedLLMConnectorException
+from ai_text_to_sql.llm_connectors import *
+
+from .llm_connector import LLMConnector
 
 
 class LLMConnectorFactory:
     """
     The class for building LLMs.
     """
+
     @staticmethod
     def build_llm(name: Text, **kwargs) -> LLMConnector:
         """
@@ -34,6 +35,10 @@ class LLMConnectorFactory:
         """
         llms = {}
         for name, obj in inspect.getmembers(sys.modules[__name__]):
-            if inspect.isclass(obj) and issubclass(obj, LLMConnector) and obj is not LLMConnector:
+            if (
+                inspect.isclass(obj)
+                and issubclass(obj, LLMConnector)
+                and obj is not LLMConnector
+            ):
                 llms[obj.__name__[:-9]] = obj  # Remove "Connector" from class name
         return llms

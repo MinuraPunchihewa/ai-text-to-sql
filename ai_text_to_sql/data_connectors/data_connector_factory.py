@@ -1,17 +1,18 @@
-import sys
 import inspect
-from typing import Text, Dict, Type
+import sys
+from typing import Dict, Text, Type
 
 from ai_text_to_sql.data_connectors import *
-from .data_connector import DataConnector
-
 from ai_text_to_sql.exceptions import UnsupportedDataConnectorException
+
+from .data_connector import DataConnector
 
 
 class DataConnectorFactory:
     """
     The class for building database data_connectors.
     """
+
     @staticmethod
     def build_connector(name: Text, **kwargs) -> DataConnector:
         """
@@ -34,6 +35,12 @@ class DataConnectorFactory:
         """
         connectors = {}
         for name, obj in inspect.getmembers(sys.modules[__name__]):
-            if inspect.isclass(obj) and issubclass(obj, DataConnector) and obj is not DataConnector:
-                connectors[obj.__name__[:-9]] = obj  # Remove "Connector" from class name
+            if (
+                inspect.isclass(obj)
+                and issubclass(obj, DataConnector)
+                and obj is not DataConnector
+            ):
+                connectors[obj.__name__[:-9]] = (
+                    obj  # Remove "Connector" from class name
+                )
         return connectors

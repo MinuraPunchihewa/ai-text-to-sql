@@ -1,13 +1,16 @@
-import pyodbc
-from typing import Text, Optional
+from typing import Optional, Text
 
+import pyodbc
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 
-from .data_connector import DataConnector
+from ai_text_to_sql.exceptions import (
+    ConnectionCreationException,
+    InsufficientParametersException,
+    NoMSSQLDriverException,
+)
 
-from ai_text_to_sql.exceptions import ConnectionCreationException, InsufficientParametersException,\
-    NoMSSQLDriverException
+from .data_connector import DataConnector
 
 
 class MSSQLConnector(DataConnector):
@@ -40,14 +43,31 @@ class MSSQLConnector(DataConnector):
         connection_string parameter or as a separate parameter.
 
     """
-    name = 'MSSQL'
 
-    def __init__(self, connection_string: Optional[Text] = None, user: Optional[Text] = None,
-                 password: Optional[Text] = None, host: Optional[Text] = None, port: int = None,
-                 database: Optional[Text] = None, schema: Optional[Text] = None):
-        if not connection_string and not user and not password and not host and not port and not database:
-            raise InsufficientParametersException("Either the connection_string or the user, password, host, port and "
-                                                  "database parameters must be specified.")
+    name = "MSSQL"
+
+    def __init__(
+        self,
+        connection_string: Optional[Text] = None,
+        user: Optional[Text] = None,
+        password: Optional[Text] = None,
+        host: Optional[Text] = None,
+        port: int = None,
+        database: Optional[Text] = None,
+        schema: Optional[Text] = None,
+    ):
+        if (
+            not connection_string
+            and not user
+            and not password
+            and not host
+            and not port
+            and not database
+        ):
+            raise InsufficientParametersException(
+                "Either the connection_string or the user, password, host, port and "
+                "database parameters must be specified."
+            )
         self.connection_string = connection_string
         self.user = user
         self.password = password
@@ -68,14 +88,18 @@ class MSSQLConnector(DataConnector):
             else:
                 connection_string = f"mssql+pyodbc://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
 
-            if self.schema and 'schema' not in connection_string:
+            if self.schema and "schema" not in connection_string:
                 connection_string += f"?schema={self.schema}"
 
             try:
                 driver = pyodbc.drivers()[-1]
             except IndexError:
-                raise NoMSSQLDriverException("No MSSQL driver found. Please install a driver for MSSQL.")
+                raise NoMSSQLDriverException(
+                    "No MSSQL driver found. Please install a driver for MSSQL."
+                )
 
             return create_engine(f"{connection_string}?driver={driver}")
         except SQLAlchemyError as e:
-            ConnectionCreationException(f"Could not create connection to MSSQL database: {e}")
+            ConnectionCreationException(
+                f"Could not create connection to MSSQL database: {e}"
+            )

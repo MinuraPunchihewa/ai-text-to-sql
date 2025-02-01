@@ -1,11 +1,14 @@
-from typing import Text, Optional
+from typing import Optional, Text
 
 from sqlalchemy import create_engine
 from sqlalchemy.exc import SQLAlchemyError
 
-from .data_connector import DataConnector
+from ai_text_to_sql.exceptions import (
+    ConnectionCreationException,
+    InsufficientParametersException,
+)
 
-from ai_text_to_sql.exceptions import ConnectionCreationException, InsufficientParametersException
+from .data_connector import DataConnector
 
 
 class MySQLConnector(DataConnector):
@@ -35,14 +38,30 @@ class MySQLConnector(DataConnector):
         with the user, password, host and port parameters) or the connection_string parameter must be specified.
 
     """
-    name = 'MySQL'
 
-    def __init__(self, connection_string: Optional[Text] = None, user: Optional[Text] = None,
-                 password: Optional[Text] = None, host: Optional[Text] = None, port: int = None,
-                 database: Optional[Text] = None):
-        if not connection_string and not user and not password and not host and not port and not database:
-            raise InsufficientParametersException("Either the connection_string or the user, password, host, port and "
-                                                  "database parameters must be specified.")
+    name = "MySQL"
+
+    def __init__(
+        self,
+        connection_string: Optional[Text] = None,
+        user: Optional[Text] = None,
+        password: Optional[Text] = None,
+        host: Optional[Text] = None,
+        port: int = None,
+        database: Optional[Text] = None,
+    ):
+        if (
+            not connection_string
+            and not user
+            and not password
+            and not host
+            and not port
+            and not database
+        ):
+            raise InsufficientParametersException(
+                "Either the connection_string or the user, password, host, port and "
+                "database parameters must be specified."
+            )
         self.connection_string = connection_string
         self.user = user
         self.password = password
@@ -60,7 +79,11 @@ class MySQLConnector(DataConnector):
             if self.connection_string:
                 return create_engine(self.connection_string)
             else:
-                return create_engine(f"mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}/"
-                                     f"{self.database}")
+                return create_engine(
+                    f"mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}/"
+                    f"{self.database}"
+                )
         except SQLAlchemyError as e:
-            ConnectionCreationException(f"Could not create connection to MySQL database: {e}")
+            ConnectionCreationException(
+                f"Could not create connection to MySQL database: {e}"
+            )

@@ -1,4 +1,4 @@
-from typing import Text, Optional
+from typing import Optional, Text
 
 from .mysql_connector import MySQLConnector
 
@@ -30,9 +30,16 @@ class MariaDBConnector(MySQLConnector):
         with the user, password, host and port parameters) or the connection_string parameter must be specified.
 
     """
-    name = 'MariaDB'
 
-    def __init__(self, connection_string: Optional[Text] = None, user: Optional[Text] = None,
-                 password: Optional[Text] = None, host: Optional[Text] = None, port: int = None,
-                 database: Optional[Text] = None):
+    name = "MariaDB"
+
+    def __init__(
+        self,
+        connection_string: Optional[Text] = None,
+        user: Optional[Text] = None,
+        password: Optional[Text] = None,
+        host: Optional[Text] = None,
+        port: int = None,
+        database: Optional[Text] = None,
+    ):
         super().__init__(connection_string, user, password, host, port, database)

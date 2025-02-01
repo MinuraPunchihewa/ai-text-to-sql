@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Text, Dict
+from typing import Dict, Text
 
 
 class LLMConnector(ABC):
@@ -15,7 +15,9 @@ class LLMConnector(ABC):
     """
 
     @abstractmethod
-    def format_database_schema(self, database_schema: Dict, connector_name: Text) -> Text:
+    def format_database_schema(
+        self, database_schema: Dict, connector_name: Text
+    ) -> Text:
         """
         Formats the database schema for the prompt.
         The database schema is a dictionary containing the tables and columns of the database.
@@ -27,7 +29,9 @@ class LLMConnector(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def create_prompt(self, user_input: Text, database_schema: Dict, connector_name: Text) -> Text:
+    def create_prompt(
+        self, user_input: Text, database_schema: Dict, connector_name: Text
+    ) -> Text:
         """
         Creates the prompt for the API call by incorporating the user input and the database schema.
         Use the format_database_schema method to format the database schema as required and incorporate it into the prompt.
