@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "ai-text-to-sql"
+version = "0.2.0"
+description = "AI-Text-to-SQL, revolutionize database querying with AI-powered text-to-SQL."
+authors = ["Minura Punchihewa <minurapunchihewa17@gmail.com>"]
+license = "GPL-3.0"
+readme = "README.md"
+repository = "https://github.com/MinuraPunchihewa/ai-text-to-sql"
+copyright = "Copyright (C) 2023  Minura Punchihewa"
+
+[tool.poetry.urls]
+"PyPI" = "https://pypi.org/project/ai-text-to-sql/"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+pandas = "^2.2.3"
+pyodbc = "^5.2.0"
+pyyaml = "^6.0.2"
+psycopg2-binary = "^2.9.10"
+openai = "^1.61.0"
+sqlalchemy = "^2.0.37"
+
+[tool.poetry.include]
+"ai_text_to_sql/config/*.yml" = {}
+"ai_text_to_sql/config/*.yaml" = {}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
