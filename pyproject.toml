@@ -6,7 +6,6 @@ authors = ["Minura Punchihewa <minurapunchihewa17@gmail.com>"]
 license = "GPL-3.0"
 readme = "README.md"
 repository = "https://github.com/MinuraPunchihewa/ai-text-to-sql"
-copyright = "Copyright (C) 2023  Minura Punchihewa"
 
 [tool.poetry.urls]
 "PyPI" = "https://pypi.org/project/ai-text-to-sql/"
