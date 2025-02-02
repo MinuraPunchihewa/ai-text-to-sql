@@ -120,5 +120,8 @@ class PostgreSQLConnector(DataConnector):
         Get the connection string for the PostgreSQL database.
         :return: The connection string for the PostgreSQL database.
         """
-        return self.connection_string if self.connection_string else \
-            f"postgresql+psycopg2://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        return (
+            self.connection_string
+            if self.connection_string
+            else f"postgresql+psycopg2://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        )

@@ -122,5 +122,8 @@ class MSSQLConnector(DataConnector):
         Returns the connection string for the MSSQL database.
         :return: The connection string for the MSSQL database.
         """
-        return self.connection_string if self.connection_string else \
-            f"mssql+pyodbc://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        return (
+            self.connection_string
+            if self.connection_string
+            else f"mssql+pyodbc://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        )

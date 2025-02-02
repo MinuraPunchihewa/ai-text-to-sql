@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Text, TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Text
 
 if TYPE_CHECKING:
     from langchain_core.language_models.chat_models import BaseChatModel
@@ -59,7 +59,7 @@ class LLMConnector(ABC):
         :return: The response (SQL query) from the API call.
         """
         raise NotImplementedError
-    
+
     @abstractmethod
     def to_langchain(self) -> "BaseChatModel":
         """

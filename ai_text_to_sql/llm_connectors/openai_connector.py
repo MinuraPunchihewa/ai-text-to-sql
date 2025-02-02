@@ -1,5 +1,5 @@
 import os
-from typing import Dict, Text, TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Text
 
 from openai import OpenAI
 
@@ -44,9 +44,17 @@ class OpenAIConnector(LLMConnector):
 
     name = "OpenAI"
 
-    def __init__(self, api_key: Text = None, model: Text = "gpt-3.5-turbo", temperature: int = 0,
-                 max_tokens: int = 150, top_p: float = 1.0, frequency_penalty: float = 0.0,
-                 presence_penalty: float = 0.0, stop: tuple = ("#", ";")) -> None:
+    def __init__(
+        self,
+        api_key: Text = None,
+        model: Text = "gpt-3.5-turbo",
+        temperature: int = 0,
+        max_tokens: int = 150,
+        top_p: float = 1.0,
+        frequency_penalty: float = 0.0,
+        presence_penalty: float = 0.0,
+        stop: tuple = ("#", ";"),
+    ) -> None:
         self.api_key = api_key or os.getenv("OPENAI_API_KEY") or None
         if self.api_key is None:
             raise NoOpenAIAPIKeyException(
@@ -122,12 +130,7 @@ class OpenAIConnector(LLMConnector):
             frequency_penalty=self.frequency_penalty,
             presence_penalty=self.presence_penalty,
             stop=self.stop,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
+            messages=[{"role": "user", "content": prompt}],
         )
 
         return response.choices[0].message.content
@@ -175,7 +178,7 @@ class OpenAIConnector(LLMConnector):
         )
 
         return formatted_database_schema
-    
+
     def to_langchain(self) -> "ChatOpenAI":
         """
         Converts the OpenAI connector to a LangChain ChatOpenAI model.
@@ -184,9 +187,16 @@ class OpenAIConnector(LLMConnector):
         try:
             from langchain_openai import ChatOpenAI
 
-            return ChatOpenAI(api_key=self.api_key, model=self.model, temperature=self.temperature,
-                          max_tokens=self.max_tokens, top_p=self.top_p, frequency_penalty=self.frequency_penalty,
-                          presence_penalty=self.presence_penalty, stop=self.stop)
+            return ChatOpenAI(
+                api_key=self.api_key,
+                model=self.model,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens,
+                top_p=self.top_p,
+                frequency_penalty=self.frequency_penalty,
+                presence_penalty=self.presence_penalty,
+                stop=self.stop,
+            )
         except ImportError:
             raise ImportError(
                 "The langchain-openai package is required to use this connector with the agent. "

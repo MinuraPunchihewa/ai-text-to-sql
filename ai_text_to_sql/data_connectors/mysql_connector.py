@@ -102,5 +102,8 @@ class MySQLConnector(DataConnector):
         Get the connection string for the MySQL database.
         :return: The connection string for the MySQL database.
         """
-        return self.connection_string if self.connection_string else \
-            f"mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        return (
+            self.connection_string
+            if self.connection_string
+            else f"mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        )

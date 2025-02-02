@@ -92,7 +92,7 @@ class DataConnector(ABC):
         with self.connection.connect() as conn:
             result = conn.execute(text(query))
         return result.fetchall()
-    
+
     def get_connection_string(self) -> Text:
         """
         Get the connection string of the database.
