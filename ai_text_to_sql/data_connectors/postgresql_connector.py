@@ -1,6 +1,7 @@
 from typing import Optional, Text
 
 from sqlalchemy import create_engine, text
+from sqlalchemy import Engine
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -64,7 +65,7 @@ class PostgreSQLConnector(DataConnector):
         port: int = None,
         database: Optional[Text] = None,
         schema: Optional[Text] = None,
-    ):
+    ) -> None:
         if (
             not connection_string
             and not user
@@ -87,7 +88,7 @@ class PostgreSQLConnector(DataConnector):
         self.schema = schema
         super().__init__()
 
-    def create_connection(self):
+    def create_connection(self) -> Engine:
         """
         Create a connection to a PostgreSQL database.
         :return: A SQLAlchemy engine object for the connection to the PostgreSQL

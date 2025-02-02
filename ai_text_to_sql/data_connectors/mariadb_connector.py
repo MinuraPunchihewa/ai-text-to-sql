@@ -50,5 +50,5 @@ class MariaDBConnector(MySQLConnector):
         host: Optional[Text] = None,
         port: int = None,
         database: Optional[Text] = None,
-    ):
+    ) -> None:
         super().__init__(connection_string, user, password, host, port, database)

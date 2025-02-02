@@ -1,6 +1,7 @@
 from typing import Optional, Text
 
 from sqlalchemy import create_engine
+from sqlalchemy import Engine
 from sqlalchemy.exc import SQLAlchemyError
 
 from ai_text_to_sql.exceptions import (
@@ -58,7 +59,7 @@ class MySQLConnector(DataConnector):
         host: Optional[Text] = None,
         port: int = None,
         database: Optional[Text] = None,
-    ):
+    ) -> None:
         if (
             not connection_string
             and not user
@@ -79,7 +80,7 @@ class MySQLConnector(DataConnector):
         self.database = database
         super().__init__()
 
-    def create_connection(self):
+    def create_connection(self) -> Engine:
         """
         Create a connection to a MySQL database.
         :return: A SQLAlchemy engine object for the connection to the MySQL database.

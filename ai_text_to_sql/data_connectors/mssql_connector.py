@@ -2,6 +2,7 @@ from typing import Optional, Text
 
 import pyodbc
 from sqlalchemy import create_engine
+from sqlalchemy import Engine
 from sqlalchemy.exc import SQLAlchemyError
 
 from ai_text_to_sql.exceptions import (
@@ -65,7 +66,7 @@ class MSSQLConnector(DataConnector):
         port: int = None,
         database: Optional[Text] = None,
         schema: Optional[Text] = None,
-    ):
+    ) -> None:
         if (
             not connection_string
             and not user
@@ -87,7 +88,7 @@ class MSSQLConnector(DataConnector):
         self.schema = schema
         super().__init__()
 
-    def create_connection(self):
+    def create_connection(self) -> Engine:
         """
         Create a connection to a MSSQL database.
         :return: A SQLAlchemy engine object for the connection to the MSSQL database.

@@ -1,6 +1,7 @@
 from typing import Optional, Text
 
 from sqlalchemy import create_engine
+from sqlalchemy import Engine
 from sqlalchemy.exc import SQLAlchemyError
 
 from ai_text_to_sql.exceptions import (
@@ -31,7 +32,7 @@ class SQLiteConnector(DataConnector):
 
     def __init__(
         self, connection_string: Optional[Text] = None, database: Optional[Text] = None
-    ):
+    ) -> None:
         if not connection_string and not database:
             raise InsufficientParametersException(
                 "Either the connection_string or the database parameter must be "
@@ -42,7 +43,7 @@ class SQLiteConnector(DataConnector):
         self.database = database
         super().__init__()
 
-    def create_connection(self):
+    def create_connection(self) -> Engine:
         """
         Create a connection to a SQLite database.
         :return: A SQLAlchemy engine object for the connection to the SQLite database.
