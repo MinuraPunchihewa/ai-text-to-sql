@@ -1,7 +1,6 @@
 from typing import Optional, Text
 
-from sqlalchemy import create_engine
-from sqlalchemy import Engine
+from sqlalchemy import Engine, create_engine
 from sqlalchemy.exc import SQLAlchemyError
 
 from ai_text_to_sql.exceptions import (

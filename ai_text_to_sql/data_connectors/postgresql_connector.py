@@ -1,7 +1,6 @@
 from typing import Optional, Text
 
-from sqlalchemy import create_engine, text
-from sqlalchemy import Engine
+from sqlalchemy import Engine, create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import scoped_session, sessionmaker
 
