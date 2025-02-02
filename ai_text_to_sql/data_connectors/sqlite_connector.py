@@ -18,12 +18,13 @@ class SQLiteConnector(DataConnector):
     Parameters:
     -----------
     connection_string : Text
-        A SQLAlchemy connection string for the SQLite database. This parameter is optional, but either this parameter or
-         the database parameter must be specified.
+        A SQLAlchemy connection string for the SQLite database.
+        This parameter is optional, but either this parameter or the database parameter
+        must be specified.
     database : Text
-        The path to the SQLite database file. This parameter is optional, but either this parameter or the
-        connection_string parameter must be specified.
-
+        The path to the SQLite database file. 
+        This parameter is optional, but either this parameter or the connection_string 
+        parameter must be specified.
     """
 
     name = "SQLite"

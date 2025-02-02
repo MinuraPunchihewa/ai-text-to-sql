@@ -14,22 +14,28 @@ class OpenAIConnector(LLMConnector):
     Parameters
     ----------
     api_key: Text
-        The API key for the OpenAI API. This parameter is optional, but if not provided, the OPENAI_API_KEY environment
-        variable must be set.
+        The API key for the OpenAI API. This parameter is optional, but if not provided,
+        the OPENAI_API_KEY environment variable must be set.
     engine: Text
-        The engine to use for the OpenAI API. This parameter is optional, and defaults to "text-davinci-003".
+        The engine to use for the OpenAI API. This parameter is optional, and defaults 
+        to "text-davinci-003".
     temperature: float
-        The temperature for the OpenAI API. This parameter is optional, and defaults to 0.
+        The temperature for the OpenAI API. This parameter is optional, and defaults to 
+        0.
     max_tokens: int
-        The maximum number of tokens for the OpenAI API. This parameter is optional, and defaults to 150.
+        The maximum number of tokens for the OpenAI API. This parameter is optional, 
+        and defaults to 150.
     top_p: float
         The top p for the OpenAI API. This parameter is optional, and defaults to 1.0.
     frequency_penalty: float
-        The frequency penalty for the OpenAI API. This parameter is optional, and defaults to 0.0.
+        The frequency penalty for the OpenAI API. This parameter is optional, and 
+        defaults to 0.0.
     presence_penalty: float
-        The presence penalty for the OpenAI API. This parameter is optional, and defaults to 0.0.
+        The presence penalty for the OpenAI API. This parameter is optional, and 
+        defaults to 0.0.
     stop: List[Text]
-        The stop for the OpenAI API. This parameter is optional, and defaults to ("#", ";").
+        The stop for the OpenAI API. This parameter is optional, and defaults to 
+        ("#", ";").
     """
 
     name = "OpenAI"

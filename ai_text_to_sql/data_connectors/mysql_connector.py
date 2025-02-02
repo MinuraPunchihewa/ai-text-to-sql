@@ -18,25 +18,34 @@ class MySQLConnector(DataConnector):
     Parameters:
     -----------
     connection_string : Text
-        A SQLAlchemy connection string for the MySQL database. This parameter is optional, but either this parameter or
-        the user, password, host, port and database parameters must be specified.
+        A SQLAlchemy connection string for the MySQL database. 
+        This parameter is optional, but either this parameter or the user, password, 
+        host, port and database parameters must be specified.
     user : Text
-        The username to connect to the database. This parameter is optional, but either this parameter (in combination
-        with the password, host, port and database parameters) or the connection_string parameter must be specified.
+        The username to connect to the database. 
+        This parameter is optional, but either this parameter (in combination with the 
+        password, host, port and database parameters) or the connection_string parameter
+        must be specified.
     password : Text
-        The password to connect to the database. This parameter is optional, but either this parameter (in combination
-        with the user, host, port and database parameters) or the connection_string parameter must be specified.
+        The password to connect to the database. 
+        This parameter is optional, but either this parameter (in combination with the 
+        user, host, port and database parameters) or the connection_string parameter 
+        must be specified.
     host : Text
-        The host name or IP address of the database server. This parameter is optional, but either this parameter (in
-        combination with the user, password, port and database parameters) or the connection_string parameter must be
-        specified.
+        The host name or IP address of the database server. 
+        This parameter is optional, but either this parameter (in combination with the 
+        user, password, port and database parameters) or the connection_string parameter
+        must be specified.
     port : int
-        The port number of the database server. This parameter is optional, but either this parameter (in combination
-        with the user, password, host and database parameters) or the connection_string parameter must be specified.
+        The port number of the database server. 
+        This parameter is optional, but either this parameter (in combination with the 
+        user, password, host and database parameters) or the connection_string parameter
+        must be specified.
     database : Text
-        The name of the database to connect to. This parameter is optional, but either this parameter (in combination
-        with the user, password, host and port parameters) or the connection_string parameter must be specified.
-
+        The name of the database to connect to. 
+        This parameter is optional, but either this parameter (in combination with the 
+        user, password, host and port parameters) or the connection_string parameter 
+        must be specified.
     """
 
     name = "MySQL"
@@ -80,8 +89,8 @@ class MySQLConnector(DataConnector):
                 return create_engine(self.connection_string)
             else:
                 return create_engine(
-                    f"mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}/"
-                    f"{self.database}"
+                    f"mysql+pymysql://{self.user}:{self.password}@{self.host}:"
+                    f"{self.port}/{self.database}"
                 )
         except SQLAlchemyError as e:
             ConnectionCreationException(

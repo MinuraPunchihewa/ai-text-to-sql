@@ -19,28 +19,38 @@ class PostgreSQLConnector(DataConnector):
     Parameters:
     -----------
     connection_string : Text
-        A SQLAlchemy connection string for the PostgreSQL database. This parameter is optional, but either this
-        parameter or the user, password, host, port and database parameters must be specified.
+        A SQLAlchemy connection string for the PostgreSQL database. 
+        This parameter is optional, but either this parameter or the user, password, 
+        host, port and database parameters must be specified.
     user : Text
-        The username to connect to the database. This parameter is optional, but either this parameter (in combination
-        with the password, host, port and database parameters) or the connection_string parameter must be specified.
+        The username to connect to the database. 
+        This parameter is optional, but either this parameter (in combination with the 
+        password, host, port and database parameters) or the connection_string parameter
+        must be specified.
     password : Text
-        The password to connect to the database. This parameter is optional, but either this parameter (in combination
-        with the user, host, port and database parameters) or the connection_string parameter must be specified.
+        The password to connect to the database. 
+        This parameter is optional, but either this parameter (in combination with the 
+        user, host, port and database parameters) or the connection_string parameter 
+        must be specified.
     host : Text
-        The host name or IP address of the database server. This parameter is optional, but either this parameter (in
-        combination with the user, password, port and database parameters) or the connection_string parameter must be
-        specified.
+        The host name or IP address of the database server. 
+        This parameter is optional, but either this parameter (in combination with the 
+        user, password, port and database parameters) or the connection_string parameter
+        must be specified.
     port : int
-        The port number of the database server. This parameter is optional, but either this parameter (in combination
-        with the user, password, host and database parameters) or the connection_string parameter must be specified.
+        The port number of the database server. 
+        This parameter is optional, but either this parameter (in combination with the 
+        user, password, host and database parameters) or the connection_string parameter
+        must be specified.
     database : Text
-        The name of the database to connect to. This parameter is optional, but either this parameter (in combination
-        with the user, password, host and port parameters) or the connection_string parameter must be specified.
+        The name of the database to connect to. 
+        This parameter is optional, but either this parameter (in combination with the 
+        user, password, host and port parameters) or the connection_string parameter 
+        must be specified.
     schema : Text
-        The name of the schema to connect to. This parameter is optional. This parameter can be provided along with the
+        The name of the schema to connect to. 
+        This parameter is optional. This parameter can be provided along with the
         connection_string parameter as well.
-
     """
 
     name = "PostgreSQL"
@@ -80,15 +90,16 @@ class PostgreSQLConnector(DataConnector):
     def create_connection(self):
         """
         Create a connection to a PostgreSQL database.
-        :return: A SQLAlchemy engine object for the connection to the PostgreSQL database.
+        :return: A SQLAlchemy engine object for the connection to the PostgreSQL 
+                 database.
         """
         try:
             if self.connection_string:
                 engine = create_engine(self.connection_string)
             else:
                 engine = create_engine(
-                    f"postgresql+psycopg2://{self.user}:{self.password}@{self.host}:{self.port}/"
-                    f"{self.database}"
+                    f"postgresql+psycopg2://{self.user}:{self.password}@{self.host}:"
+                    f"{self.port}/{self.database}"
                 )
 
             if self.schema:
