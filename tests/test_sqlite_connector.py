@@ -42,13 +42,15 @@ class TestSQLiteConnector(unittest.TestCase):
     def test_advanced_convert_text_to_sql_2(self):
         self.assertEqual(
             self.tts.convert_text_to_sql(
-                "Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name."
+                "Find all the tracks written by AC/DC, including the track name, album "
+                "title, and the artist name. Sort the results alphabetically by track "
+                "name."
             )
             .replace("\n", " ")
             .strip()
             .lower(),
-            "SELECT t.Name AS TrackName, a.Title AS AlbumTitle, ar.Name AS ArtistName \n"
-            "FROM tracks t \n"
+            "SELECT t.Name AS TrackName, a.Title AS AlbumTitle, ar.Name AS ArtistName"
+            "\nFROM tracks t \n"
             "INNER JOIN albums a ON t.AlbumId = a.AlbumId \n"
             "INNER JOIN artists ar ON a.ArtistId = ar.ArtistId \n"
             "WHERE ar.Name = 'AC/DC' \n"

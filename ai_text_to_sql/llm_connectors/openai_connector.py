@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List, Text
+from typing import Dict, Text
 
 import openai
 
@@ -54,7 +54,8 @@ class OpenAIConnector(LLMConnector):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY") or None
         if self.api_key is None:
             raise NoOpenAIAPIKeyException(
-                "No OpenAI API key provided. Please provide an API key or set the OPENAI_API_KEY environment variable."
+                "No OpenAI API key provided. Please provide an API key or set the "
+                "OPENAI_API_KEY environment variable."
             )
         openai.api_key = self.api_key
 
@@ -134,9 +135,11 @@ class OpenAIConnector(LLMConnector):
         self, user_input: Text, database_schema: Dict, connector_name: Text
     ) -> Text:
         """
-        Creates the prompt for the API call by incorporating the user input and the database schema.
+        Creates the prompt for the API call by incorporating the user input and the 
+        database schema.
         :param user_input: The user input to be converted to SQL.
-        :param database_schema: The database schema to use for the prompt as a formatted string.
+        :param database_schema: The database schema to use for the prompt as a 
+                                formatted string.
         :param connector_name: The name of the connector.
         :return: The prompt for the API call.
         """

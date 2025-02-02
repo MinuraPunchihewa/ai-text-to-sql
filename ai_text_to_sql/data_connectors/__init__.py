@@ -4,7 +4,7 @@ from ai_text_to_sql.data_connectors.mysql_connector import MySQLConnector
 from ai_text_to_sql.data_connectors.postgresql_connector import PostgreSQLConnector
 from ai_text_to_sql.data_connectors.sqlite_connector import SQLiteConnector
 
-_all__ = [
+__all__ = [
     "MariaDBConnector",
     "MSSQLConnector",
     "MySQLConnector",

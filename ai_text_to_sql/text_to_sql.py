@@ -1,5 +1,5 @@
 import logging.config
-from typing import Dict, List, Optional, Text
+from typing import Dict, List, Text
 
 import pandas as pd
 
