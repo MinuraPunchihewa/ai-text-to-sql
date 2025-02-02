@@ -17,24 +17,24 @@ class OpenAIConnector(LLMConnector):
         The API key for the OpenAI API. This parameter is optional, but if not provided,
         the OPENAI_API_KEY environment variable must be set.
     engine: Text
-        The engine to use for the OpenAI API. This parameter is optional, and defaults 
+        The engine to use for the OpenAI API. This parameter is optional, and defaults
         to "text-davinci-003".
     temperature: float
-        The temperature for the OpenAI API. This parameter is optional, and defaults to 
+        The temperature for the OpenAI API. This parameter is optional, and defaults to
         0.
     max_tokens: int
-        The maximum number of tokens for the OpenAI API. This parameter is optional, 
+        The maximum number of tokens for the OpenAI API. This parameter is optional,
         and defaults to 150.
     top_p: float
         The top p for the OpenAI API. This parameter is optional, and defaults to 1.0.
     frequency_penalty: float
-        The frequency penalty for the OpenAI API. This parameter is optional, and 
+        The frequency penalty for the OpenAI API. This parameter is optional, and
         defaults to 0.0.
     presence_penalty: float
-        The presence penalty for the OpenAI API. This parameter is optional, and 
+        The presence penalty for the OpenAI API. This parameter is optional, and
         defaults to 0.0.
     stop: List[Text]
-        The stop for the OpenAI API. This parameter is optional, and defaults to 
+        The stop for the OpenAI API. This parameter is optional, and defaults to
         ("#", ";").
     """
 
@@ -135,10 +135,10 @@ class OpenAIConnector(LLMConnector):
         self, user_input: Text, database_schema: Dict, connector_name: Text
     ) -> Text:
         """
-        Creates the prompt for the API call by incorporating the user input and the 
+        Creates the prompt for the API call by incorporating the user input and the
         database schema.
         :param user_input: The user input to be converted to SQL.
-        :param database_schema: The database schema to use for the prompt as a 
+        :param database_schema: The database schema to use for the prompt as a
                                 formatted string.
         :param connector_name: The name of the connector.
         :return: The prompt for the API call.
