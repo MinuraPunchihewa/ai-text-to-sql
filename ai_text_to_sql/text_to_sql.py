@@ -1,11 +1,11 @@
-import pandas as pd
-from typing import Optional, Text, List, Dict
-
 import logging.config
+from typing import Dict, List, Text
+
+import pandas as pd
 
 from .config_parser import ConfigParser
-from .llm_connectors.llm_connector import LLMConnector
 from .data_connectors.data_connector import DataConnector
+from .llm_connectors.llm_connector import LLMConnector
 
 logging_config_parser = ConfigParser()
 logging.config.dictConfig(logging_config_parser.get_config_dict())
@@ -23,6 +23,7 @@ class TextToSQL:
     data_connector : DataConnector
         The DataConnector to use for querying the database.
     """
+
     def __init__(self, data_connector: DataConnector, llm_connector: LLMConnector):
         self.data_connector = data_connector
         self.llm_connector = llm_connector
@@ -38,7 +39,7 @@ class TextToSQL:
         prompt = self.llm_connector.create_prompt(
             text,
             self.data_connector.get_database_schema(),
-            self.data_connector.get_connector_name()
+            self.data_connector.get_connector_name(),
         )
         self.logger.info(f"Prompt: {prompt}")
 
@@ -63,4 +64,3 @@ class TextToSQL:
         """
         sql = self.convert_text_to_sql(text)
         return pd.DataFrame(self.data_connector.query(sql))
-

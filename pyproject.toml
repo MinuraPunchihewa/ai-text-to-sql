@@ -1,0 +1,77 @@
+[tool.poetry]
+name = "ai-text-to-sql"
+version = "0.2.0"
+description = "AI-Text-to-SQL, revolutionize database querying with AI-powered text-to-SQL."
+authors = ["Minura Punchihewa <minurapunchihewa17@gmail.com>"]
+license = "GPL-3.0"
+readme = "README.md"
+repository = "https://github.com/MinuraPunchihewa/ai-text-to-sql"
+
+[tool.poetry.urls]
+"PyPI" = "https://pypi.org/project/ai-text-to-sql/"
+"Source Code" = "https://github.com/MinuraPunchihewa/tree/main/ai_text_to_sql"
+"Release Notes" = "https://github.com/MinuraPunchihewa/releases"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+pandas = "^2.2.3"
+pyodbc = "^5.2.0"
+pyyaml = "^6.0.2"
+psycopg2-binary = "^2.9.10"
+openai = "^1.61.0"
+sqlalchemy = "^2.0.37"
+
+[tool.setuptools.package-data]
+ai_text_to_sql = ["config/*.yml", "config/*.yaml"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+disallow_untyped_defs = "True"
+ignore_missing_imports = "True"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "T201"]
+
+[tool.coverage.run]
+omit = ["tests/*"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers --strict-config --durations=5"
+markers = [
+    "compile: mark placeholder test used to compile integration tests without running them",
+]
+asyncio_mode = "auto"
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.codespell]
+optional = true
+
+[tool.poetry.group.test_integration]
+optional = true
+
+[tool.poetry.group.lint]
+optional = true
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+
+[tool.poetry.group.test.dependencies]
+
+[tool.poetry.group.codespell.dependencies]
+codespell = "^2.2.6"
+
+[tool.poetry.group.test_integration.dependencies]
+
+[tool.poetry.group.lint.dependencies]
+ruff = "^0.5"
+types-pyyaml = "^6.0.12.20241230"
+
+[tool.poetry.group.typing.dependencies]
+mypy = "^1.10"
