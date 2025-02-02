@@ -53,6 +53,6 @@ class SQLiteConnector(DataConnector):
             else:
                 return create_engine(f"sqlite:///{self.database}")
         except SQLAlchemyError as e:
-            ConnectionCreationException(
+            raise ConnectionCreationException(
                 f"Could not create connection to SQLite database: {e}"
             )

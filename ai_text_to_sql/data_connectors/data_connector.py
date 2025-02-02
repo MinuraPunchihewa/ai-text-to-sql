@@ -22,7 +22,7 @@ class DataConnector(ABC):
 
     name = "Base"
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.connection = self.create_connection()
         self.inspector = self.create_inspector()
 
@@ -58,7 +58,7 @@ class DataConnector(ABC):
         """
         return self.inspector.get_table_names()
 
-    def get_columns(self, table_name) -> List[Text]:
+    def get_columns(self, table_name: Text) -> List[Text]:
         """
         Get the columns of a table.
         This method must be implemented by subclasses if the database does not

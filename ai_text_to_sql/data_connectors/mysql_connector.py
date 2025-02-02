@@ -93,6 +93,6 @@ class MySQLConnector(DataConnector):
                     f"{self.port}/{self.database}"
                 )
         except SQLAlchemyError as e:
-            ConnectionCreationException(
+            raise ConnectionCreationException(
                 f"Could not create connection to MySQL database: {e}"
             )

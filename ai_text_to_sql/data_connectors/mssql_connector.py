@@ -113,6 +113,6 @@ class MSSQLConnector(DataConnector):
 
             return create_engine(f"{connection_string}?driver={driver}")
         except SQLAlchemyError as e:
-            ConnectionCreationException(
+            raise ConnectionCreationException(
                 f"Could not create connection to MSSQL database: {e}"
             )

@@ -111,6 +111,6 @@ class PostgreSQLConnector(DataConnector):
 
             return engine
         except SQLAlchemyError as e:
-            ConnectionCreationException(
+            raise ConnectionCreationException(
                 f"Could not create connection to PostgreSQL database: {e}"
             )
