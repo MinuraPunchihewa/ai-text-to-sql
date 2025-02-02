@@ -13,13 +13,13 @@ class ConfigParser:
         The path to the configuration file.
     """
 
-    def __init__(self, file_path="config/logging.yaml"):
+    def __init__(self, file_path="config/logging.yaml") -> None:
         with open(
             os.path.join(os.path.dirname(os.path.abspath(__file__)), file_path), "r"
         ) as f:
             self.config_dict = yaml.safe_load(f)
 
-    def get_config_dict(self):
+    def get_config_dict(self) -> dict:
         """
         Get the configuration dictionary.
         :return: The configuration dictionary.

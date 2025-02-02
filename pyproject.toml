@@ -71,6 +71,7 @@ codespell = "^2.2.6"
 
 [tool.poetry.group.lint.dependencies]
 ruff = "^0.5"
+types-pyyaml = "^6.0.12.20241230"
 
 [tool.poetry.group.typing.dependencies]
 mypy = "^1.10"
