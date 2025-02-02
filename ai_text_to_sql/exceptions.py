@@ -8,7 +8,8 @@ class ConnectionCreationException(Exception):
 
 class InsufficientParametersException(Exception):
     """
-    Raised when insufficient parameters are provided to a connector for creating a connection.
+    Raised when insufficient parameters are provided to a connector for creating a 
+    connection.
     """
 
     pass

@@ -16,7 +16,7 @@ class MariaDBConnector(MySQLConnector):
     user : Text
         The username to connect to the database. 
         This parameter is optional, but either this parameter (in combination with the 
-        password, host, port and database parameters) or the connection_string parameter 
+        password, host, port and database parameters) or the connection_string parameter
         must be specified.
     password : Text
         The password to connect to the database. T
