@@ -71,16 +71,6 @@ jobs:
 
       # We explicitly *don't* set up caching here. This ensures our tests are
       # maximally sensitive to catching breakage.
-      #
-      # For example, here's a way that caching can cause a falsely-passing test:
-      # - Make the langchain package manifest no longer list a dependency package
-      #   as a requirement. This means it won't be installed by `pip install`,
-      #   and attempting to use it would cause a crash.
-      # - That dependency used to be required, so it may have been cached.
-      #   When restoring the venv packages from cache, that dependency gets included.
-      # - Tests pass, because the dependency is present even though it wasn't specified.
-      # - The package is published, and it breaks on the missing dependency when
-      #   used in the real world.
 
       - name: Set up Python + Poetry ${{ env.POETRY_VERSION }}
         uses: "./.github/actions/poetry_setup"

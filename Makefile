@@ -28,7 +28,7 @@ PYTHON_FILES=.
 MYPY_CACHE=.mypy_cache
 lint format: PYTHON_FILES=.
 lint_diff format_diff: PYTHON_FILES=$(shell git diff --relative=libs/partners/minds --name-only --diff-filter=d master | grep -E '\.py$$|\.ipynb$$')
-lint_package: PYTHON_FILES=langchain_minds
+lint_package: PYTHON_FILES=ai_text_to_sql
 lint_tests: PYTHON_FILES=tests
 lint_tests: MYPY_CACHE=.mypy_cache_test
 
@@ -47,7 +47,7 @@ spell_check:
 spell_fix:
 	poetry run codespell --toml pyproject.toml -w
 
-check_imports: $(shell find langchain_minds -name '*.py')
+check_imports: $(shell find ai_text_to_sql -name '*.py')
 	poetry run python ./scripts/check_imports.py $^
 
 ######################
