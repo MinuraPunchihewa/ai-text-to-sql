@@ -199,6 +199,7 @@ class OpenAIConnector(LLMConnector):
             )
         except ImportError:
             raise ImportError(
-                "The langchain-openai package is required to use this connector with the agent. "
+                "The langchain-openai package is required to use this connector with "
+                "the agent. "
                 "Please run 'pip install langchain-openai' to install it."
             )
