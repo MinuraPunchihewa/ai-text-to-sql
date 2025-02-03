@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import ClassVar
 
 from dotenv import load_dotenv
 
@@ -11,11 +12,13 @@ load_dotenv()
 
 
 class TestMSSQLConnector(unittest.TestCase):
+    tts: ClassVar[TextToSQL]
+
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         mssql_connector = MSSQLConnector(
             user=os.environ.get("MSSQL_USER"),
-            port=os.environ.get("MSSQL_PORT"),
+            port=int(os.environ.get("MSSQL_PORT", "1433")),
             password=os.environ.get("MSSQL_PASSWORD"),
             host=os.environ.get("MSSQL_HOST"),
             database=os.environ.get("MSSQL_DATABASE"),
@@ -25,7 +28,7 @@ class TestMSSQLConnector(unittest.TestCase):
         openai_connector = OpenAIConnector(api_key=os.environ.get("OPENAI_API_KEY"))
         cls.tts = TextToSQL(mssql_connector, openai_connector)
 
-    def test_convert_text_to_sql(self):
+    def test_convert_text_to_sql(self) -> None:
         self.assertEqual(
             self.tts.convert_text_to_sql(
                 "Get me list of people whose last name is Torres."

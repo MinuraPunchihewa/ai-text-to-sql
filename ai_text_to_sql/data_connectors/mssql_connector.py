@@ -1,4 +1,4 @@
-from typing import Optional, Text
+from typing import Optional, Text, Union
 
 import pyodbc
 from sqlalchemy import Engine, create_engine
@@ -62,7 +62,7 @@ class MSSQLConnector(DataConnector):
         user: Optional[Text] = None,
         password: Optional[Text] = None,
         host: Optional[Text] = None,
-        port: int = None,
+        port: Union[int, None] = None,
         database: Optional[Text] = None,
         schema: Optional[Text] = None,
     ) -> None:
@@ -116,3 +116,14 @@ class MSSQLConnector(DataConnector):
             raise ConnectionCreationException(
                 f"Could not create connection to MSSQL database: {e}"
             )
+
+    def get_connection_string(self) -> Text:
+        """
+        Returns the connection string for the MSSQL database.
+        :return: The connection string for the MSSQL database.
+        """
+        return (
+            self.connection_string
+            if self.connection_string
+            else f"mssql+pyodbc://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        )

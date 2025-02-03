@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import ClassVar
 
 from dotenv import load_dotenv
 
@@ -11,11 +12,13 @@ load_dotenv()
 
 
 class TestPostgreSQLConnector(unittest.TestCase):
+    tts: ClassVar[TextToSQL]
+
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         postgresql_connector = PostgreSQLConnector(
             user=os.environ.get("POSTGRESQL_USER"),
-            port=os.environ.get("POSTGRESQL_PORT"),
+            port=int(os.environ.get("POSTGRESQL_PORT", "5432")),
             password=os.environ.get("POSTGRESQL_PASSWORD"),
             host=os.environ.get("POSTGRESQL_HOST"),
             database=os.environ.get("POSTGRESQL_DATABASE"),
@@ -25,7 +28,7 @@ class TestPostgreSQLConnector(unittest.TestCase):
         openai_connector = OpenAIConnector(api_key=os.environ.get("OPENAI_API_KEY"))
         cls.tts = TextToSQL(postgresql_connector, openai_connector)
 
-    def test_convert_text_to_sql(self):
+    def test_convert_text_to_sql(self) -> None:
         self.assertEqual(
             self.tts.convert_text_to_sql(
                 "Get me list of people whose last name is Torres."

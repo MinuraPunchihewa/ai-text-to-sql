@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import ClassVar
 
 from dotenv import load_dotenv
 
@@ -11,20 +12,22 @@ load_dotenv()
 
 
 class TestSQLiteConnector(unittest.TestCase):
+    tts: ClassVar[TextToSQL]
+
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         sqlite_connector = SQLiteConnector(database="tests/data/chinook.db")
 
         openai_connector = OpenAIConnector(api_key=os.environ.get("OPENAI_API_KEY"))
         cls.tts = TextToSQL(sqlite_connector, openai_connector)
 
-    def test_convert_text_to_sql(self):
+    def test_convert_text_to_sql(self) -> None:
         self.assertEqual(
             self.tts.convert_text_to_sql("Get me a list of distinct genres.").lower(),
             "SELECT DISTINCT Name FROM genres".lower(),
         )
 
-    def test_advanced_convert_text_to_sql_1(self):
+    def test_advanced_convert_text_to_sql_1(self) -> None:
         self.assertEqual(
             self.tts.convert_text_to_sql("Get me the names of 5 Rock songs.")
             .replace("\n", "")
@@ -39,7 +42,7 @@ class TestSQLiteConnector(unittest.TestCase):
             .lower(),
         )
 
-    def test_advanced_convert_text_to_sql_2(self):
+    def test_advanced_convert_text_to_sql_2(self) -> None:
         self.assertEqual(
             self.tts.convert_text_to_sql(
                 "Find all the tracks written by AC/DC, including the track name, album "
@@ -59,7 +62,7 @@ class TestSQLiteConnector(unittest.TestCase):
             .lower(),
         )
 
-    def test_query(self):
+    def test_query(self) -> None:
         genres = self.tts.query("Get me a list of 5 distinct genres.")
         self.assertEqual(
             [genre[0] for genre in genres],

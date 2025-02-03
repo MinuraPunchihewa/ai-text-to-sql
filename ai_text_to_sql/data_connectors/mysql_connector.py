@@ -1,4 +1,4 @@
-from typing import Optional, Text
+from typing import Optional, Text, Union
 
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.exc import SQLAlchemyError
@@ -56,7 +56,7 @@ class MySQLConnector(DataConnector):
         user: Optional[Text] = None,
         password: Optional[Text] = None,
         host: Optional[Text] = None,
-        port: int = None,
+        port: Union[int, None] = None,
         database: Optional[Text] = None,
     ) -> None:
         if (
@@ -96,3 +96,14 @@ class MySQLConnector(DataConnector):
             raise ConnectionCreationException(
                 f"Could not create connection to MySQL database: {e}"
             )
+
+    def get_connection_string(self) -> Text:
+        """
+        Get the connection string for the MySQL database.
+        :return: The connection string for the MySQL database.
+        """
+        return (
+            self.connection_string
+            if self.connection_string
+            else f"mysql+pymysql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        )

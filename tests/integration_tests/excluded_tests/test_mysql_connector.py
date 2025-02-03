@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import ClassVar
 
 from dotenv import load_dotenv
 
@@ -11,11 +12,13 @@ load_dotenv()
 
 
 class TestMySQLConnector(unittest.TestCase):
+    tts: ClassVar[TextToSQL]
+
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         mysql_connector = MySQLConnector(
             user=os.environ.get("MYSQL_USER"),
-            port=os.environ.get("MYSQL_PORT"),
+            port=int(os.environ.get("MYSQL_PORT", "3306")),
             password=os.environ.get("MYSQL_PASSWORD"),
             host=os.environ.get("MYSQL_HOST"),
             database=os.environ.get("MYSQL_DATABASE"),
@@ -24,7 +27,7 @@ class TestMySQLConnector(unittest.TestCase):
         openai_connector = OpenAIConnector(api_key=os.environ.get("OPENAI_API_KEY"))
         cls.tts = TextToSQL(mysql_connector, openai_connector)
 
-    def test_convert_text_to_sql(self):
+    def test_convert_text_to_sql(self) -> None:
         self.assertEqual(
             self.tts.convert_text_to_sql(
                 "Get me list of people whose last name is Torres."

@@ -1,4 +1,4 @@
-from typing import Optional, Text
+from typing import Optional, Text, Union
 
 from sqlalchemy import Engine, create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
@@ -61,7 +61,7 @@ class PostgreSQLConnector(DataConnector):
         user: Optional[Text] = None,
         password: Optional[Text] = None,
         host: Optional[Text] = None,
-        port: int = None,
+        port: Union[int, None] = None,
         database: Optional[Text] = None,
         schema: Optional[Text] = None,
     ) -> None:
@@ -114,3 +114,14 @@ class PostgreSQLConnector(DataConnector):
             raise ConnectionCreationException(
                 f"Could not create connection to PostgreSQL database: {e}"
             )
+
+    def get_connection_string(self) -> Text:
+        """
+        Get the connection string for the PostgreSQL database.
+        :return: The connection string for the PostgreSQL database.
+        """
+        return (
+            self.connection_string
+            if self.connection_string
+            else f"postgresql+psycopg2://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
+        )

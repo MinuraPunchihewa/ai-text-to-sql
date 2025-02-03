@@ -1,7 +1,11 @@
 import os
-from typing import Dict, Text
+from typing import TYPE_CHECKING, Dict, Text, Union
 
-import openai
+from openai import OpenAI
+
+if TYPE_CHECKING:
+    from langchain_openai import ChatOpenAI
+
 
 from ai_text_to_sql.exceptions import NoOpenAIAPIKeyException
 from ai_text_to_sql.llm_connectors.llm_connector import LLMConnector
@@ -42,24 +46,23 @@ class OpenAIConnector(LLMConnector):
 
     def __init__(
         self,
-        api_key: Text = None,
-        engine: Text = "text-davinci-003",
+        api_key: Union[Text, None] = None,
+        model: Text = "gpt-3.5-turbo",
         temperature: int = 0,
         max_tokens: int = 150,
         top_p: float = 1.0,
         frequency_penalty: float = 0.0,
         presence_penalty: float = 0.0,
         stop: tuple = ("#", ";"),
-    ):
+    ) -> None:
         self.api_key = api_key or os.getenv("OPENAI_API_KEY") or None
         if self.api_key is None:
             raise NoOpenAIAPIKeyException(
                 "No OpenAI API key provided. Please provide an API key or set the "
                 "OPENAI_API_KEY environment variable."
             )
-        openai.api_key = self.api_key
 
-        self.engine = engine
+        self.model = model
         self.temperature = temperature
         self.max_tokens = max_tokens
         self.top_p = top_p
@@ -67,49 +70,9 @@ class OpenAIConnector(LLMConnector):
         self.presence_penalty = presence_penalty
         self.stop = list(stop)
 
-        self.context = []
-
-    def get_engine(self) -> Text:
-        """
-        Returns the engine specified for the API.
-        :return: The engine specified for the API.
-        """
-        return self.engine
-
-    def get_temperature(self) -> float:
-        """
-        Returns the temperature specified for the API.
-        :return: The temperature specified for the API.
-        """
-        return self.temperature
-
-    def get_top_p(self) -> float:
-        """
-        Returns the top_p specified for the API.
-        :return: The top_p specified for the API.
-        """
-        return self.top_p
-
-    def get_frequency_penalty(self) -> float:
-        """
-        Returns the frequency_penalty specified for the API.
-        :return: The frequency_penalty specified for the API.
-        """
-        return self.frequency_penalty
-
-    def get_presence_penalty(self) -> float:
-        """
-        Returns the presence_penalty specified for the API.
-        :return: The presence_penalty specified for the API.
-        """
-        return self.presence_penalty
-
-    def get_max_tokens(self) -> int:
-        """
-        Returns the max tokens specified for the API.
-        :return: The max tokens specified for the API.
-        """
-        return self.max_tokens
+        self.client = OpenAI(
+            api_key=self.api_key,
+        )
 
     def get_answer(self, prompt: Text) -> Text:
         """
@@ -117,19 +80,18 @@ class OpenAIConnector(LLMConnector):
         :param prompt: The prompt for the API call.
         :return: The response (SQL query) from the API call.
         """
-        response = openai.Completion.create(
-            engine=self.get_engine(),
-            prompt=prompt,
-            max_tokens=self.get_max_tokens(),
-            temperature=self.get_temperature(),
-            top_p=self.get_top_p(),
-            frequency_penalty=self.get_frequency_penalty(),
-            presence_penalty=self.get_presence_penalty(),
-            stream=False,
+        response = self.client.chat.completions.create(
+            model=self.model,
+            temperature=self.temperature,
+            max_tokens=self.max_tokens,
+            top_p=self.top_p,
+            frequency_penalty=self.frequency_penalty,
+            presence_penalty=self.presence_penalty,
             stop=self.stop,
+            messages=[{"role": "user", "content": prompt}],
         )
 
-        return response["choices"][0]["text"]
+        return response.choices[0].message.content or ""
 
     def create_prompt(
         self, user_input: Text, database_schema: Dict, connector_name: Text
@@ -174,3 +136,28 @@ class OpenAIConnector(LLMConnector):
         )
 
         return formatted_database_schema
+
+    def to_langchain(self) -> "ChatOpenAI":
+        """
+        Converts the OpenAI connector to a LangChain ChatOpenAI model.
+        :return: The LangChain chat model.
+        """
+        try:
+            from langchain_openai import ChatOpenAI
+
+            return ChatOpenAI(
+                api_key=self.api_key,
+                model=self.model,
+                temperature=self.temperature,
+                max_tokens=self.max_tokens,
+                top_p=self.top_p,
+                frequency_penalty=self.frequency_penalty,
+                presence_penalty=self.presence_penalty,
+                stop=self.stop,
+            )
+        except ImportError:
+            raise ImportError(
+                "The langchain-openai package is required to use this connector with "
+                "the agent. "
+                "Please run 'pip install langchain-openai' to install it."
+            )
