@@ -18,7 +18,9 @@ class TestPostgreSQLConnector(unittest.TestCase):
     def setUpClass(cls) -> None:
         postgresql_connector = PostgreSQLConnector(
             user=os.environ.get("POSTGRESQL_USER"),
-            port=int(os.environ.get("POSTGRESQL_PORT")),
+            port=int(os.environ.get("POSTGRESQL_PORT"))
+            if os.environ.get("POSTGRESQL_PORT")
+            else None,
             password=os.environ.get("POSTGRESQL_PASSWORD"),
             host=os.environ.get("POSTGRESQL_HOST"),
             database=os.environ.get("POSTGRESQL_DATABASE"),

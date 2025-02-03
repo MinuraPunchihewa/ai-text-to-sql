@@ -18,7 +18,9 @@ class TestMSSQLConnector(unittest.TestCase):
     def setUpClass(cls) -> None:
         mssql_connector = MSSQLConnector(
             user=os.environ.get("MSSQL_USER"),
-            port=int(os.environ.get("MSSQL_PORT")),
+            port=int(os.environ.get("MSSQL_PORT"))
+            if os.environ.get("MSSQL_PORT")
+            else None,
             password=os.environ.get("MSSQL_PASSWORD"),
             host=os.environ.get("MSSQL_HOST"),
             database=os.environ.get("MSSQL_DATABASE"),
