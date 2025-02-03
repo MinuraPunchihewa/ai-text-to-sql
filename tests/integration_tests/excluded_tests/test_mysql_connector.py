@@ -18,9 +18,7 @@ class TestMySQLConnector(unittest.TestCase):
     def setUpClass(cls) -> None:
         mysql_connector = MySQLConnector(
             user=os.environ.get("MYSQL_USER"),
-            port=int(os.environ.get("MYSQL_PORT"))
-            if os.environ.get("MYSQL_PORT")
-            else None,
+            port=int(os.environ.get("MYSQL_PORT", "3306")),
             password=os.environ.get("MYSQL_PASSWORD"),
             host=os.environ.get("MYSQL_HOST"),
             database=os.environ.get("MYSQL_DATABASE"),
