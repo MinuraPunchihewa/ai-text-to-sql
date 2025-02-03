@@ -57,7 +57,7 @@ class SQLiteConnector(DataConnector):
                 f"Could not create connection to SQLite database: {e}"
             )
 
-    def get_connection_string(self):
+    def get_connection_string(self) -> Text:
         """
         Get the connection string for the SQLite database.
         :return: The connection string for the SQLite database.

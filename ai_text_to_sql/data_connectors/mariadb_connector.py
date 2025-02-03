@@ -1,4 +1,4 @@
-from typing import Optional, Text
+from typing import Optional, Text, Union
 
 from .mysql_connector import MySQLConnector
 
@@ -48,7 +48,7 @@ class MariaDBConnector(MySQLConnector):
         user: Optional[Text] = None,
         password: Optional[Text] = None,
         host: Optional[Text] = None,
-        port: int = None,
+        port: Union[int, Text] = None,
         database: Optional[Text] = None,
     ) -> None:
         super().__init__(connection_string, user, password, host, port, database)

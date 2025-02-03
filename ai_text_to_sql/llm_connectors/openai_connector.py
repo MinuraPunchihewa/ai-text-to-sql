@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING, Dict, Text
+from typing import TYPE_CHECKING, Dict, Text, Union
 
 from openai import OpenAI
 
@@ -46,7 +46,7 @@ class OpenAIConnector(LLMConnector):
 
     def __init__(
         self,
-        api_key: Text = None,
+        api_key: Union[Text, None] = None,
         model: Text = "gpt-3.5-turbo",
         temperature: int = 0,
         max_tokens: int = 150,
@@ -73,48 +73,6 @@ class OpenAIConnector(LLMConnector):
         self.client = OpenAI(
             api_key=self.api_key,
         )
-
-    def get_engine(self) -> Text:
-        """
-        Returns the engine specified for the API.
-        :return: The engine specified for the API.
-        """
-        return self.engine
-
-    def get_temperature(self) -> float:
-        """
-        Returns the temperature specified for the API.
-        :return: The temperature specified for the API.
-        """
-        return self.temperature
-
-    def get_top_p(self) -> float:
-        """
-        Returns the top_p specified for the API.
-        :return: The top_p specified for the API.
-        """
-        return self.top_p
-
-    def get_frequency_penalty(self) -> float:
-        """
-        Returns the frequency_penalty specified for the API.
-        :return: The frequency_penalty specified for the API.
-        """
-        return self.frequency_penalty
-
-    def get_presence_penalty(self) -> float:
-        """
-        Returns the presence_penalty specified for the API.
-        :return: The presence_penalty specified for the API.
-        """
-        return self.presence_penalty
-
-    def get_max_tokens(self) -> int:
-        """
-        Returns the max tokens specified for the API.
-        :return: The max tokens specified for the API.
-        """
-        return self.max_tokens
 
     def get_answer(self, prompt: Text) -> Text:
         """
