@@ -12,7 +12,7 @@ load_dotenv()
 
 class TestMSSQLConnector(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         mssql_connector = MSSQLConnector(
             user=os.environ.get("MSSQL_USER"),
             port=os.environ.get("MSSQL_PORT"),
@@ -25,7 +25,7 @@ class TestMSSQLConnector(unittest.TestCase):
         openai_connector = OpenAIConnector(api_key=os.environ.get("OPENAI_API_KEY"))
         cls.tts = TextToSQL(mssql_connector, openai_connector)
 
-    def test_convert_text_to_sql(self):
+    def test_convert_text_to_sql(self) -> None:
         self.assertEqual(
             self.tts.convert_text_to_sql(
                 "Get me list of people whose last name is Torres."

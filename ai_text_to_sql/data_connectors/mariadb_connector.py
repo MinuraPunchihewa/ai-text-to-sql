@@ -48,7 +48,7 @@ class MariaDBConnector(MySQLConnector):
         user: Optional[Text] = None,
         password: Optional[Text] = None,
         host: Optional[Text] = None,
-        port: Union[int, Text] = None,
+        port: Union[int, None] = None,
         database: Optional[Text] = None,
     ) -> None:
         super().__init__(connection_string, user, password, host, port, database)

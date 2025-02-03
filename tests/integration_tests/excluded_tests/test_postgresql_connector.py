@@ -12,7 +12,7 @@ load_dotenv()
 
 class TestPostgreSQLConnector(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         postgresql_connector = PostgreSQLConnector(
             user=os.environ.get("POSTGRESQL_USER"),
             port=os.environ.get("POSTGRESQL_PORT"),
@@ -25,7 +25,7 @@ class TestPostgreSQLConnector(unittest.TestCase):
         openai_connector = OpenAIConnector(api_key=os.environ.get("OPENAI_API_KEY"))
         cls.tts = TextToSQL(postgresql_connector, openai_connector)
 
-    def test_convert_text_to_sql(self):
+    def test_convert_text_to_sql(self) -> None:
         self.assertEqual(
             self.tts.convert_text_to_sql(
                 "Get me list of people whose last name is Torres."

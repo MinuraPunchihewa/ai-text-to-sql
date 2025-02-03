@@ -62,7 +62,7 @@ class MSSQLConnector(DataConnector):
         user: Optional[Text] = None,
         password: Optional[Text] = None,
         host: Optional[Text] = None,
-        port: Union[int, Text] = None,
+        port: Union[int, None] = None,
         database: Optional[Text] = None,
         schema: Optional[Text] = None,
     ) -> None:
