@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import ClassVar
 
 from dotenv import load_dotenv
 
@@ -11,11 +12,13 @@ load_dotenv()
 
 
 class TestMSSQLConnector(unittest.TestCase):
+    tts: ClassVar[TextToSQL]
+
     @classmethod
     def setUpClass(cls) -> None:
         mssql_connector = MSSQLConnector(
             user=os.environ.get("MSSQL_USER"),
-            port=os.environ.get("MSSQL_PORT"),
+            port=int(os.environ.get("MSSQL_PORT")),
             password=os.environ.get("MSSQL_PASSWORD"),
             host=os.environ.get("MSSQL_HOST"),
             database=os.environ.get("MSSQL_DATABASE"),

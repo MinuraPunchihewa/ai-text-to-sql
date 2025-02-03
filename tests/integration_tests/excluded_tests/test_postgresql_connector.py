@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import ClassVar
 
 from dotenv import load_dotenv
 
@@ -11,11 +12,13 @@ load_dotenv()
 
 
 class TestPostgreSQLConnector(unittest.TestCase):
+    tts: ClassVar[TextToSQL]
+
     @classmethod
     def setUpClass(cls) -> None:
         postgresql_connector = PostgreSQLConnector(
             user=os.environ.get("POSTGRESQL_USER"),
-            port=os.environ.get("POSTGRESQL_PORT"),
+            port=int(os.environ.get("POSTGRESQL_PORT")),
             password=os.environ.get("POSTGRESQL_PASSWORD"),
             host=os.environ.get("POSTGRESQL_HOST"),
             database=os.environ.get("POSTGRESQL_DATABASE"),

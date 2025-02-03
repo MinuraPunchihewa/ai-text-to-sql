@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import ClassVar
 
 from dotenv import load_dotenv
 
@@ -11,11 +12,13 @@ load_dotenv()
 
 
 class TestMySQLConnector(unittest.TestCase):
+    tts: ClassVar[TextToSQL]
+
     @classmethod
     def setUpClass(cls) -> None:
         mysql_connector = MySQLConnector(
             user=os.environ.get("MYSQL_USER"),
-            port=os.environ.get("MYSQL_PORT"),
+            port=int(os.environ.get("MYSQL_PORT")),
             password=os.environ.get("MYSQL_PASSWORD"),
             host=os.environ.get("MYSQL_HOST"),
             database=os.environ.get("MYSQL_DATABASE"),

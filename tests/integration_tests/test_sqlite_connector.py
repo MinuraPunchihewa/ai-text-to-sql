@@ -1,5 +1,6 @@
 import os
 import unittest
+from typing import ClassVar
 
 from dotenv import load_dotenv
 
@@ -11,6 +12,8 @@ load_dotenv()
 
 
 class TestSQLiteConnector(unittest.TestCase):
+    tts: ClassVar[TextToSQL]
+
     @classmethod
     def setUpClass(cls) -> None:
         sqlite_connector = SQLiteConnector(database="tests/data/chinook.db")
