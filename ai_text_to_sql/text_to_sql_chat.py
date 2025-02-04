@@ -1,5 +1,5 @@
 import logging.config
-from typing import Text
+from typing import Text, Union
 
 from .config_parser import ConfigParser
 from .data_connectors.data_connector import DataConnector
@@ -12,10 +12,12 @@ logger = logging.getLogger()
 
 
 class TextToSQLChatMemory:
-    def __init__(self):
+    def __init__(self, system_prompt: Text, window_size: Union[int, None] = None):
+        self.system_prompt = system_prompt
+        self.window_size = window_size
         self.memory = []
 
-    def add(self, role: Text, content: Text):
+    def add_message(self, role: Text, content: Text):
         self.memory.append(
             {
                 "role": role,
@@ -24,14 +26,25 @@ class TextToSQLChatMemory:
             }
         )
 
-    def get(self):
-        return self.memory
+    def get_messages(self):
+        if self.window_size is None or len(self.memory) <= self.window_size:
+            return [{"role": "system", "content": self.system_prompt}] + self.memory
+        else:
+            # Return the last 'window_size' elements of the memory.
+            return (
+                [{"role": "system", "content": self.system_prompt}] +
+                self.memory[-self.window_size:]
+            )
 
 
 class TextToSQLChat(TextToSQL):
-    def __init__(self, data_connector: DataConnector, llm_connector: LLMConnector):
+    def __init__(
+            self,
+            data_connector: DataConnector,
+            llm_connector: LLMConnector,
+            window_size: Union[int, None] = None
+        ):
         super().__init__(data_connector, llm_connector)
-        self.memory = TextToSQLChatMemory()
 
         # Add the system prompt to the memory.
         system_prompt = self.llm_connector.create_prompt(
@@ -41,10 +54,7 @@ class TextToSQLChat(TextToSQL):
         )
         self.logger.info(f"System prompt: {system_prompt}")
 
-        self.memory.add(
-            "system",
-            system_prompt
-        )
+        self.memory = TextToSQLChatMemory(system_prompt, window_size=window_size)
         
     def convert_text_to_sql(self, text: Text) -> Text:
         """
@@ -52,17 +62,17 @@ class TextToSQLChat(TextToSQL):
         :param text: The Text to convert to SQL query.
         :return: The converted SQL query.
         """
-        self.memory.add(
+        self.memory.add_message(
             "user",
             text
         )
 
         sql = self.llm_connector.get_answer(
-            messages=self.memory.get()
+            messages=self.memory.get_messages()
         ).strip()
         self.logger.info(f"SQL query: {sql}")
 
-        self.memory.add(
+        self.memory.add_message(
             "system",
             sql
         )
