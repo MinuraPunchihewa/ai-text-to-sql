@@ -82,7 +82,7 @@ class OpenAIConnector(LLMConnector):
         """
         if not prompt and not messages:
             raise ValueError("Either prompt or messages must be provided.")
-        
+
         if prompt and messages:
             raise ValueError("Only one of prompt or messages can be provided.")
 

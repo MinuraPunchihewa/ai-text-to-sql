@@ -55,7 +55,7 @@ class LLMConnector(ABC):
     def get_answer(self, prompt: Text, messages: List[Dict]) -> Text:
         """
         Calls the LLM and returns the response.
-        :param prompt: The prompt for the API call. 
+        :param prompt: The prompt for the API call.
                        This parameter is optional, but either this parameter or the
                        messages parameter must be specified.
         :param messages: The messages to include in the API call.
