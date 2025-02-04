@@ -53,9 +53,7 @@ class LLMConnector(ABC):
 
     @abstractmethod
     def get_answer(
-        self,
-        prompt: Union[Text, None] = None,
-        messages: Union[List[Dict], None] = None
+        self, prompt: Union[Text, None] = None, messages: Union[List[Dict], None] = None
     ) -> Text:
         """
         Calls the LLM and returns the response.

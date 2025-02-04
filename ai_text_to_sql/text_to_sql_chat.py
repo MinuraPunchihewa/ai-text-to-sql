@@ -27,9 +27,7 @@ class TextToSQLChatMemory:
     """
 
     def __init__(
-            self,
-            system_prompt: Text,
-            window_size: Union[int, None] = None
+        self, system_prompt: Text, window_size: Union[int, None] = None
     ) -> None:
         self.system_prompt = system_prompt
         self.window_size = window_size
