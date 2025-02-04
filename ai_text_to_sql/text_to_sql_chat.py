@@ -52,5 +52,20 @@ class TextToSQLChat(TextToSQL):
         :param text: The Text to convert to SQL query.
         :return: The converted SQL query.
         """
-        pass
+        self.memory.add(
+            "user",
+            text
+        )
+
+        sql = self.llm_connector.get_answer(
+            messages=self.memory.get()
+        ).strip()
+        self.logger.info(f"SQL query: {sql}")
+
+        self.memory.add(
+            "system",
+            sql
+        )
+
+        return sql
 
