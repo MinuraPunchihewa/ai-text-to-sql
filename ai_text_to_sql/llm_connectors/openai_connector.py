@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING, Dict, Text, Union
+from typing import TYPE_CHECKING, Dict, List, Text, Union
 
 from openai import OpenAI
 
@@ -74,12 +74,21 @@ class OpenAIConnector(LLMConnector):
             api_key=self.api_key,
         )
 
-    def get_answer(self, prompt: Text) -> Text:
+    def get_answer(self, prompt: Text = None, messages: List[Dict] = None) -> Text:
         """
         Calls the OpenAI Completion API with the provided prompt.
         :param prompt: The prompt for the API call.
         :return: The response (SQL query) from the API call.
         """
+        if not prompt and not messages:
+            raise ValueError("Either prompt or messages must be provided.")
+        
+        if prompt and messages:
+            raise ValueError("Only one of prompt or messages can be provided.")
+
+        if prompt:
+            messages = [{"role": "user", "content": prompt}]
+
         response = self.client.chat.completions.create(
             model=self.model,
             temperature=self.temperature,
