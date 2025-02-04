@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Dict, List, Text
+from typing import TYPE_CHECKING, Dict, List, Text, Union
 
 if TYPE_CHECKING:
     from langchain_core.language_models.chat_models import BaseChatModel
@@ -52,7 +52,11 @@ class LLMConnector(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_answer(self, prompt: Text, messages: List[Dict]) -> Text:
+    def get_answer(
+        self,
+        prompt: Union[Text, None] = None,
+        messages: Union[List[Dict], None] = None
+    ) -> Text:
         """
         Calls the LLM and returns the response.
         :param prompt: The prompt for the API call.

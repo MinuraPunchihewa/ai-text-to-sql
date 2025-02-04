@@ -74,7 +74,11 @@ class OpenAIConnector(LLMConnector):
             api_key=self.api_key,
         )
 
-    def get_answer(self, prompt: Text = None, messages: List[Dict] = None) -> Text:
+    def get_answer(
+        self,
+        prompt: Union[Text, None] = None,
+        messages: Union[List[Dict], None] = None
+    ) -> Text:
         """
         Calls the OpenAI Completion API with the provided prompt.
         :param prompt: The prompt for the API call.

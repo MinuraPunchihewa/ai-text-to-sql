@@ -1,5 +1,5 @@
 import logging.config
-from typing import Text, Union
+from typing import List, Text, Union
 
 from .config_parser import ConfigParser
 from .data_connectors.data_connector import DataConnector
@@ -26,12 +26,16 @@ class TextToSQLChatMemory:
         provided, all messages will returned.
     """
 
-    def __init__(self, system_prompt: Text, window_size: Union[int, None] = None):
+    def __init__(
+            self,
+            system_prompt: Text,
+            window_size: Union[int, None] = None
+    ) -> None:
         self.system_prompt = system_prompt
         self.window_size = window_size
-        self.memory = []
+        self.memory: List = []
 
-    def add_message(self, role: Text, content: Text):
+    def add_message(self, role: Text, content: Text) -> None:
         """
         Add a message to the memory.
         :param role: The author of the message.
@@ -44,7 +48,7 @@ class TextToSQLChatMemory:
             }
         )
 
-    def get_messages(self):
+    def get_messages(self) -> List:
         """
         Get the messages stored in memory.
         If the window_size is not provided or the number of messages is less than the
@@ -83,7 +87,7 @@ class TextToSQLChat(TextToSQL):
         data_connector: DataConnector,
         llm_connector: LLMConnector,
         window_size: Union[int, None] = None,
-    ):
+    ) -> None:
         super().__init__(data_connector, llm_connector)
 
         # Add the system prompt to the memory.
