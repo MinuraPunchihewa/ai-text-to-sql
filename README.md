@@ -20,9 +20,13 @@ To summon the power of AI-Text-to-SQL, follow these mystical steps:
 
 2. Import the LLM Connector: Next, import the LLM (Language Learning Model) connector. This vital ingredient enhances the mystical abilities of `ai_text_to_sql`, enabling it to comprehend your text queries like a seasoned SQL wizard.
 
-3. Instantiating TextToSQL: Now, it's time to weave your magic! Create an instance of `TextToSQL` by passing in the objects of the previously instantiated data connector and LLM connector. This mystical union forms the very heart of `ai_text_to_sql`, enabling it to interpret your words and craft elegant SQL incantations.
+3. Choose Your Path of Power:
 
-4. Unlocking Advanced Sorcery with `TextToSQLAgent` (New!): For those seeking to wield even greater power, the `TextToSQLAgent` awaits! This mystical entity allows you to commune with your database in ways beyond imagination, effortlessly navigating complex queries and weaving additional context into your spells for unparalleled results.
+- Conjuring the Core SQL Spell with `TextToSQL`: If you seek to transform text into SQL queries with the purest magic, invoke `TextToSQL`. This powerful incantation allows you to craft SQL queries from simple text, enabling you to summon the power of databases with ease and precision.
+
+- Summoning the Enchanted Conversationalist with `TextToSQLChat` (New!): For those who desire the power of `TextToSQL` but with memory, `TextToSQLChat` remembers the context of previous queries. This allows you to build on past interactions, making your SQL spellcasting feel more like an ongoing conversation.
+
+- Unlocking Advanced Sorcery with `TextToSQLAgent` (New!): If you seek a fully autonomous SQL assistant, `TextToSQLAgent` acts as an intelligent intermediary, orchestrating multi-step reasoning, handling follow-ups, and dynamically retrieving relevant information to craft the most precise queries. With this agent at your command, you can navigate complex data interactions with ease.
 
 ## Spellbinding Example Usage 🎩
 
@@ -55,6 +59,43 @@ results = text_to_sql.query(text_query)
 
 # Store the results in a DataFrame for further sorcery 📊✨
 df = text_to_sql.query_df(text_query)
+```
+
+### Conversational Usage with `TextToSQLChat`
+
+The `TextToSQLChat` artifact is a conversational variant of `TextToSQL` that remembers the context of previous queries. Ready to engage in a dialogue with your SQL queries? Here's how to do it:
+
+```python
+from ai_text_to_sql.data_connectors import SQLiteConnector
+from ai_text_to_sql.llm_connectors import OpenAIConnector
+from ai_text_to_sql import TextToSQLChat
+
+
+# Prepare your spell ingredients
+sqlite_connector = SQLiteConnector(database='chinook.db')
+openai_connector = OpenAIConnector(api_key='YOUR_OPENAI_API_KEY')
+
+# Weave the enchantment 🧙‍♂️✨
+text_to_sql = TextToSQLChat(sqlite_connector, openai_connector)
+
+# Utter your magical incantation 🗣️✨
+text_query = "Find all the tracks written by AC/DC, including the track name, album title, " \
+             "and the artist name. Sort the results alphabetically by track name."
+
+# Witness the spell's transformation 🔮✨
+sql_query = text_to_sql.convert_text_to_sql(text_query)
+
+# Unleash the magic upon the database directly 💾✨
+results = text_to_sql.query(text_query)
+
+# Store the results in a DataFrame for further sorcery 📊✨
+df = text_to_sql.query_df(text_query)
+
+# Continue the conversation with a follow-up query 🗣️✨
+follow_up_query = "OK, now let's do Queen"
+follow_up_results = text_to_sql.query(follow_up_query)
+# OR
+follow_up_df = text_to_sql.query_df(follow_up_query)
 ```
 
 ### Advanced Usage with `TextToSQLAgent`
