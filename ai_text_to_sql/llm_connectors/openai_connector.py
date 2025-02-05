@@ -2,6 +2,7 @@ import os
 from typing import TYPE_CHECKING, Dict, List, Text, Union
 
 from openai import OpenAI
+from openai.types.chat import ChatCompletionMessageParam
 
 if TYPE_CHECKING:
     from langchain_openai import ChatOpenAI
@@ -99,7 +100,7 @@ class OpenAIConnector(LLMConnector):
             frequency_penalty=self.frequency_penalty,
             presence_penalty=self.presence_penalty,
             stop=self.stop,
-            messages=messages,
+            messages=messages,  # type: ignore[arg-type]
         )
 
         return response.choices[0].message.content or ""
