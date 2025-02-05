@@ -2,7 +2,6 @@ import os
 from typing import TYPE_CHECKING, Dict, List, Text, Union
 
 from openai import OpenAI
-from openai.types.chat import ChatCompletionMessageParam
 
 if TYPE_CHECKING:
     from langchain_openai import ChatOpenAI
