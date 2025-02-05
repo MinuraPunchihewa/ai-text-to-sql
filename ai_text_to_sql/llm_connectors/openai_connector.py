@@ -124,7 +124,7 @@ class OpenAIConnector(LLMConnector):
             " retrieves only the necessary data from the relevant tables. "
             "Please ensure that your query is optimized for performance and "
             "accuracy. Your response should only include the SQL statement,"
-            " without any additional text."
+            " without any additional text or tags."
         )
 
     def format_database_schema(
