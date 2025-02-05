@@ -99,7 +99,7 @@ class OpenAIConnector(LLMConnector):
             frequency_penalty=self.frequency_penalty,
             presence_penalty=self.presence_penalty,
             stop=self.stop,
-            messages=[{"role": "user", "content": prompt}],
+            messages=messages,
         )
 
         return response.choices[0].message.content or ""
