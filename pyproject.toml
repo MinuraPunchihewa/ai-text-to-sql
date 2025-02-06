@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ai-text-to-sql"
-version = "0.2.0"
+version = "0.3.0"
 description = "AI-Text-to-SQL, revolutionize database querying with AI-powered text-to-SQL."
 authors = ["Minura Punchihewa <minurapunchihewa17@gmail.com>"]
 license = "GPL-3.0"
