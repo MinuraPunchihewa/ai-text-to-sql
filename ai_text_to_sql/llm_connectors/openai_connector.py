@@ -1,5 +1,5 @@
 import os
-from typing import TYPE_CHECKING, Dict, Text, Union
+from typing import TYPE_CHECKING, Dict, List, Text, Union
 
 from openai import OpenAI
 
@@ -74,12 +74,23 @@ class OpenAIConnector(LLMConnector):
             api_key=self.api_key,
         )
 
-    def get_answer(self, prompt: Text) -> Text:
+    def get_answer(
+        self, prompt: Union[Text, None] = None, messages: Union[List[Dict], None] = None
+    ) -> Text:
         """
         Calls the OpenAI Completion API with the provided prompt.
         :param prompt: The prompt for the API call.
         :return: The response (SQL query) from the API call.
         """
+        if not prompt and not messages:
+            raise ValueError("Either prompt or messages must be provided.")
+
+        if prompt and messages:
+            raise ValueError("Only one of prompt or messages can be provided.")
+
+        if prompt:
+            messages = [{"role": "user", "content": prompt}]
+
         response = self.client.chat.completions.create(
             model=self.model,
             temperature=self.temperature,
@@ -88,7 +99,7 @@ class OpenAIConnector(LLMConnector):
             frequency_penalty=self.frequency_penalty,
             presence_penalty=self.presence_penalty,
             stop=self.stop,
-            messages=[{"role": "user", "content": prompt}],
+            messages=messages,  # type: ignore[arg-type]
         )
 
         return response.choices[0].message.content or ""
@@ -113,7 +124,7 @@ class OpenAIConnector(LLMConnector):
             " retrieves only the necessary data from the relevant tables. "
             "Please ensure that your query is optimized for performance and "
             "accuracy. Your response should only include the SQL statement,"
-            " without any additional text."
+            " without any additional text or enclosing characters."
         )
 
     def format_database_schema(
