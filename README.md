@@ -33,7 +33,8 @@ from ai_text_to_sql.llm_connectors import OpenAIConnector
 Now, define the magical incantation you wish to transform into SQL:
 
 ```python
-text_query = "Find all the tracks written by AC/DC, including the track name, album title, and the artist name. Sort the results alphabetically by track name."
+text_query = "Find all the tracks written by AC/DC, including the track name, album " \
+             "title and the artist name. Sort the results alphabetically by track name."
 ```
 
 ### Step 2: Choose Your Path of Power 🌟
@@ -93,6 +94,10 @@ text_to_sql_agent = TextToSQLAgent(sqlite_connector, openai_connector)
 
 # Engage the AI agent in a conversation 🤖✨
 response = text_to_sql_agent.query(text_query)
+
+# Continue the dialogue with a follow-up query 🤖✨
+follow_up_query = "OK, now let's do Led Zeppelin"
+follow_up_response = text_to_sql_agent.query(follow_up_query)
 ```
 
 With these powerful artifacts at your disposal, you are now equipped to master the arcane arts of AI-driven SQL spellcasting! 🌟🎉
